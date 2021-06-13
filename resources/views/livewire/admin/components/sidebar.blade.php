@@ -28,11 +28,11 @@
                     </a>
                     <ul class="submenu ">
                         <li class="submenu-item">
-                            <a href="component-alert.html">Paramedis</a>
-                            <a href="component-alert.html">Jabatan</a>
+                            <a href="{{ route('dash.master-data.paramedis') }}">Paramedis</a>
+                            <a href="">Jabatan</a>
                             <a href="component-alert.html">Bidang</a>
                             <a href="component-alert.html">Pegawai</a>
-                            <a href="component-alert.html">Poli</a>
+                            <a href="{{ route('dash.master-data.poli') }}">Poli</a>
                             <a href="component-alert.html">Dokter</a>
                             <a href="component-alert.html">Jadwal Praktek Dokter</a>
                             <a href="component-alert.html">Pasien</a>
