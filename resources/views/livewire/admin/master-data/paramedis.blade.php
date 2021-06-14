@@ -92,6 +92,22 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <label for="kode_paramedis">Kode Paramedis</label>
+                                            <input type="text" wire:model.lazy='kode_paramedis' class="form-control @error('kode_paramedis') is-invalid @enderror" placeholder="Masukkan kode paramedis">
+                                            @error('kode_paramedis')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="no_izin_paramedis">No Izin Paramedis</label>
+                                            <input type="text" wire:model.lazy='no_izin_paramedis' class="form-control @error('no_izin_paramedis') is-invalid @enderror" placeholder="Masukkan nomor izin paramedis">
+                                            @error('no_izin_paramedis')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
                                             <label for="poli">Poli</label>
                                             <select wire:model.lazy='poli' class="form-control @error('poli') is-invalid @enderror" id="poli">
                                                 <option selected>Pilih</option>
@@ -154,6 +170,7 @@
                                         <thead>
                                                 <tr>
                                                     <th>No</th>
+                                                    <th>Kode Paramedis</th>
                                                     <th>No Izin Paramedis</th>
                                                     <th>Nama</th>
                                                     <th>Poli</th>
@@ -169,6 +186,7 @@
                                             @forelse ($paramedis as $key => $item)
                                                 <tr>
                                                     <td>{{ $paramedis->firstItem() + $key }}</td>
+                                                    <td>{{ $item->kode_paramedis }}</td>
                                                     <td>{{ $item->no_izin_paramedis }}</td>
                                                     <td>{{ $item->nama_paramedis }}</td>
                                                     <td>{{ $item->poli->nama_poli }}</td>
@@ -197,7 +215,7 @@
 
                                                 @empty
 
-                                                <td colspan="5" class="text-center">Data not found</td>
+                                                <td colspan="9" class="text-center">Data not found</td>
                                             @endforelse
                                         </tbody>
                                         </table>
