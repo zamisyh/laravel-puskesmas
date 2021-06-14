@@ -29,9 +29,9 @@
                     <ul class="submenu ">
                         <li class="submenu-item">
                             <a href="{{ route('dash.master-data.paramedis') }}">Paramedis</a>
-                            <a href="">Jabatan</a>
-                            <a href="component-alert.html">Bidang</a>
-                            <a href="component-alert.html">Pegawai</a>
+                            <a href="{{ route('dash.master-data.jabatan') }}">Jabatan</a>
+                            <a href="{{ route('dash.master-data.bidang') }}">Bidang</a>
+                            <a href="{{ route('dash.master-data.pegawai') }}">Pegawai</a>
                             <a href="{{ route('dash.master-data.poli') }}">Poli</a>
                             <a href="component-alert.html">Dokter</a>
                             <a href="component-alert.html">Jadwal Praktek Dokter</a>
