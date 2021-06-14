@@ -21,22 +21,23 @@ class Paramedis extends Component
     public $openFormCreate, $openFormUpdate, $details;
     public $data_poli, $paramedisId;
 
-    public $nama, $jenis_kelamin, $tempat_lahir, $tanggal_lahir, $alamat_tinggal, $poli;
+    public $nama, $jenis_kelamin, $tempat_lahir, $tanggal_lahir, $alamat_tinggal, $poli,
+        $kode_paramedis, $no_izin_paramedis;
 
     public function render()
     {
 
         $this->data_poli = Poli::orderBy('created_at', 'DESC')->get();
 
-        if($this->search){
+        if ($this->search) {
             $paramedis = Paramedic::where('nama_paramedis', 'LIKE', '%' . $this->search . '%')
-            ->with('poli')
-            ->orderBy('created_at', 'DESC')
-            ->paginate($this->rows);
-        }else{
+                ->with('poli')
+                ->orderBy('created_at', 'DESC')
+                ->paginate($this->rows);
+        } else {
             $paramedis = Paramedic::with('poli')
-            ->orderBy('created_at', 'DESC')
-            ->paginate($this->rows);
+                ->orderBy('created_at', 'DESC')
+                ->paginate($this->rows);
         }
 
 
@@ -45,10 +46,23 @@ class Paramedis extends Component
     }
 
 
-    public function openFormCreateParamedis() { $this->openFormCreate = true; }
-    public function closeFormCreateParamedis() { $this->openFormCreate = false;  $this->resetForm(); }
-    public function openDetails() { $this->details = true; }
-    public function closeDetails() { $this->details = false; }
+    public function openFormCreateParamedis()
+    {
+        $this->openFormCreate = true;
+    }
+    public function closeFormCreateParamedis()
+    {
+        $this->openFormCreate = false;
+        $this->resetForm();
+    }
+    public function openDetails()
+    {
+        $this->details = true;
+    }
+    public function closeDetails()
+    {
+        $this->details = false;
+    }
     public function openFormUpdateParamedis($id)
     {
         $user = Paramedic::findOrFail($id);
@@ -57,16 +71,21 @@ class Paramedis extends Component
         $this->tempat_lahir = $user->tempat_lahir;
         $this->tanggal_lahir = $user->tanggal_lahir;
         $this->alamat_tinggal = $user->alamat;
+        $this->kode_paramedis = $user->kode_paramedis;
+        $this->no_izin_paramedis = $user->no_izin_paramedis;
         $this->poli = $user->id_poli;
         $this->paramedisId = $user->id;
         $this->openFormCreate = true;
         $this->openUpdate = true;
     }
-    public function closeFormUpdateParamedis() { $this->openFormUpdate = false; }
+    public function closeFormUpdateParamedis()
+    {
+        $this->openFormUpdate = false;
+    }
 
     public function saveParamedis()
     {
-       $this->validasi();
+        $this->validasi();
 
         try {
 
@@ -76,7 +95,8 @@ class Paramedis extends Component
                 'tempat_lahir' => $this->tempat_lahir,
                 'tanggal_lahir' => $this->tanggal_lahir,
                 'alamat' => $this->alamat_tinggal,
-                'no_izin_paramedis' => $this->noIzinParamedis(),
+                'no_izin_paramedis' => strtoupper($this->no_izin_paramedis),
+                'kode_paramedis' => strtoupper($this->kode_paramedis),
                 'id_poli' => $this->poli,
             ]);
 
@@ -90,16 +110,13 @@ class Paramedis extends Component
                 'cancelButtonText' =>  'Cancel',
                 'showCancelButton' =>  false,
                 'showConfirmButton' =>  false,
-          ]);
+            ]);
 
-          $this->resetForm();
-          $this->openFormCreate = false;
-
-
+            $this->resetForm();
+            $this->openFormCreate = false;
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
-
     }
 
     public function updateParamedis($id)
@@ -113,6 +130,8 @@ class Paramedis extends Component
         $data->tempat_lahir = $this->tempat_lahir;
         $data->tanggal_lahir = $this->tanggal_lahir;
         $data->alamat =  $this->alamat_tinggal;
+        $data->kode_paramedis = $this->kode_paramedis;
+        $data->no_izin_paramedis = $this->no_izin_paramedis;
         $data->id_poli =  $this->poli;
 
         $data->save();
@@ -126,12 +145,11 @@ class Paramedis extends Component
             'cancelButtonText' =>  'Cancel',
             'showCancelButton' =>  false,
             'showConfirmButton' =>  false,
-      ]);
+        ]);
 
 
         $this->resetForm();
         $this->openFormCreate = false;
-
     }
 
 
@@ -141,7 +159,6 @@ class Paramedis extends Component
         $this->paramedisId = $data->id;
 
         $this->triggerConfirm();
-
     }
 
     public function triggerConfirm()
@@ -170,7 +187,7 @@ class Paramedis extends Component
             'cancelButtonText' =>  'Cancel',
             'showCancelButton' =>  false,
             'showConfirmButton' =>  false,
-      ]);
+        ]);
     }
 
 
@@ -184,7 +201,6 @@ class Paramedis extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         $this->reset();
-
     }
 
     public function validasi()
@@ -195,6 +211,8 @@ class Paramedis extends Component
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'alamat_tinggal' => 'required',
+            'no_izin_paramedis' => 'required|unique:paramedis,no_izin_paramedis',
+            'kode_paramedis' => 'required|unique:paramedis,kode_paramedis',
             'poli' => 'required'
         ]);
     }
