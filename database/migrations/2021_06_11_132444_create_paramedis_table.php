@@ -16,6 +16,7 @@ class CreateParamedisTable extends Migration
         Schema::create('paramedis', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_poli');
+            $table->string('kode_paramedis');
             $table->string('nama_paramedis');
             $table->string('jenis_kelamin');
             $table->string('no_izin_paramedis');
