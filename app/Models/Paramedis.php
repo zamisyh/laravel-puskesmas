@@ -10,7 +10,7 @@ class Paramedis extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_paramedis', 'jenis_kelamin', 'no_izin_paramedis', 'tempat_lahir',
+        'kode_paramedis', 'nama_paramedis', 'jenis_kelamin', 'no_izin_paramedis', 'tempat_lahir',
         'tanggal_lahir', 'alamat', 'id_poli'
     ];
 
