@@ -28,15 +28,21 @@ class Poli extends Component
             $data_poli = Polis::where('nama_poli', 'LIKE', '%' . $this->search . '%')
                 ->orderBy('created_at', 'DESC')
                 ->paginate($this->rows);
-        }else{
+        } else {
             $data_poli = Polis::orderBy('created_at', 'DESC')->paginate($this->rows);
         }
 
         return view('livewire.admin.master-data.poli', compact('data_poli'))->extends('layouts.app')->section('content');
     }
 
-    public function openFormCreatePoli() { $this->openFormCreate = true; }
-    public function closeFormCreatePoli() {$this->openFormCreate = false; }
+    public function openFormCreatePoli()
+    {
+        $this->openFormCreate = true;
+    }
+    public function closeFormCreatePoli()
+    {
+        $this->openFormCreate = false;
+    }
 
 
     public function savePoli()
@@ -58,11 +64,9 @@ class Poli extends Component
                 'cancelButtonText' =>  'Cancel',
                 'showCancelButton' =>  false,
                 'showConfirmButton' =>  false,
-          ]);
+            ]);
 
-          $this->openFormCreate = false;
-
-
+            $this->openFormCreate = false;
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -73,7 +77,6 @@ class Poli extends Component
         $data = Polis::findOrFail($id);
         $this->poliId = $data->id;
         $this->triggerConfirm();
-
     }
 
     public function triggerConfirm()
@@ -102,6 +105,6 @@ class Poli extends Component
             'cancelButtonText' =>  'Cancel',
             'showCancelButton' =>  false,
             'showConfirmButton' =>  false,
-      ]);
+        ]);
     }
 }
