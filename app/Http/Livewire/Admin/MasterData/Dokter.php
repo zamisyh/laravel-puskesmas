@@ -31,7 +31,7 @@ class Dokter extends Component
         $this->data_poli = Poli::orderBy('created_at', 'DESC')->get();
 
         if ($this->search) {
-            $dokters = dokters::where('nama_pegawai', 'LIKE', '%' . $this->search . '%')
+            $dokters = dokters::where('nama_dokter', 'LIKE', '%' . $this->search . '%')
                 ->with('poli')
                 ->orderBy('created_at', 'DESC')
                 ->paginate($this->rows);
