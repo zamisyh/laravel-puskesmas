@@ -222,7 +222,7 @@
                                     </div>
 
                                     <div>
-                                      
+                                        {{ $pegawais->links() }}
                                     </div>
                                 </div>
 
