@@ -17,8 +17,9 @@ class CreateDoktersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_poli');
             $table->string('nama_dokter');
-            $table->string('jenis_kelamin');
+            $table->string('kode_dokter');
             $table->string('nid');
+            $table->string('jenis_kelamin');
             $table->string('tempat_lahir');
             $table->string('tanggal_lahir');
             $table->string('alamat');
