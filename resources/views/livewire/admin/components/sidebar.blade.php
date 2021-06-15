@@ -33,15 +33,15 @@
                             <a href="{{ route('dash.master-data.bidang') }}">Bidang</a>
                             <a href="{{ route('dash.master-data.pegawai') }}">Pegawai</a>
                             <a href="{{ route('dash.master-data.poli') }}">Poli</a>
-                            <a href="component-alert.html">Dokter</a>
-                            <a href="component-alert.html">Jadwal Praktek Dokter</a>
+                            <a href="{{ route('dash.master-data.dokter') }}">Dokter</a>
+                            <a href="{{ route('dash.master-data.jadwal-praktek-dokter') }}">Jadwal Praktek Dokter</a>
                             <a href="component-alert.html">Pasien</a>
                             <a href="component-alert.html">Diagnosa</a>
                             <a href="component-alert.html">Tindakan</a>
                             <a href="component-alert.html">Supplier</a>
                             <a href="component-alert.html">Operasi</a>
                             <a href="component-alert.html">Obat-Obatan</a>
-                            <a href="component-alert.html">Jaminan</a>
+                            <a href="{{ route('dash.master-data.jaminan') }}">Jaminan</a>
                         </li>
                     </ul>
                 </li>
