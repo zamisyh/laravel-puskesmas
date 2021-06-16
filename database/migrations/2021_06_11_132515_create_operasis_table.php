@@ -15,6 +15,7 @@ class CreateOperasisTable extends Migration
     {
         Schema::create('operasi', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_operasi');
             $table->string('nama_operasi');
             $table->string('biaya');
             $table->string('tindakan_oleh');
