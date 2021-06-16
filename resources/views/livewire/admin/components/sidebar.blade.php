@@ -15,7 +15,7 @@
                 <li class="sidebar-title">Menu</li>
 
                 <li class="sidebar-item  ">
-                    <a href="index.html" class='sidebar-link'>
+                    <a href="{{ route('dash.home') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
@@ -37,10 +37,10 @@
                             <a href="{{ route('dash.master-data.jadwal-praktek-dokter') }}">Jadwal Praktek Dokter</a>
                             <a href="component-alert.html">Pasien</a>
                             <a href="component-alert.html">Diagnosa</a>
-                            <a href="component-alert.html">Tindakan</a>
-                            <a href="component-alert.html">Supplier</a>
-                            <a href="component-alert.html">Operasi</a>
-                            <a href="component-alert.html">Obat-Obatan</a>
+                            <a href="{{ route('dash.master-data.tindakan') }}">Tindakan</a>
+                            <a href="{{ route('dash.master-data.supplier') }}">Supplier</a>
+                            <a href="{{ route('dash.master-data.operasi') }}">Operasi</a>
+                            <a href="{{ route('dash.master-data.obat') }}">Obat-Obatan</a>
                             <a href="{{ route('dash.master-data.jaminan') }}">Jaminan</a>
                         </li>
                     </ul>
