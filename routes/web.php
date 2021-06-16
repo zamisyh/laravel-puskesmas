@@ -13,6 +13,10 @@ use App\Http\Livewire\Admin\MasterData\Pegawai;
 use App\Http\Livewire\Admin\MasterData\Dokter;
 use App\Http\Livewire\Admin\MasterData\JadwalPraktekDokter;
 use App\Http\Livewire\Admin\MasterData\Jaminan;
+use App\Http\Livewire\Admin\MasterData\Supplier;
+use App\Http\Livewire\Admin\MasterData\Obat;
+use App\Http\Livewire\Admin\MasterData\Tindakan;
+use App\Http\Livewire\Admin\MasterData\Operasi;
 
 use App\Http\Livewire\Admin\Home;
 
@@ -56,6 +60,10 @@ Route::prefix('dash')->group(function () {
                     Route::get('dokter', Dokter::class)->name('master-data.dokter');
                     Route::get('jadwal-praktek-dokter', JadwalPraktekDokter::class)->name('master-data.jadwal-praktek-dokter');
                     Route::get('jaminan', Jaminan::class)->name('master-data.jaminan');
+                    Route::get('supplier', Supplier::class)->name('master-data.supplier');
+                    Route::get('obat', Obat::class)->name('master-data.obat');
+                    Route::get('tindakan', Tindakan::class)->name('master-data.tindakan');
+                    Route::get('operasi', Operasi::class)->name('master-data.operasi');
                 });
             });
         });
