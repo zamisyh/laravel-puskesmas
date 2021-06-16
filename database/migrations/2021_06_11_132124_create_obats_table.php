@@ -15,6 +15,7 @@ class CreateObatsTable extends Migration
     {
         Schema::create('obat', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_obat');
             $table->string('nama_obat');
             $table->string('jenis_obat');
             $table->string('dosis_aturan_obat');
