@@ -15,6 +15,7 @@ class CreateTindakansTable extends Migration
     {
         Schema::create('tindakan', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_tindakan');
             $table->string('nama_tindakan');
             $table->string('tindakan_oleh');
             $table->unsignedBigInteger('id_poli');
