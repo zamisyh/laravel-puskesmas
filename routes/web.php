@@ -17,6 +17,8 @@ use App\Http\Livewire\Admin\MasterData\Supplier;
 use App\Http\Livewire\Admin\MasterData\Obat;
 use App\Http\Livewire\Admin\MasterData\Tindakan;
 use App\Http\Livewire\Admin\MasterData\Operasi;
+use App\Http\Livewire\Admin\MasterData\Diagnosa;
+use App\Http\Livewire\Admin\MasterData\Pasien;
 
 use App\Http\Livewire\Admin\Home;
 
@@ -52,18 +54,22 @@ Route::prefix('dash')->group(function () {
                 });
 
                 Route::prefix('master-data')->group(function () {
-                    Route::get('paramedis', Paramedis::class)->name('master-data.paramedis');
-                    Route::get('poli', Poli::class)->name('master-data.poli');
-                    Route::get('jabatan', Jabatan::class)->name('master-data.jabatan');
-                    Route::get('bidang', Bidang::class)->name('master-data.bidang');
-                    Route::get('pegawai', Pegawai::class)->name('master-data.pegawai');
-                    Route::get('dokter', Dokter::class)->name('master-data.dokter');
-                    Route::get('jadwal-praktek-dokter', JadwalPraktekDokter::class)->name('master-data.jadwal-praktek-dokter');
-                    Route::get('jaminan', Jaminan::class)->name('master-data.jaminan');
-                    Route::get('supplier', Supplier::class)->name('master-data.supplier');
-                    Route::get('obat', Obat::class)->name('master-data.obat');
-                    Route::get('tindakan', Tindakan::class)->name('master-data.tindakan');
-                    Route::get('operasi', Operasi::class)->name('master-data.operasi');
+                    Route::name('master-data.')->group(function () {
+                        Route::get('paramedis', Paramedis::class)->name('paramedis');
+                        Route::get('poli', Poli::class)->name('poli');
+                        Route::get('jabatan', Jabatan::class)->name('jabatan');
+                        Route::get('bidang', Bidang::class)->name('bidang');
+                        Route::get('pegawai', Pegawai::class)->name('pegawai');
+                        Route::get('dokter', Dokter::class)->name('dokter');
+                        Route::get('jadwal-praktek-dokter', JadwalPraktekDokter::class)->name('jadwal-praktek-dokter');
+                        Route::get('jaminan', Jaminan::class)->name('jaminan');
+                        Route::get('supplier', Supplier::class)->name('supplier');
+                        Route::get('obat', Obat::class)->name('obat');
+                        Route::get('tindakan', Tindakan::class)->name('tindakan');
+                        Route::get('operasi', Operasi::class)->name('operasi');
+                        Route::get('diagnosa', Diagnosa::class)->name('diagnosa');
+                        Route::get('pasien', Pasien::class)->name('pasien');
+                    });
                 });
             });
         });

@@ -20,21 +20,20 @@ class CreateRiwayatTindakansTable extends Migration
             $table->unsignedBigInteger('id_tindakan');
             $table->string('no_rawat');
             $table->string('hasil_periksa');
-            $table->string('keluhan')->nullable();
-            $table->string('cek_fisik')->nullable();
-            $table->string('temperatur')->nullable();
-            $table->string('tinggi_badan')->nullable();
-            $table->string('berat_badan')->nullable();
-            $table->string('tekanan_darah')->nullable();
-            $table->string('tekanan_nadi')->nullable();
-            $table->string('penunjang')->nullable();
+            $table->string('keluhan');
+            $table->string('cek_fisik');
+            $table->string('temperatur');
+            $table->string('tinggi_badan');
+            $table->string('berat_badan');
+            $table->string('tekanan_darah');
+            $table->string('tekanan_nadi');
+            $table->string('penunjang');
             $table->string('nama_obat');
             $table->string('no_rekammedis');
             $table->timestamps();
 
             $table->foreign('id_poli')->references('id')->on('poli')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_tindakan')->references('id')->on('tindakan')->onDelete('cascade')->onUpdate('cascade');
-
         });
     }
 

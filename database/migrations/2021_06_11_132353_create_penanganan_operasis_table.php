@@ -21,7 +21,7 @@ class CreatePenangananOperasisTable extends Migration
             $table->string('tanngal_operasi');
             $table->string('biaya');
             $table->string('kembalian');
-            $table->text('keterangan')->nullable();
+            $table->text('keterangan');
             $table->timestamps();
 
             $table->foreign('id_pasien')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');

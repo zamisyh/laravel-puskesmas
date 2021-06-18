@@ -17,10 +17,10 @@ class CreateDiagnosasTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('nama_penyakit');
-            $table->text('ciri_ciri_penyakit')->nullable();
-            $table->longText('keterangan')->nullable();
-            $table->text('keterangan_umum')->nullable();
-            $table->text('kasus')->nullable();
+            $table->text('kasus');
+            $table->text('ciri_ciri_penyakit');
+            $table->text('keterangan_umum');
+            $table->longText('keterangan');
             $table->timestamps();
         });
     }

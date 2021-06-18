@@ -16,9 +16,9 @@ class CreateJenisLaboratoriaTable extends Migration
         Schema::create('jenis_laboratorium', function (Blueprint $table) {
             $table->id();
             $table->text('keterangan');
-            $table->string('nilai')->nullable();
-            $table->string('satuan')->nullable();
-            $table->string('nilai_rujukan')->nullable();
+            $table->string('nilai');
+            $table->string('satuan');
+            $table->string('nilai_rujukan');
             $table->timestamps();
         });
     }

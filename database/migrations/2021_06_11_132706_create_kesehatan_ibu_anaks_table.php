@@ -15,15 +15,15 @@ class CreateKesehatanIbuAnaksTable extends Migration
     {
         Schema::create('kesehatan_ibu_anak', function (Blueprint $table) {
             $table->id();
-            $table->string('no_kia')->nullable();
-            $table->string('no_bpjs')->nullable();
+            $table->string('no_kia');
+            $table->string('no_bpjs');
             $table->string('status_pasien');
             $table->string('nama_operasi');
             $table->string('biaya');
             $table->string('ditangani_oleh');
             $table->string('dibayar');
             $table->string('kembalian');
-            $table->text('keterangan')->nullable();
+            $table->text('keterangan');
             $table->date('tanggal_tindakan');
             $table->timestamps();
         });

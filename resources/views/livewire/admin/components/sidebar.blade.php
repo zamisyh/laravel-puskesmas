@@ -35,8 +35,8 @@
                             <a href="{{ route('dash.master-data.poli') }}">Poli</a>
                             <a href="{{ route('dash.master-data.dokter') }}">Dokter</a>
                             <a href="{{ route('dash.master-data.jadwal-praktek-dokter') }}">Jadwal Praktek Dokter</a>
-                            <a href="component-alert.html">Pasien</a>
-                            <a href="component-alert.html">Diagnosa</a>
+                            <a href="{{ route('dash.master-data.pasien') }}">Pasien</a>
+                            <a href="{{ route('dash.master-data.diagnosa') }}">Diagnosa</a>
                             <a href="{{ route('dash.master-data.tindakan') }}">Tindakan</a>
                             <a href="{{ route('dash.master-data.supplier') }}">Supplier</a>
                             <a href="{{ route('dash.master-data.operasi') }}">Operasi</a>
