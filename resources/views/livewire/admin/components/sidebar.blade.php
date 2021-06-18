@@ -53,9 +53,9 @@
                     </a>
                     <ul class="submenu ">
                         <li class="submenu-item ">
-                            <a href="component-alert.html">Stock Obat</a>
-                            <a href="component-alert.html">Pengadaan Obat</a>
-                            <a href="component-alert.html">Pengeluaran Obat</a>
+                            <a href="{{ route('dash.transaksi.stock-obat') }}">Stock Obat</a>
+                            <a href="{{ route('dash.transaksi.pengadaan-obat') }}">Pengadaan Obat</a>
+                            <a href="{{ route('dash.transaksi.pengeluaran-obat') }}">Pengeluaran Obat</a>
                         </li>
                     </ul>
                 </li>
