@@ -19,6 +19,9 @@ use App\Http\Livewire\Admin\MasterData\Tindakan;
 use App\Http\Livewire\Admin\MasterData\Operasi;
 use App\Http\Livewire\Admin\MasterData\Diagnosa;
 use App\Http\Livewire\Admin\MasterData\Pasien;
+use App\Http\Livewire\Admin\TransaksiObat\Stock;
+use App\Http\Livewire\Admin\TransaksiObat\PengadaanObat;
+use App\Http\Livewire\Admin\TransaksiObat\PengeluaranObat;
 
 use App\Http\Livewire\Admin\Home;
 
@@ -69,6 +72,14 @@ Route::prefix('dash')->group(function () {
                         Route::get('operasi', Operasi::class)->name('operasi');
                         Route::get('diagnosa', Diagnosa::class)->name('diagnosa');
                         Route::get('pasien', Pasien::class)->name('pasien');
+                    });
+                });
+
+                Route::prefix('transaksi')->group(function () {
+                    Route::name('transaksi.')->group(function () {
+                        Route::get('stock-obat', Stock::class)->name('stock-obat');
+                        Route::get('pengadaan-obat', PengadaanObat::class)->name('pengadaan-obat');
+                        Route::get('pengeluaran-obat', PengeluaranObat::class)->name('pengeluaran-obat');
                     });
                 });
             });
