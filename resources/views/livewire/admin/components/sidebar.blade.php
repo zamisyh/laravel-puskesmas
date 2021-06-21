@@ -75,9 +75,9 @@
                 </li>
 
                 <li class="sidebar-item  ">
-                    <a href="index.html" class='sidebar-link'>
+                    <a href="{{ route('dash.pendaftaran') }}" class='sidebar-link'>
                         <i class="bi bi-people-fill"></i>
-                        <span>Registration</span>
+                        <span>Pendaftaran</span>
                     </a>
                 </li>
 
@@ -88,10 +88,10 @@
                     </a>
                     <ul class="submenu ">
                         <li class="submenu-item ">
-                            <a href="component-alert.html">Penanganan Operasi</a>
-                            <a href="component-alert.html">Data Poli Kia</a>
-                            <a href="component-alert.html">Data Perbaikan Gizi</a>
-                            <a href="component-alert.html">Data Tidakan Berobat</a>
+                            <a href="{{ route('dash.tindakan.penanganan-operasi') }}">Penanganan Operasi</a>
+                            <a href="{{ route('dash.tindakan.poli-kia') }}">Data Poli Kia</a>
+                            <a href="{{ route('dash.tindakan.perbaikan-gizi') }}">Data Perbaikan Gizi</a>
+                            <a href="{{ route('dash.tindakan.data-berobat') }}">Data Tidakan Berobat</a>
                         </li>
                     </ul>
                 </li>

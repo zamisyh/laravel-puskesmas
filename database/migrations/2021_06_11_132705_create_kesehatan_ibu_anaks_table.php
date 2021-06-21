@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePenangananOperasisTable extends Migration
+class CreateKesehatanIbuAnaksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,21 @@ class CreatePenangananOperasisTable extends Migration
      */
     public function up()
     {
-        Schema::create('penanganan_operasi', function (Blueprint $table) {
+        Schema::create('kesehatan_ibu_anak', function (Blueprint $table) {
             $table->id();
+            $table->string('no_kia');
+            $table->string('no_bpjs');
             $table->unsignedBigInteger('id_pasien');
-            $table->string('nama_operasi');
-            $table->string('ditangani_oleh');
-            $table->string('tanngal_operasi');
+            $table->string('status_pasien');
+            $table->string('nama_tindakan');
             $table->string('biaya');
+            $table->string('ditangani_oleh');
+            $table->string('dibayar');
             $table->string('kembalian');
             $table->text('keterangan');
+            $table->date('tanggal_tindakan');
             $table->timestamps();
+
 
             $table->foreign('id_pasien')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
         });
@@ -35,6 +40,6 @@ class CreatePenangananOperasisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penanganan_operasi');
+        Schema::dropIfExists('kesehatan_ibu_anak');
     }
 }

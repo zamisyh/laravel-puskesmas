@@ -20,6 +20,7 @@ class CreatePendaftaransTable extends Migration
             $table->date('tanggal_daftar');
             $table->unsignedBigInteger('id_dokter');
             $table->unsignedBigInteger('id_poli');
+            $table->unsignedBigInteger('id_pasien');
             $table->string('nama_penanggung_jawab');
             $table->string('hubungan_dengan_penanggung_jawab');
             $table->string('alamat');
@@ -29,7 +30,7 @@ class CreatePendaftaransTable extends Migration
 
             $table->foreign('id_dokter')->references('id')->on('dokter')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_poli')->references('id')->on('poli')->onDelete('cascade')->onUpdate('cascade');
-
+            $table->foreign('id_pasien')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

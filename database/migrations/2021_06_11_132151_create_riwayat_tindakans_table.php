@@ -16,7 +16,7 @@ class CreateRiwayatTindakansTable extends Migration
         Schema::create('riwayat_tindakan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_poli');
-            $table->string('kode_penyakit');
+            $table->unsignedBigInteger('id_diagnosa');
             $table->unsignedBigInteger('id_tindakan');
             $table->string('no_rawat');
             $table->string('hasil_periksa');
@@ -24,14 +24,18 @@ class CreateRiwayatTindakansTable extends Migration
             $table->string('cek_fisik');
             $table->string('temperatur');
             $table->string('tinggi_badan');
-            $table->string('berat_badan');
             $table->string('tekanan_darah');
             $table->string('tekanan_nadi');
             $table->string('penunjang');
-            $table->string('nama_obat');
-            $table->string('no_rekammedis');
+            $table->string('hr');
+            $table->string('rr');
+            $table->string('bb');
+            $table->string('lp');
+            $table->string('rencana_pengobatan');
+            $table->string('no_rekamedis');
             $table->timestamps();
 
+            $table->foreign('id_diagnosa')->references('id')->on('diagnosa')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_poli')->references('id')->on('poli')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_tindakan')->references('id')->on('tindakan')->onDelete('cascade')->onUpdate('cascade');
         });

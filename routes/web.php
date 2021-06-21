@@ -22,6 +22,11 @@ use App\Http\Livewire\Admin\MasterData\Pasien;
 use App\Http\Livewire\Admin\TransaksiObat\Stock;
 use App\Http\Livewire\Admin\TransaksiObat\PengadaanObat;
 use App\Http\Livewire\Admin\TransaksiObat\PengeluaranObat;
+use App\Http\Livewire\Admin\Pendaftaran;
+use App\Http\Livewire\Admin\Tindakan\PenangananOperasi;
+use App\Http\Livewire\Admin\Tindakan\PoliKia;
+use App\Http\Livewire\Admin\Tindakan\PerbaikanGizi;
+use App\Http\Livewire\Admin\Tindakan\DataBerobat;
 
 use App\Http\Livewire\Admin\Home;
 
@@ -80,6 +85,17 @@ Route::prefix('dash')->group(function () {
                         Route::get('stock-obat', Stock::class)->name('stock-obat');
                         Route::get('pengadaan-obat', PengadaanObat::class)->name('pengadaan-obat');
                         Route::get('pengeluaran-obat', PengeluaranObat::class)->name('pengeluaran-obat');
+                    });
+                });
+
+                Route::get('pendaftaran', Pendaftaran::class)->name('pendaftaran');
+
+                Route::prefix('tindakan')->group(function () {
+                    Route::name('tindakan.')->group(function () {
+                        Route::get('penanganan-operasi', PenangananOperasi::class)->name('penanganan-operasi');
+                        Route::get('poli-kia', PoliKia::class)->name('poli-kia');
+                        Route::get('perbaikan-gizi', PerbaikanGizi::class)->name('perbaikan-gizi');
+                        Route::get('data-tindakan-berobat', DataBerobat::class)->name('data-berobat');
                     });
                 });
             });

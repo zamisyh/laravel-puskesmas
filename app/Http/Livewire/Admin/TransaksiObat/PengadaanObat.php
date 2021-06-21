@@ -235,7 +235,7 @@ class PengadaanObat extends Component
     public function noTrans()
     {
 
-        $no = PengadaanObats::where('tanggal_transaksi', date('ymd'))->count();
+        $no = PengadaanObats::where('tanggal_transaksi', date('ymd'))->count() + 1;
         $id = sprintf("%05s", abs($no + 1));
 
 
@@ -256,7 +256,7 @@ class PengadaanObat extends Component
             'obat' => 'required',
             'harga_beli' => 'required|numeric',
             'jumlah' => 'required|numeric',
-            'keterangan' => 'nullable|min:4'
+
         ]);
     }
 }
