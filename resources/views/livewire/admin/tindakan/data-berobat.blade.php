@@ -89,38 +89,47 @@
                                         <div class="card-header">
                                             <h4>Input Rujukan Lab</h4>
                                         </div>
-                                        <div class="card-body">
-                                            Lab   
+                                        <div class="card-body" style="max-height: 400px; overflow-y:auto; ">
+                                            <form wire:submit.prevent='saveRujukanLab'>
+                                                <table class="table table-bordered table-hover">
+                                                    <tbody>
+                                                        @foreach ($data_lab as $item)
+                                                            <tr>                                                                
+                                                                <td>
+                                                                    @if ($item->keterangan == 'Hematologi' OR 
+                                                                    $item->keterangan == 'Kimia Darah' OR 
+                                                                    $item->keterangan == 'Urinalisa' OR 
+                                                                    $item->keterangan == 'Imuno / Serologi')
+                                                                        <h4>{{ $item->keterangan }}</h4>
+
+                                                                    @else
+                                                                        {{ $item->keterangan }}
+                                                                    @endif
+                                                                </td>
+                                                                 @if ($item->keterangan != 'Hematologi' &&
+                                                                    $item->keterangan != 'Kimia Darah' &&
+                                                                    $item->keterangan != 'Urinalisa' && 
+                                                                    $item->keterangan != 'Imuno / Serologi')
+                                                                    <td>
+                                                                        <input type="checkbox" wire:model='lab_keterangan' value="{{ $item->id }}">
+                                                                    </td>
+                                                                 @endif
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+
+                                                <button class="btn btn-success">Submit</button>
+                                            </form>
                                         </div> 
                                     </div>
 
                                 @elseif ($i_tindakan)
                                     @include('livewire.admin.tindakan.components.i-tindakan')
                                 @elseif ($i_resep_obat)
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4>Input Resep Obat</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            Resep Obat
-                                        </div> 
-                                    </div>
+                                    @include('livewire.admin.tindakan.components.i-resep-obat')
                                 @elseif ($i_rujukan)
-
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4>Input Rujukan</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="nama_pasien">Nama Pasien</label>
-                                                <input type="text" wire:model='nama_pasien' class="form-control @error('nama_pasien')
-                                                    is-invalid
-                                                @enderror" readonly>
-                                            </div>
-                                        </div> 
-                                    </div>
-                                    
+                                    @include('livewire.admin.tindakan.components.i-rujukan');
                                 @endif
                             </div>
 
@@ -180,6 +189,10 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+
+                                                <div class="form-group">
+                                                    {{ $data_riwayat->links() }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -202,14 +215,22 @@
                                                        </tr>
                                                    </thead>
                                                    <tbody>
+                                                        
+                                                    @foreach ($data_resep_obat as $key => $item)
                                                         <tr>
-                                                            <td>No</td>
-                                                            <td>Nama Obat</td>
-                                                            <td>Jenis</td>
-                                                            <td>Dosis</td>
-                                                            <td>Action</td>
+                                                            <td>{{ $data_resep_obat->firstItem() + $key }}</td>
+                                                            <td>{{ $item->obat->nama_obat }}</td>
+                                                            <td>{{ $item->jenis_obat }}</td>
+                                                            <td>{{ $item->dosis }}</td>
+                                                            <td>
+                                                                <button wire:click.prevent='deleteDataResepObat({{ $item->id }})' style="margin-left: 5px" class="btn btn-danger btn-sm">
+                                                                    <i class="bi bi-trash-fill"></i>
+                                                                </button>
+                                                            </td>
                                                         </tr>
-                                                </tbody>
+                                                    @endforeach
+
+                                                 </tbody>
                                                </table>
                                            </div>
                                        </div>

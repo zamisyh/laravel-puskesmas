@@ -98,7 +98,7 @@
 
 
                 <li class="sidebar-item  ">
-                    <a href="index.html" class='sidebar-link'>
+                    <a href="{{ route('dash.laboratorium') }}" class='sidebar-link'>
                         <i class="bi bi-door-open"></i>
                         <span>Laboratory</span>
                     </a>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJenisLaboratoriaTable extends Migration
+class CreateLaboratoriaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateJenisLaboratoriaTable extends Migration
      */
     public function up()
     {
-        Schema::create('jenis_laboratorium', function (Blueprint $table) {
+        Schema::create('laboratorium', function (Blueprint $table) {
             $table->id();
-            $table->text('keterangan');
-            $table->string('nilai');
-            $table->string('satuan');
-            $table->string('nilai_rujukan');
+            $table->unsignedBigInteger('id_pasien');
+            $table->string('no_rawat');
+            $table->string('no_rekammedis');
             $table->timestamps();
+
+            $table->foreign('id_pasien')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +31,6 @@ class CreateJenisLaboratoriaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jenis_laboratorium');
+        Schema::dropIfExists('laboratorium');
     }
 }

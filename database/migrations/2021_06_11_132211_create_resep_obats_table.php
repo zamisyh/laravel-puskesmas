@@ -16,10 +16,14 @@ class CreateResepObatsTable extends Migration
         Schema::create('resep_obat', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_obat');
+            $table->string('jenis_obat');
+            $table->string('dosis');
             $table->string('jumlah_obat');
             $table->string('no_rawat');
             $table->string('no_rekammedis');
             $table->timestamps();
+
+            $table->foreign('id_obat')->references('id')->on('obat')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

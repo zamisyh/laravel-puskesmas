@@ -27,6 +27,7 @@ use App\Http\Livewire\Admin\Tindakan\PenangananOperasi;
 use App\Http\Livewire\Admin\Tindakan\PoliKia;
 use App\Http\Livewire\Admin\Tindakan\PerbaikanGizi;
 use App\Http\Livewire\Admin\Tindakan\DataBerobat;
+use App\Http\Livewire\Admin\Laboratorium;
 
 use App\Http\Livewire\Admin\Home;
 
@@ -98,6 +99,8 @@ Route::prefix('dash')->group(function () {
                         Route::get('data-tindakan-berobat', DataBerobat::class)->name('data-berobat');
                     });
                 });
+
+                Route::get('laboratorium', Laboratorium::class)->name('laboratorium');
             });
         });
     });

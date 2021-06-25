@@ -27,12 +27,18 @@ class Users extends Component
     }
 
 
-    public function openFormCreateUser() { $this->formCreateUser = true; }
-    public function closeFormCreateUser() { $this->formCreateUser = false; }
+    public function openFormCreateUser()
+    {
+        $this->formCreateUser = true;
+    }
+    public function closeFormCreateUser()
+    {
+        $this->formCreateUser = false;
+    }
 
     public function createUser()
     {
-        $data = $this->validate([
+        $this->validate([
             'name' => 'required|min:4',
             'email' => 'required|email',
             'role' => 'required',
@@ -41,7 +47,12 @@ class Users extends Component
         ]);
 
         try {
-            $user = User::create($data);
+            $user = User::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'role' => $this->role,
+                'password' => bcrypt($this->password)
+            ]);
             $user->assignRole($this->role);
 
             $this->alert('success', 'Succesfully create new user', [
@@ -53,9 +64,9 @@ class Users extends Component
                 'cancelButtonText' =>  'Cancel',
                 'showCancelButton' =>  false,
                 'showConfirmButton' =>  false,
-          ]);
+            ]);
 
-          $this->formCreateUser = false;
+            $this->formCreateUser = false;
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -66,7 +77,6 @@ class Users extends Component
         $user = User::findOrFail($id);
         $this->triggerConfirm();
         $this->userId = $user->id;
-
     }
 
 
@@ -96,6 +106,6 @@ class Users extends Component
             'cancelButtonText' =>  'Cancel',
             'showCancelButton' =>  false,
             'showConfirmButton' =>  false,
-      ]);
+        ]);
     }
 }
