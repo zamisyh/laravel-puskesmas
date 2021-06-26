@@ -22,8 +22,8 @@ class Pasien extends Component
     public $data_jaminan, $pasienId;
 
     public $no_rekamedis, $nama_pasien, $jenis_kelamin, $no_ktp, $no_kk,
-        $no_bpjs, $jaminan, $no_jaminan, $tempat_lahir, $tanggal_lahir, $alamat,
-        $wilayah, $status_pasien;
+        $no_antrian, $jaminan, $no_jaminan, $tanggal_lahir, $alamat,
+        $wilayah, $status_pasien, $keterangan;
 
     public function render()
     {
@@ -76,13 +76,13 @@ class Pasien extends Component
         $this->jenis_kelamin = $user->jenis_kelamin;
         $this->no_kk = $user->no_kk;
         $this->no_ktp = $user->no_ktp;
-        $this->no_bpjs = $user->no_bpjs;
+        $this->no_antrian = $user->no_antrian;
         $this->jaminan = $user->id_jaminan;
         $this->no_jaminan = $user->no_jaminan;
-        $this->tempat_lahir = $user->tempat_lahir;
         $this->tanggal_lahir = $user->tanggal_lahir;
         $this->alamat = $user->alamat;
         $this->wilayah = $user->wilayah;
+        $this->keterangan = $user->keterangan;
 
         $this->pasienId = $user->id;
         $this->openFormCreate = true;
@@ -109,10 +109,10 @@ class Pasien extends Component
                 'jenis_kelamin' => $this->jenis_kelamin,
                 'no_kk' => $this->no_kk,
                 'no_ktp' => !empty($this->no_ktp) ? $this->no_ktp : '-',
-                'no_bpjs' => !empty($this->no_bpjs) ? $this->no_bpjs : '-',
+                'no_antrian' => !empty($this->no_antrian) ? $this->no_antrian : '-',
                 'id_jaminan' => $this->jaminan,
+                'keterangan' => !empty($this->keterangan) ? $this->keterangan : '-',
                 'no_jaminan' => $this->no_jaminan,
-                'tempat_lahir' => $this->tempat_lahir,
                 'tanggal_lahir' => $this->tanggal_lahir,
                 'alamat' => $this->alamat,
                 'wilayah' => $this->wilayah,
@@ -153,15 +153,15 @@ class Pasien extends Component
         $data->jenis_kelamin = $this->jenis_kelamin;
         $data->no_kk = $this->no_kk;
         $data->no_ktp = $this->no_ktp;
-        $data->no_bpjs = $this->no_bpjs;
+        $data->no_antrian = $this->no_antrian;
         $data->id_jaminan = $this->jaminan;
         $data->no_jaminan = $this->no_jaminan;
-        $data->tempat_lahir = $this->tempat_lahir;
         $data->tanggal_lahir = $this->tanggal_lahir;
         $data->alamat = $this->alamat;
         $data->status_pasien = $findJaminan->nama_jaminan;
         $data->wilayah = $this->wilayah;
         $data->usia = \Carbon\Carbon::parse($this->tanggal_lahir)->age;
+        $data->keterangan = $this->keterangan;
 
         $data->save();
 
@@ -240,10 +240,10 @@ class Pasien extends Component
             'jenis_kelamin' => 'required',
             'no_kk' => 'required|numeric',
             'no_ktp' => 'nullable|numeric',
-            'no_bpjs' => 'nullable|numeric',
+            'no_antrian' => 'nullable',
+            'keterangan' => 'nullable',
             'jaminan' => 'required',
             'no_jaminan' => 'required',
-            'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'alamat' => 'required',
             'wilayah' => 'required'

@@ -16,10 +16,33 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
 
-        $role = Role::create([
-            'name' => 'admin',
-            'guard_name' => 'web',
-        ]);
+
+        $role = [
+            [
+                'name' => 'admin',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'apoteker',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'laboratorium',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'pendaftaran',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'dokter',
+                'guard_name' => 'web',
+            ]
+        ];
+
+        Role::insert($role);
+
+
 
         $userAdmin = User::create([
             'name' => 'The Admins',
@@ -29,7 +52,5 @@ class UsersTableSeeder extends Seeder
 
 
         $userAdmin->assignRole('admin');
-
-
     }
 }

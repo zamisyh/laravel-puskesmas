@@ -23,7 +23,7 @@ class Pendaftaran extends Component
 
     public $no_rawat, $dokter, $poli, $no_rekamedis, $pasien, $no_kk, $tanggal_lahir,
         $nama_penanggung_jawab, $status_pasien, $no_jaminan, $wilayah, $alamat,
-        $alamat_penanggung_jawab, $hubungan, $no_bpjs;
+        $alamat_penanggung_jawab, $hubungan;
 
     public function render()
     {
@@ -115,7 +115,6 @@ class Pendaftaran extends Component
         $this->wilayah = $getData->wilayah;
         $this->alamat = $getData->alamat;
         $this->no_rekamedis = $getData->kode_paramedis;
-        $this->no_bpjs = $getData->no_bpjs;
     }
 
     public function savePendaftaran()
@@ -136,7 +135,7 @@ class Pendaftaran extends Component
                 'hubungan_dengan_penanggung_jawab' => $this->hubungan,
                 'alamat' => $this->alamat,
                 'status_pasien' => $this->status_pasien,
-                'no_bpjs' => $this->no_bpjs
+                'no_jaminan' => $this->no_jaminan
             ]);
 
 

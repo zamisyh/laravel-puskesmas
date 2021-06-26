@@ -58,28 +58,37 @@ Route::prefix('dash')->group(function () {
 
             Route::middleware(['role:admin'])->group(function () {
                 Route::prefix('management')->group(function () {
-                    Route::get('role', Roles::class)->name('management.role');
+                    // Route::get('role', Roles::class)->name('management.role');
                     Route::get('users', Users::class)->name('management.user');
                 });
+            });
 
-                Route::prefix('master-data')->group(function () {
-                    Route::name('master-data.')->group(function () {
+
+            Route::prefix('master-data')->group(function () {
+                Route::name('master-data.')->group(function () {
+
+                    Route::middleware(['role:admin'])->group(function () {
                         Route::get('paramedis', Paramedis::class)->name('paramedis');
-                        Route::get('poli', Poli::class)->name('poli');
                         Route::get('jabatan', Jabatan::class)->name('jabatan');
                         Route::get('bidang', Bidang::class)->name('bidang');
                         Route::get('pegawai', Pegawai::class)->name('pegawai');
                         Route::get('dokter', Dokter::class)->name('dokter');
                         Route::get('jadwal-praktek-dokter', JadwalPraktekDokter::class)->name('jadwal-praktek-dokter');
-                        Route::get('jaminan', Jaminan::class)->name('jaminan');
-                        Route::get('supplier', Supplier::class)->name('supplier');
-                        Route::get('obat', Obat::class)->name('obat');
                         Route::get('tindakan', Tindakan::class)->name('tindakan');
                         Route::get('operasi', Operasi::class)->name('operasi');
                         Route::get('diagnosa', Diagnosa::class)->name('diagnosa');
-                        Route::get('pasien', Pasien::class)->name('pasien');
+                    });
+
+                    Route::middleware(['role:admin|apoteker'])->group(function () {
+                        Route::get('jaminan', Jaminan::class)->name('jaminan');
+                        Route::get('supplier', Supplier::class)->name('supplier');
+                        Route::get('poli', Poli::class)->name('poli');
+                        Route::get('obat', Obat::class)->name('obat');
                     });
                 });
+            });
+
+            Route::middleware(['role:admin|apoteker'])->group(function () {
 
                 Route::prefix('transaksi')->group(function () {
                     Route::name('transaksi.')->group(function () {
@@ -88,9 +97,14 @@ Route::prefix('dash')->group(function () {
                         Route::get('pengeluaran-obat', PengeluaranObat::class)->name('pengeluaran-obat');
                     });
                 });
+            });
 
+            Route::middleware(['role:admin|pendaftaran'])->group(function () {
+                Route::get('pasien', Pasien::class)->name('master-data.pasien');
                 Route::get('pendaftaran', Pendaftaran::class)->name('pendaftaran');
+            });
 
+            Route::middleware(['role:admin|dokter|laboratorium'])->group(function () {
                 Route::prefix('tindakan')->group(function () {
                     Route::name('tindakan.')->group(function () {
                         Route::get('penanganan-operasi', PenangananOperasi::class)->name('penanganan-operasi');

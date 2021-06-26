@@ -17,18 +17,18 @@ class CreatePasiensTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_jaminan');
             $table->string('no_kk');
+            $table->string('no_antrian');
             $table->string('nama_pasien');
             $table->string('usia');
             $table->string('kode_paramedis');
             $table->string('no_ktp');
-            $table->string('no_bpjs');
             $table->string('no_jaminan');
             $table->string('jenis_kelamin');
-            $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('alamat');
             $table->string('status_pasien');
             $table->string('wilayah');
+            $table->string('keterangan');
             $table->timestamps();
 
 

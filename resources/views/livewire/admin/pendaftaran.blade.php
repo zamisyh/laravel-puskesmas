@@ -122,7 +122,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="no_jaminan">No Jaminan</label>
+                                                    <label for="no_jaminan">No Jaminan Kesehatan</label>
                                                     <input wire:model.lazy='no_jaminan' type="text" class="form-control" readonly>
                                                 </div>
 

@@ -12,14 +12,14 @@
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Master Data - Pasien</h3>
+                                <h3>Pendaftaran - Pasien</h3>
                                 <p class="text-subtitle text-muted">Hi, this is page for manajement data Pasien</p>
                             </div>
                             <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('dash.home') }}">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Master Data
+                                        <li class="breadcrumb-item active" aria-current="page">Pendaftaran
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">Pasien
                                         </li>
@@ -52,6 +52,14 @@
                                             <label for="no_rekamedis">No Rekamedis</label>
                                             <input type="text" wire:model.lazy='no_rekamedis' class="form-control @error('no_rekamedis') is-invalid @enderror" placeholder="Masukkan No Rekamedis">
                                             @error('no_rekamedis')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="no_antrian">Nomor Antrian</label>
+                                            <input type="text" wire:model.lazy='no_antrian' class="form-control @error('no_antrian') is-invalid @enderror" placeholder="Masukkan no jaminan pasien">
+                                            @error('no_antrian')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -94,13 +102,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="no_bpjs">Nomor BPJS</label>
-                                            <input type="text" wire:model.lazy='no_bpjs' class="form-control @error('no_bpjs') is-invalid @enderror" placeholder="Masukkan no bpjs pasien">
-                                            @error('no_bpjs')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                     
                                     
                                        @if (!$openForm)
                                             <button type="button" class="btn btn-primary" wire:loading.remove wire:click='openLoadForm'>Load More</button>
@@ -126,17 +128,9 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="no_jaminan">Nomor Jaminan</label>
+                                                <label for="no_jaminan">Nomor Jaminan Kesehatan (KIS / ASKES / LM-NIK)</label>
                                                 <input type="text" wire:model.lazy='no_jaminan' class="form-control @error('no_jaminan') is-invalid @enderror" placeholder="Masukkan no jaminan pasien">
                                                 @error('no_jaminan')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="tempat_lahir">Tempat Lahir</label>
-                                                <input type="text" wire:model.lazy='tempat_lahir' class="form-control @error('tempat_lahir') is-invalid @enderror" placeholder="Masukkan tempat lahir pasien">
-                                                @error('tempat_lahir')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -145,6 +139,18 @@
                                                 <label for="tanggal_lahir">Tanggal Lahir</label>
                                                 <input type="date" wire:model.lazy='tanggal_lahir' class="form-control @error('tanggal_lahir') is-invalid @enderror">
                                                 @error('tanggal_lahir')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="wilayah">Wilayah</label>
+                                                <select wire:model.lazy='wilayah' class="form-control @error('wilayah') is-invalid @enderror">
+                                                    <option selected>Pilih</option>
+                                                    <option value="Dalam Wilayah">Dalam Wilayah</option>
+                                                    <option value="Luar Wilayah">Luar Wilayah</option>
+                                                </select>
+                                                @error('wilayah')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -157,14 +163,11 @@
                                                 @enderror
                                             </div>
 
+                                           
                                             <div class="form-group">
-                                                <label for="wilayah">Wilayah</label>
-                                                <select wire:model.lazy='wilayah' class="form-control @error('wilayah') is-invalid @enderror">
-                                                    <option selected>Pilih</option>
-                                                    <option value="Dalam Wilayah">Dalam Wilayah</option>
-                                                    <option value="Luar Wilayah">Luar Wilayah</option>
-                                                </select>
-                                                @error('wilayah')
+                                                <label for="keterangan">Keterangan</label>
+                                                <textarea rows="4" wire:model.lazy='keterangan' class="form-control @error('keterangan') is-invalid @enderror" placeholder="Masukkan keterangan pasien"></textarea>
+                                                @error('keterangan')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -227,11 +230,11 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>No Rekamedis</th>
+                                                    <th>No Antrian</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Usia</th>
                                                     <th>No KK</th>
                                                     <th>No KTP Pasien</th>
-                                                    <th>No BPJS</th>
                                                     @if ($details)
                                                         <th>Jaminan</th>
                                                         <th>No Jaminan</th>
@@ -248,11 +251,11 @@
                                                 <tr>
                                                     <td>{{ $pasiens->firstItem() + $key }}</td>
                                                     <td>{{ $item->kode_paramedis }}</td>
+                                                    <td>{{ $item->no_antrian }}</td>
                                                     <td>{{ $item->nama_pasien }}</td>
                                                     <td>{{ $item->usia }}</td>
                                                     <td>{{ $item->no_kk }}</td>
                                                     <td>{{ $item->no_ktp }}</td>
-                                                    <td>{{ $item->no_bpjs }}</td>
                                                     @if ($details)
                                                         <td>{{ $item->jaminan->nama_jaminan }}</td>
                                                         <td>{{ $item->no_jaminan }}</td>

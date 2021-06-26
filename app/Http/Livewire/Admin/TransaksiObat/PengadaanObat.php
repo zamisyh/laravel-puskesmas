@@ -23,7 +23,7 @@ class PengadaanObat extends Component
     public $data_supplier, $data_obat, $pengadaanObatId;
 
     public $supplier, $obat, $kode_obat, $jenis_obat, $satuan,
-        $harga_beli, $jumlah, $total, $keterangan;
+        $harga_beli, $jumlah, $total, $keterangan, $no_batch;
 
     public function render()
     {
@@ -80,6 +80,7 @@ class PengadaanObat extends Component
     public function openFormUpdatePengadaanObat($id)
     {
         $user = PengadaanObats::findOrFail($id);
+        $this->no_batch = $user->no_trans;
         $this->supplier = $user->id_supplier;
         $this->obat = $user->id_obat;
         $this->harga_beli = $user->harga_beli;
@@ -130,7 +131,7 @@ class PengadaanObat extends Component
         try {
 
             PengadaanObats::create([
-                'no_trans' => $this->noTrans(),
+                'no_trans' => $this->no_batch,
                 'id_supplier' => $this->supplier,
                 'id_obat' => $this->obat,
                 'harga_beli' => $this->harga_beli,
@@ -167,6 +168,7 @@ class PengadaanObat extends Component
         $data = PengadaanObats::findOrFail($id);
 
         $data->id_obat = $this->obat;
+        $data->no_trans = $this->no_batch;
         $data->harga_beli = $this->harga_beli;
         $data->jumlah = $this->jumlah;
         $data->total = $this->total;
@@ -232,16 +234,6 @@ class PengadaanObat extends Component
     }
 
 
-    public function noTrans()
-    {
-
-        $no = PengadaanObats::where('tanggal_transaksi', date('ymd'))->count() + 1;
-        $id = sprintf("%05s", abs($no + 1));
-
-
-        return 'B-' . date('ymd') . '-' . $id;
-    }
-
     public function resetForm()
     {
         $this->resetErrorBag();
@@ -252,6 +244,7 @@ class PengadaanObat extends Component
     public function validasi()
     {
         return $this->validate([
+            'no_batch' => 'required',
             'supplier' => 'required',
             'obat' => 'required',
             'harga_beli' => 'required|numeric',

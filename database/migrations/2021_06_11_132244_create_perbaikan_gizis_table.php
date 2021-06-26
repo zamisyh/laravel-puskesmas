@@ -15,11 +15,8 @@ class CreatePerbaikanGizisTable extends Migration
     {
         Schema::create('perbaikan_gizi', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_anak');
-            $table->string('nama_tindakan');
-            $table->string('nama_obat');
-            $table->string('jumlah');
-            $table->string('satuan');
+            $table->text('terapi');
+            $table->text('hasil');
             $table->date('tanggal');
             $table->timestamps();
         });

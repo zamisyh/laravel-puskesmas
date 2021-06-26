@@ -25,7 +25,7 @@ class CreatePendaftaransTable extends Migration
             $table->string('hubungan_dengan_penanggung_jawab');
             $table->string('alamat');
             $table->string('status_pasien');
-            $table->string('no_bpjs');
+            $table->string('no_jaminan');
             $table->timestamps();
 
             $table->foreign('id_dokter')->references('id')->on('dokter')->onDelete('cascade')->onUpdate('cascade');

@@ -50,6 +50,15 @@
                                     >
                                         
                                         <div class="form-group">
+                                            <label for="no_batch">No Batch</label>
+                                            <input type="text" wire:model.lazy='no_batch' class="form-control @error('no_batch') is-invalid @enderror"
+                                            placeholder="Masukkan no batch">
+                                            @error('no_batch')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
                                             <label for="supplier">Nama Supplier</label>
                                             <select wire:model.lazy='supplier' class="form-control @error('supplier') is-invalid @enderror" id="supplier">
                                                 <option selected>Pilih</option>
@@ -192,7 +201,7 @@
                                         <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>No Trans</th>
+                                                    <th>No Batch</th>
                                                     <th>Supplier</th>
                                                     <th>Nama Obat</th>
                                                     <th>Jenis Obat</th>
