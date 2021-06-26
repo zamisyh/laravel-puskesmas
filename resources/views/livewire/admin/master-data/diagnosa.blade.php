@@ -49,7 +49,7 @@
                                         @endif
                                     >
                                         <div class="form-group">
-                                            <label for="kode">Kode Diagnosa</label>
+                                            <label for="kode">Kode ICD</label>
                                             <input type="text" wire:model.lazy='kode' class="form-control @error('kode') is-invalid @enderror" placeholder="Masukkan kode diagnosa">
                                             @error('kode')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -64,37 +64,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="kasus">Kasus</label>
-                                            <input type="text" wire:model.lazy='kasus' class="form-control @error('kasus') is-invalid @enderror" placeholder="Masukkan nama kasus">
-                                            @error('kasus')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="ciri_ciri">Ciri Ciri Penyakit</label>
-                                            <textarea rows="2" wire:model.lazy='ciri_ciri' class="form-control @error('ciri_ciri') is-invalid @enderror" placeholder="Masukkan ciri ciri penyakit"></textarea>
-                                            @error('ciri_ciri')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="ciri_ciri_umum">Ciri Ciri Umum</label>
-                                            <textarea rows="2" wire:model.lazy='ciri_ciri_umum' class="form-control @error('ciri_ciri_umum') is-invalid @enderror" placeholder="Masukkan ciri ciri umum"></textarea>
-                                            @error('ciri_ciri_umum')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="keterangan">Keterangan</label>
-                                            <textarea rows="4" wire:model.lazy='keterangan' class="form-control @error('keterangan') is-invalid @enderror" placeholder="Masukkan keterangan"></textarea>
-                                            @error('keterangan')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                       
                                         
 
                                         @if ($diagnosaId)
@@ -127,17 +97,6 @@
                                             <option value="20" selected>20</option>
                                         </select>
 
-                                        @if (!$details)
-                                                <button wire:click='openDetails' class="btn btn-primary btn-sm">
-                                                    <i class="bi bi-eye-slash-fill"></i>
-                                                </button>
-
-                                            @else
-                                                <button wire:click='closeDetails' class="btn btn-primary btn-sm">
-                                                    <i class="bi bi-eye-fill"></i>
-                                                </button>
-                                        @endif
-
                                     </div>
 
                                     <p></p>
@@ -147,14 +106,8 @@
                                         <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Kode</th>
+                                                    <th>Kode ICD</th>
                                                     <th>Nama Penyakit</th>
-                                                    <th>Kasus</th>
-                                                    @if ($details)
-                                                        <th>Ciri Ciri Penyakit</th>
-                                                        <th>Ciri Ciri Umum</th>
-                                                        <th>Keterangan</th>
-                                                    @endif
                                                     <th>Actions</th>
                                                 </tr>
                                         </thead>
@@ -164,12 +117,7 @@
                                                     <td>{{ $diagnosas->firstItem() + $key }}</td>
                                                     <td>{{ $item->code }}</td>
                                                     <td>{{ $item->nama_penyakit }}</td>
-                                                    <td>{{ $item->kasus }}</td>
-                                                    @if ($details)
-                                                        <td>{{ $item->ciri_ciri_penyakit }}</td>
-                                                        <td>{{ $item->keterangan_umum }}</td>
-                                                        <td>{{ $item->keterangan }}</td>
-                                                    @endif
+                                    
                                                     <td class="d-flex">
                                                         <button wire:click="openFormUpdateDiagnosa({{ $item->id }})" class="btn btn-primary btn-sm">
                                                             <i class="bi bi-pencil-square"></i>

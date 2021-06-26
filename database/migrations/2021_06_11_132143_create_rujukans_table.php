@@ -18,7 +18,6 @@ class CreateRujukansTable extends Migration
             $table->string('no_rujukan');
             $table->unsignedBigInteger('id_pasien');
             $table->string('nama_penyakit');
-            $table->string('diagnosa');
             $table->string('nama_rumah_sakit');
             $table->string('poli_tujuan');
             $table->date('tanggal_rujukan');

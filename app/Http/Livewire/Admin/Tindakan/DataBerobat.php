@@ -80,16 +80,14 @@ class DataBerobat extends Component
                     ->get();
             } else if ($this->i_rujukan) {
                 $data_rujukan = RiwayatTindakan::where('no_rawat', $this->no_rawat)
-                ->with('diagnosa')->orderBy('created_at', 'DESC')->first();
-               
+                    ->with('diagnosa')->orderBy('created_at', 'DESC')->first();
+
                 if (is_null($data_rujukan)) {
                     $this->nama_diagnosa = 'Silahkan input tindakan terlebih dahulu';
-                }else{
-                    $this->nama_diagnosa = "[" . $data_rujukan->diagnosa->code . "] " . $data_rujukan->diagnosa->nama_penyakit;
+                } else {
+                    $this->nama_diagnosa = RiwayatTindakan::where('no_rawat', $this->no_rawat)->first();
                 }
-               
-              
-            }else if($this->i_lab){
+            } else if ($this->i_lab) {
                 $this->data_lab = JenisLaboratorium::all('id', 'keterangan');
             }
         }
@@ -177,10 +175,11 @@ class DataBerobat extends Component
     {
         $this->validateTindakan();
 
+
+
         try {
-            RiwayatTindakan::create([
+            $data = RiwayatTindakan::create([
                 'id_poli' => $this->poliId,
-                'id_diagnosa' => $this->diagnosa,
                 'id_tindakan' => $this->nama_tindakan,
                 'no_rawat' => $this->no_rawat,
                 'hasil_periksa' => $this->hasil_periksa,
@@ -198,6 +197,8 @@ class DataBerobat extends Component
                 'no_rekamedis' => $this->no_rekamedis,
                 'rencana_pengobatan' => $this->rencana_pengobatan
             ]);
+
+            $data->diagnosaMany()->attach($this->diagnosa);
 
             $this->alert('success', 'Succesfully create data', [
                 'position' =>  'top-end',
@@ -276,7 +277,6 @@ class DataBerobat extends Component
                 'no_rujukan' => $this->noRujukan(),
                 'id_pasien' => $this->id_pasien,
                 'nama_penyakit' => '-',
-                'diagnosa' => $this->nama_diagnosa,
                 'nama_rumah_sakit' => $this->nama_rumah_sakit,
                 'poli_tujuan' => $this->poli_rujukan_tujuan,
                 'tanggal_rujukan' => date('Y-m-d'),
@@ -295,7 +295,6 @@ class DataBerobat extends Component
             ]);
 
             $this->i_rujukan = false;
-
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -312,11 +311,11 @@ class DataBerobat extends Component
             ]);
 
             $lab->jenis_laboratorium()->attach($this->lab_keterangan);
-        }else{
+        } else {
             $find->jenis_laboratorium()->sync($this->lab_keterangan);
         }
 
-        
+
 
         $this->alert('success', 'Succesfully create data', [
             'position' =>  'top-end',
@@ -328,7 +327,7 @@ class DataBerobat extends Component
             'showCancelButton' =>  false,
             'showConfirmButton' =>  false,
         ]);
-        
+
         $this->i_lab = false;
         $this->resetForm();
     }
@@ -397,13 +396,13 @@ class DataBerobat extends Component
     public function noRujukan()
     {
 
-       
- 
-        $no = Rujukan::where('tanggal_rujukan', date('ymd'))->count() + 1;
+
+
+        $no = Rujukan::where('tanggal_rujukan', date('ymd'))->count();
         $id = sprintf("%05s", abs($no + 1));
 
 
-        return 'R-'. date('Ymd') . '-' . $id;
+        return 'R-' . date('Ymd') . '-' . $id;
     }
 
 

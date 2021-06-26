@@ -12,11 +12,14 @@
             </div>
             <div class="form-group">
                 <label for="diagnosa">Diagnosa</label>
-                <input type="hidden" wire:model='nama_diagnosa' class="form-control @error('nama_diagnosa')
-                    is-invalid
-                @enderror" readonly>
-    
-                <p>{{ $nama_diagnosa }}</p>
+            
+                <p>
+                    <ul>
+                        @foreach ($nama_diagnosa->diagnosaMany as $item)
+                            <li>[ {{ $item->code }} ] {{ $item->nama_penyakit }}</li>
+                        @endforeach
+                    </ul>
+                </p>
             </div>
     
             <div class="form-group">

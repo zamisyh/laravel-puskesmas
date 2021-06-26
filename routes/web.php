@@ -74,9 +74,7 @@ Route::prefix('dash')->group(function () {
                         Route::get('pegawai', Pegawai::class)->name('pegawai');
                         Route::get('dokter', Dokter::class)->name('dokter');
                         Route::get('jadwal-praktek-dokter', JadwalPraktekDokter::class)->name('jadwal-praktek-dokter');
-                        Route::get('tindakan', Tindakan::class)->name('tindakan');
                         Route::get('operasi', Operasi::class)->name('operasi');
-                        Route::get('diagnosa', Diagnosa::class)->name('diagnosa');
                     });
 
                     Route::middleware(['role:admin|apoteker'])->group(function () {
@@ -84,6 +82,11 @@ Route::prefix('dash')->group(function () {
                         Route::get('supplier', Supplier::class)->name('supplier');
                         Route::get('poli', Poli::class)->name('poli');
                         Route::get('obat', Obat::class)->name('obat');
+                    });
+
+                    Route::middleware(['role:admin|dokter'])->group(function () {
+                        Route::get('diagnosa', Diagnosa::class)->name('diagnosa');
+                        // Route::get('tindakan', Tindakan::class)->name('tindakan');
                     });
                 });
             });

@@ -21,7 +21,7 @@
                     </a>
                 </li>
 
-               @hasanyrole('admin|apoteker')
+               @hasanyrole('admin|apoteker|dokter')
 
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
@@ -50,6 +50,11 @@
                                 <a href="{{ route('dash.master-data.supplier') }}">Supplier</a>
                                 <a href="{{ route('dash.master-data.poli') }}">Poli</a>
                                 <a href="{{ route('dash.master-data.obat') }}">Obat-Obatan</a>
+                            @endrole
+                            @role('dokter')
+
+                                <a href="{{ route('dash.master-data.diagnosa') }}">Diagnosa</a>
+                                {{-- <a href="{{ route('dash.master-data.tindakan') }}">Tindakan</a> --}}
                             @endrole
                         </li>
                     </ul>

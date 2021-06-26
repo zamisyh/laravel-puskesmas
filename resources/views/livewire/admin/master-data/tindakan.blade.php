@@ -79,7 +79,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="poli">Tindakan Oleh</label>
+                                            <label for="poli">Poli</label>
                                             <select wire:model.lazy='poli' class="form-control @error('poli') is-invalid @enderror">
                                                 <option selected>Pilih</option>
                                                  @forelse ($data_poli as $item)

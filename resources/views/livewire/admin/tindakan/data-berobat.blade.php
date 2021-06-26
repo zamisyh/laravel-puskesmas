@@ -1,6 +1,11 @@
 <div>
 
+    @section('css')
+        <link rel="stylesheet" href="{{ asset('assets/vendors/select2/select2.min.css') }}">
+    @endsection
+
     @section('title', 'Tindakan - Data Berobat')
+    
 
     <div id="app">
         @include('livewire.admin.components.sidebar')
@@ -133,108 +138,107 @@
                                 @endif
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-7">
-                                    <div class="card">
-                                        <div class="card-header bg-success">
-                                            <h4 class="text-white">Riwayat Tindakan</h4>
-                                        </div>
-                                        <div class="card-body mt-4">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered table-striped table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Penyakit</th>
-                                                            <th>Tindakan</th>
-                                                            <th>Keluhan</th>
-                                                            <th>Cek Fisik</th>
-                                                            <th>Temperatur</th>
-                                                            <th>Tinggi Badan</th>
-                                                            <th>Tekanan Darah</th>
-                                                            <th>Tekanan Nadi</th>
-                                                            <th>HR</th>
-                                                            <th>RR</th>
-                                                            <th>BB</th>
-                                                            <th>LP</th>
-                                                            <th>Pemeriksa Penunjang</th>
-                                                            <th>Rencana Pengobatan</th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($data_riwayat as $key => $item)
-                                                            <tr>
-                                                                <td>{{ $data_riwayat->firstItem() + $key }}</td>
-                                                                <td>[ {{ $item->diagnosa->code }} ]{{ $item->diagnosa->nama_penyakit }}</td>
-                                                                <td>{{ $item->tindakan->nama_tindakan }}</td>
-                                                                <td>{{ $item->keluhan }}</td>
-                                                                <td>{{ $item->cek_fisil }}</td>
-                                                                <td>{{ $item->temperatur }}</td>
-                                                                <td>{{ $item->tinggi_badan }}</td>
-                                                                <td>{{ $item->tekanan_darah }}</td>
-                                                                <td>{{ $item->tekanan_nadi }}</td>
-                                                                <td>{{ $item->hr }}</td>
-                                                                <td>{{ $item->rr }}</td>
-                                                                <td>{{ $item->bb }}</td>
-                                                                <td>{{ $item->lp }}</td>
-                                                                <td>{{ $item->penunjang }}</td>
-                                                                <td>{{ $item->rencana_pengobatan }}</td>
-                                                                <td>
-                                                                    <button wire:click.prevent='deleteDataRiwayatTindakan({{ $item->id }})' style="margin-left: 5px" class="btn btn-danger btn-sm">
-                                                                        <i class="bi bi-trash-fill"></i>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                            <div class="card">
+                                <div class="card-header bg-success">
+                                    <h4 class="text-white">Riwayat Tindakan</h4>
+                                </div>
+                                <div class="card-body mt-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama Penyakit</th>
+                                                    <th>Tindakan</th>
+                                                    <th>Keluhan</th>
+                                                    <th>Cek Fisik</th>
+                                                    <th>Temperatur</th>
+                                                    <th>Tinggi Badan</th>
+                                                    <th>Tekanan Darah</th>
+                                                    <th>Tekanan Nadi</th>
+                                                    <th>HR</th>
+                                                    <th>RR</th>
+                                                    <th>BB</th>
+                                                    <th>LP</th>
+                                                    <th>Pemeriksa Penunjang</th>
+                                                    <th>Rencana Pengobatan</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data_riwayat as $key => $item)
+                                                    <tr>
+                                                        <td>{{ $data_riwayat->firstItem() + $key }}</td>
+                                                        <td>
+                                                           @foreach ($item->diagnosaMany as $d)
+                                                             [ {{ $d->code }} ] {{ $d->nama_penyakit }},
+                                                           @endforeach
+                                                        </td>
+                                                        <td>{{ $item->tindakan->nama_tindakan }}</td>
+                                                        <td>{{ $item->keluhan }}</td>
+                                                        <td>{{ $item->cek_fisil }}</td>
+                                                        <td>{{ $item->temperatur }}</td>
+                                                        <td>{{ $item->tinggi_badan }}</td>
+                                                        <td>{{ $item->tekanan_darah }}</td>
+                                                        <td>{{ $item->tekanan_nadi }}</td>
+                                                        <td>{{ $item->hr }}</td>
+                                                        <td>{{ $item->rr }}</td>
+                                                        <td>{{ $item->bb }}</td>
+                                                        <td>{{ $item->lp }}</td>
+                                                        <td>{{ $item->penunjang }}</td>
+                                                        <td>{{ $item->rencana_pengobatan }}</td>
+                                                        <td>
+                                                            <button wire:click.prevent='deleteDataRiwayatTindakan({{ $item->id }})' style="margin-left: 5px" class="btn btn-danger btn-sm">
+                                                                <i class="bi bi-trash-fill"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
 
-                                                <div class="form-group">
-                                                    {{ $data_riwayat->links() }}
-                                                </div>
-                                            </div>
+                                        <div class="form-group">
+                                            {{ $data_riwayat->links() }}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-5">
-                                   <div class="card">
-                                       <div class="card-header bg-success">
-                                           <h4 class="text-white">Resep Obat</h4>
-                                       </div>
-                                       <div class="card-body mt-4">
-                                           <div class="table-responsive">
-                                               <table class="table table-bordered table-striped table-hover">
-                                                   <thead>
-                                                       <tr>
-                                                           <th>No</th>
-                                                           <th>Nama Obat</th>
-                                                           <th>Jenis</th>
-                                                           <th>Dosis</th>
-                                                           <th>Action</th>
-                                                       </tr>
-                                                   </thead>
-                                                   <tbody>
-                                                        
-                                                    @foreach ($data_resep_obat as $key => $item)
-                                                        <tr>
-                                                            <td>{{ $data_resep_obat->firstItem() + $key }}</td>
-                                                            <td>{{ $item->obat->nama_obat }}</td>
-                                                            <td>{{ $item->jenis_obat }}</td>
-                                                            <td>{{ $item->dosis }}</td>
-                                                            <td>
-                                                                <button wire:click.prevent='deleteDataResepObat({{ $item->id }})' style="margin-left: 5px" class="btn btn-danger btn-sm">
-                                                                    <i class="bi bi-trash-fill"></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
+                            </div>
 
-                                                 </tbody>
-                                               </table>
-                                           </div>
-                                       </div>
-                                   </div>
+                            <div class="card">
+                                <div class="card-header bg-success">
+                                    <h4 class="text-white">Resep Obat</h4>
+                                </div>
+                                <div class="card-body mt-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama Obat</th>
+                                                    <th>Jenis</th>
+                                                    <th>Dosis</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                 
+                                             @foreach ($data_resep_obat as $key => $item)
+                                                 <tr>
+                                                     <td>{{ $data_resep_obat->firstItem() + $key }}</td>
+                                                     <td>{{ $item->obat->nama_obat }}</td>
+                                                     <td>{{ $item->jenis_obat }}</td>
+                                                     <td>{{ $item->dosis }}</td>
+                                                     <td>
+                                                         <button wire:click.prevent='deleteDataResepObat({{ $item->id }})' style="margin-left: 5px" class="btn btn-danger btn-sm">
+                                                             <i class="bi bi-trash-fill"></i>
+                                                         </button>
+                                                     </td>
+                                                 </tr>
+                                             @endforeach
+
+                                          </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         @else
@@ -333,9 +337,13 @@
     </div>
 
     @section('js')
+
+        <script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
+
+
         <script src="{{  asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
         <script src="{{  asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-
         <script src="{{  asset('assets/js/main.js') }}"></script>
     @endsection
 </div>

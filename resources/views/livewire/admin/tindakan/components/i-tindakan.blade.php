@@ -122,11 +122,11 @@
                 @enderror
             </div>
     
-            <div class="form-group">
+            <div class="form-group" wire:ignore>
                 <label for="diagnosa">Diagnosa</label>
-                <select wire:model.lazy='diagnosa' class="form-control @error('diagnosa')
+                <select wire:model.lazy='diagnosa' id="select2_diagnosa" class="form-control @error('diagnosa')
                     is-invalid
-                @enderror">
+                @enderror js-example-basic-multiple" multiple>
                     <option value="" selected>Pilih</option>
                     @foreach ($data_diagnosa as $diagnosa)
                         <option value="{{ $diagnosa->id }}">[ {{ $diagnosa->code }} ] {{ $diagnosa->nama_penyakit }}</option>
@@ -137,11 +137,11 @@
                 @enderror
             </div>
     
-            <div class="form-group">
+            <div class="form-group" wire:ignore>
                 <label for="tindakan">Tindakan</label>
                 <select wire:model.lazy='nama_tindakan' class="form-control @error('nama_tindakan')
                     is-invalid
-                @enderror">
+                @enderror" id="js-example-basic-single">
                     <option value="" selected>Pilih</option>
                     @foreach ($data_tindakan as $tindakan)
                         <option value="{{ $tindakan->id }}">{{ $tindakan->nama_tindakan }}</option>
@@ -179,3 +179,20 @@
 
     </div> 
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+
+
+        $('#js-example-basic-single').select2();
+
+        $('#select2_diagnosa').on('change', function() {
+                @this.diagnosa = $(this).val();
+         })
+
+    });
+
+
+
+</script>

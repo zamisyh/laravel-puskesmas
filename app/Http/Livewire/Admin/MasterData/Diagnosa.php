@@ -16,10 +16,10 @@ class Diagnosa extends Component
     public $search;
     public $rows = 5;
 
-    public $openFormCreate, $openFormUpdate, $details;
+    public $openFormCreate, $openFormUpdate;
     public $diagnosaId;
 
-    public $kode, $nama_penyakit, $kasus, $ciri_ciri, $ciri_ciri_umum, $keterangan;
+    public $kode, $nama_penyakit;
 
     public function render()
     {
@@ -45,24 +45,14 @@ class Diagnosa extends Component
         $this->openFormCreate = false;
         $this->resetForm();
     }
-    public function openDetails()
-    {
-        $this->details = true;
-    }
-    public function closeDetails()
-    {
-        $this->details = false;
-    }
+
     public function openFormUpdateDiagnosa($id)
     {
         $user = Diagnosas::findOrFail($id);
 
         $this->kode = $user->code;
         $this->nama_penyakit = $user->nama_penyakit;
-        $this->kasus = $user->kasus;
-        $this->ciri_ciri = $user->ciri_ciri_penyakit;
-        $this->ciri_ciri_umum = $user->keterangan_umum;
-        $this->keterangan = $user->keterangan;
+
 
         $this->diagnosaId = $user->id;
         $this->openFormCreate = true;
@@ -82,10 +72,7 @@ class Diagnosa extends Component
             Diagnosas::create([
                 'code' => strtoupper($this->kode),
                 'nama_penyakit' => $this->nama_penyakit,
-                'kasus' => !is_null($this->kasus) ? $this->kasus : '-',
-                'ciri_ciri_penyakit' => !is_null($this->ciri_ciri) ? $this->ciri_ciri : '-',
-                'keterangan_umum' => !is_null($this->ciri_ciri_umum) ? $this->ciri_ciri_umum : '-',
-                'keterangan' => !is_null($this->keterangan) ? $this->keterangan : '-'
+
 
             ]);
 
@@ -116,10 +103,7 @@ class Diagnosa extends Component
 
         $data->code  = $this->kode;
         $data->nama_penyakit = $this->nama_penyakit;
-        $data->kasus = $this->kasus;
-        $data->ciri_ciri_penyakit = $this->ciri_ciri;
-        $data->keterangan_umum = $this->ciri_ciri_umum;
-        $data->keterangan = $this->keterangan;
+
 
         $data->save();
 

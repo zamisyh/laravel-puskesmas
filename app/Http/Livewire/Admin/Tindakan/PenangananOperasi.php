@@ -252,7 +252,7 @@ class PenangananOperasi extends Component
     public function noRawat()
     {
 
-        $no = Operasi::where('tanggal_daftar', date('ymd'))->count() + 1;
+        $no = Operasi::where('tanggal_daftar', date('ymd'))->count();
         $id = sprintf("%05s", abs($no + 1));
 
 
