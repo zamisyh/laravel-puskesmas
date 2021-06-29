@@ -23,7 +23,7 @@ class Pasien extends Component
 
     public $no_rekamedis, $nama_pasien, $jenis_kelamin, $no_ktp, $no_kk,
         $no_antrian, $jaminan, $no_jaminan, $tanggal_lahir, $alamat,
-        $wilayah, $status_pasien, $keterangan;
+        $wilayah, $status_pasien, $keterangan, $nama_penanggung_jawab, $hubungan;
 
     public function render()
     {
@@ -83,6 +83,8 @@ class Pasien extends Component
         $this->alamat = $user->alamat;
         $this->wilayah = $user->wilayah;
         $this->keterangan = $user->keterangan;
+        $this->nama_penanggung_jawab = $user->nama_penanggung_jawab;
+        $this->hubungan = $user->hubungan_dengan_penanggung_jawab;
 
         $this->pasienId = $user->id;
         $this->openFormCreate = true;
@@ -117,7 +119,9 @@ class Pasien extends Component
                 'alamat' => $this->alamat,
                 'wilayah' => $this->wilayah,
                 'status_pasien' => $findJaminan->nama_jaminan,
-                'usia' => $age
+                'usia' => $age,
+                'hubungan_dengan_penanggung_jawab' => $this->hubungan,
+                'nama_penanggung_jawab' => $this->nama_penanggung_jawab,
             ]);
 
 
@@ -162,6 +166,8 @@ class Pasien extends Component
         $data->wilayah = $this->wilayah;
         $data->usia = \Carbon\Carbon::parse($this->tanggal_lahir)->age;
         $data->keterangan = $this->keterangan;
+        $data->nama_penanggung_jawab = $this->nama_penanggung_jawab;
+        $data->hubungan_dengan_penanggung_jawab = $this->hubungan;
 
         $data->save();
 
@@ -246,7 +252,9 @@ class Pasien extends Component
             'no_jaminan' => 'required',
             'tanggal_lahir' => 'required',
             'alamat' => 'required',
-            'wilayah' => 'required'
+            'wilayah' => 'required',
+            'nama_penanggung_jawab' => 'required',
+            'hubungan' => 'required'
 
         ]);
     }

@@ -21,9 +21,6 @@ class CreatePendaftaransTable extends Migration
             $table->unsignedBigInteger('id_dokter');
             $table->unsignedBigInteger('id_poli');
             $table->unsignedBigInteger('id_pasien');
-            $table->string('nama_penanggung_jawab');
-            $table->string('hubungan_dengan_penanggung_jawab');
-            $table->string('alamat');
             $table->string('status_pasien');
             $table->string('no_jaminan');
             $table->timestamps();

@@ -142,6 +142,40 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
+
+                                            <div class="form-group">
+                                                <label for="nama_penanggung_jawab">Nama Penanggung Jawab</label>
+                                                <input wire:model.lazy='nama_penanggung_jawab' type="text" class="form-control @error('nama_penanggung_jawaba') is-invalid @enderror"
+                                                placeholder="Masukkan nama penanggung jawab">
+                                                @error('nama_penanggung_jawab')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>  
+
+                                            <div class="form-group">
+                                                <label for="hubungan">Hubungan</label>
+                                                <select wire:model.lazy='hubungan' class="form-control @error('hubungan') is-invalid @enderror" id="hubungan">
+                                                    <option selected>Pilih</option>
+                                                    <option value="anak">Anak</option>
+                                                    <option value="orang tua">Orang Tua</option>
+                                                    <option value="suami">Suami</option>
+                                                    <option value="istri">Istri</option>
+                                                    <option value="kakak">Kakak</option>
+                                                    <option value="adik">Adik</option>
+                                                    <option value="kakek">Kakek</option>
+                                                    <option value="nenek">Nenek</option>
+                                                    <option value="tetangga">Tetangga</option>
+                                                    <option value="saudara">Saudara</option>
+                                                    <option value="paman">Paman</option>
+                                                    <option value="bibi">Bibi</option>
+                                                    <option value="om">Om</option>
+                                                    <option value="tante">Tante</option>
+                                                    <option value="orang lain">Orang Lain</option>
+                                                </select>
+                                                @error('hubungan')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                             
                                             <div class="form-group">
                                                 <label for="wilayah">Wilayah</label>

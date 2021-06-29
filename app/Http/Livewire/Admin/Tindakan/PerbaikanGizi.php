@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Tindakan;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\PerbaikanGizi as PerbaikanGizis;
+use App\Models\Pasien;
 
 class PerbaikanGizi extends Component
 {
@@ -19,19 +20,26 @@ class PerbaikanGizi extends Component
     public $openFormCreate, $openFormUpdate;
     public $data_obat, $perbaikanGiziId;
 
-    public $nama_anak, $nama_tindakan, $nama_obat, $jumlah, $satuan, $tanggal;
+    public $hasil, $data_pasien, $nama_pasien, $terapi, $tanggal;
 
     public function render()
     {
 
+        $this->data_pasien = Pasien::orderBy('created_at', 'DESC')->get(['id', 'nama_pasien']);
+
         if ($this->search) {
-            $perbaikan_gizis = PerbaikanGizis::where('nama_obat', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('nama_anak', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('nama_tindakan', 'LIKE', '%' . $this->search . '%')
+            $perbaikan_gizis = PerbaikanGizis::whereHas('pasien', function ($q) {
+                $q->where('nama_pasien',  'LIKE', '%' . $this->search . '%')
+                    ->orWhere('hasil',  'LIKE', '%' . $this->search . '%')
+                    ->orWhere('terapi',  'LIKE', '%' . $this->search . '%')
+                    ->orWhere('tanggal', 'LIKE', '%' . $this->search . '%');
+            })
+                ->with('pasien')
                 ->orderBy('created_at', 'DESC')
                 ->paginate($this->rows);
         } else {
             $perbaikan_gizis = PerbaikanGizis::orderBy('created_at', 'DESC')
+                ->with('pasien')
                 ->paginate($this->rows);
         }
 
@@ -53,11 +61,9 @@ class PerbaikanGizi extends Component
     {
         $user = PerbaikanGizis::findOrFail($id);
 
-        $this->nama_anak = $user->nama_anak;
-        $this->nama_tindakan = $user->nama_tindakan;
-        $this->nama_obat = $user->nama_obat;
-        $this->jumlah = $user->jumlah;
-        $this->satuan = $user->satuan;
+        $this->nama_pasien = $user->id_pasien;
+        $this->hasil = $user->hasil;
+        $this->terapi = $user->terapi;
         $this->tanggal = $user->tanggal;
 
 
@@ -77,11 +83,9 @@ class PerbaikanGizi extends Component
         try {
 
             PerbaikanGizis::create([
-                'nama_anak' => $this->nama_anak,
-                'nama_tindakan' => $this->nama_tindakan,
-                'nama_obat' => $this->nama_obat,
-                'jumlah' => $this->jumlah,
-                'satuan' => $this->satuan,
+                'id_pasien' => $this->nama_pasien,
+                'hasil' => $this->hasil,
+                'terapi' => $this->terapi,
                 'tanggal' => $this->tanggal
             ]);
 
@@ -110,12 +114,11 @@ class PerbaikanGizi extends Component
         $this->validasi();
         $data = PerbaikanGizis::findOrFail($id);
 
-        $data->nama_anak = $this->nama_anak;
-        $data->nama_tindakan = $this->nama_tindakan;
-        $data->nama_obat = $this->nama_obat;
-        $data->satuan = $this->satuan;
-        $data->jumlah = $this->jumlah;
+        $data->id_pasien = $this->nama_pasien;
+        $data->hasil = $this->hasil;
+        $data->terapi = $this->terapi;
         $data->tanggal = $this->tanggal;
+
 
 
         $data->save();
@@ -187,12 +190,10 @@ class PerbaikanGizi extends Component
     public function validasi()
     {
         $this->validate([
-            'nama_anak' => 'required',
-            'nama_tindakan' => 'required',
-            'nama_obat' => 'required',
-            'jumlah' => 'required|numeric',
-            'satuan' => 'required',
-            'tanggal' => 'required'
+            'nama_pasien' => 'required',
+            'terapi' => 'required',
+            'hasil' => 'required',
+
         ]);
     }
 }

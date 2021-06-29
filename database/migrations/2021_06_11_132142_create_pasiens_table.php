@@ -26,6 +26,8 @@ class CreatePasiensTable extends Migration
             $table->string('jenis_kelamin');
             $table->date('tanggal_lahir');
             $table->string('alamat');
+            $table->string('nama_penanggung_jawab');
+            $table->string('hubungan_dengan_penanggung_jawab');
             $table->string('status_pasien');
             $table->string('wilayah');
             $table->string('keterangan');

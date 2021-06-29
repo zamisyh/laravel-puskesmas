@@ -111,7 +111,7 @@ Route::prefix('dash')->group(function () {
                 Route::prefix('tindakan')->group(function () {
                     Route::name('tindakan.')->group(function () {
                         Route::get('penanganan-operasi', PenangananOperasi::class)->name('penanganan-operasi');
-                        Route::get('poli-kia', PoliKia::class)->name('poli-kia');
+                        // Route::get('poli-kia', PoliKia::class)->name('poli-kia');
                         Route::get('perbaikan-gizi', PerbaikanGizi::class)->name('perbaikan-gizi');
                         Route::get('data-tindakan-berobat', DataBerobat::class)->name('data-berobat');
                     });

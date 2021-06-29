@@ -174,7 +174,7 @@
                                                              [ {{ $d->code }} ] {{ $d->nama_penyakit }},
                                                            @endforeach
                                                         </td>
-                                                        <td>{{ $item->tindakan->nama_tindakan }}</td>
+                                                        <td>{{ $item->nama_tindakan }}</td>
                                                         <td>{{ $item->keluhan }}</td>
                                                         <td>{{ $item->cek_fisil }}</td>
                                                         <td>{{ $item->temperatur }}</td>

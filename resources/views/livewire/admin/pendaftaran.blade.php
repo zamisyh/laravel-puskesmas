@@ -1,5 +1,9 @@
 <div>
 
+    @section('css')
+        <link rel="stylesheet" href="{{ asset('assets/vendors/select2/select2.min.css') }}">
+    @endsection
+
     @section('title', 'Pendaftaran')
 
     <div id="app">
@@ -30,172 +34,7 @@
                         <div class="card">
                             @if ($openFormCreate)
                             
-                            <div class="card-body">
-                                <form
-                                    @if ($pendaftaranId)
-                                        wire:submit.prevent='updatePendaftaran({{ $pendaftaranId }})'
-                                    @else
-                                        wire:submit.prevent='savePendaftaran'
-                                    @endif
-                                >
-                                   
-                                    <div class="row">
-                                        <div class="col-lg-5">
-                                            <h5>Data Pendaftaran</h5>
-
-                                            <div class="form-group">
-                                                <label for="no_rawat">No Rawat</label>
-                                                <input wire:model.lazy='no_rawat' type="text" class="form-control" readonly>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="dokter">Dokter Penanggung Jawab</label>
-                                                <select wire:model.lazy='dokter' class="form-control @error('dokter') is-invalid @enderror" id="dokter">
-                                                    <option selected>Pilih</option>
-                                                     @foreach ($data_dokter as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama_dokter }}</option>
-                                                     @endforeach
-                                                </select>
-                                                @error('dokter')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="poli">Poli Tujuan</label>
-                                                <select wire:model.lazy='poli' class="form-control @error('poli') is-invalid @enderror" id="poli">
-                                                    <option selected>Pilih</option>
-                                                     @foreach ($data_poli as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama_poli }}</option>
-                                                     @endforeach
-                                                </select>
-                                                @error('poli')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div> 
-                                        <div class="col-lg-7">
-                                            <h5>Data Pasien</h5>
-                                            
-                                    
-                                            <div class="form-group">
-                                                <label for="pasien">Pasien</label>
-                                                <select wire:model.lazy='pasien' class="form-control @error('pasien') is-invalid @enderror" id="pasien">
-                                                    <option selected>Pilih</option>
-                                                     @foreach ($data_pasien as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->nama_pasien }}</option>
-                                                     @endforeach
-                                                </select>
-                                                @error('pasien')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="no_rekamedis">No Rekamedis</label>
-                                                <input wire:model.lazy='no_rekamedis' type="text" class="form-control" readonly>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @if (!$showDataPasien)
-                                                    <a href="#!" wire:click='openDetailPasien'>Lihat semua data</a>
-                                                @else
-                                                    <a href="#!" wire:click='closeDetailPasien'>Tutup semua data</a>
-                                                @endif
-                                            </div>
-                                            
-                                            @if ($showDataPasien)
-                                                <div class="form-group">
-                                                    <label for="no_kk">No KK</label>
-                                                    <input wire:model.lazy='no_kk' type="text" class="form-control" readonly>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="tanggal_lahir">Tanggal Lahir</label>
-                                                    <input wire:model.lazy='tanggal_lahir' type="date" class="form-control" readonly>
-                                                </div>
-
-                            
-                                                <div class="form-group">
-                                                    <label for="status_pasien">Status Pasien</label>
-                                                    <input wire:model.lazy='status_pasien' type="text" class="form-control" readonly>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="no_jaminan">No Jaminan Kesehatan</label>
-                                                    <input wire:model.lazy='no_jaminan' type="text" class="form-control" readonly>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="wilayah">Wilayah</label>
-                                                    <input wire:model.lazy='wilayah' type="text" class="form-control" readonly>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="alamat">Alamat</label>
-                                                    <textarea rows="3" wire:model.lazy='alamat' class="form-control" readonly></textarea>
-                                                </div>
-                                            @endif
-
-                                            <div class="form-group">
-                                                <label for="nama_penanggung_jawab">Nama Penanggung Jawab</label>
-                                                <input wire:model.lazy='nama_penanggung_jawab' type="text" class="form-control @error('nama_penanggung_jawaba') is-invalid @enderror"
-                                                placeholder="Masukkan nama penanggung jawab">
-                                                @error('nama_penanggung_jawab')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>  
-
-                                            <div class="form-group">
-                                                <label for="hubungan">Hubungan</label>
-                                                <select wire:model.lazy='hubungan' class="form-control @error('hubungan') is-invalid @enderror" id="hubungan">
-                                                    <option selected>Pilih</option>
-                                                    <option value="anak">Anak</option>
-                                                    <option value="orang tua">Orang Tua</option>
-                                                    <option value="suami">Suami</option>
-                                                    <option value="istri">Istri</option>
-                                                    <option value="kakak">Kakak</option>
-                                                    <option value="adik">Adik</option>
-                                                    <option value="kakek">Kakek</option>
-                                                    <option value="nenek">Nenek</option>
-                                                    <option value="tetangga">Tetangga</option>
-                                                    <option value="saudara">Saudara</option>
-                                                    <option value="paman">Paman</option>
-                                                    <option value="bibi">Bibi</option>
-                                                    <option value="om">Om</option>
-                                                    <option value="tante">Tante</option>
-                                                    <option value="orang lain">Orang Lain</option>
-                                                </select>
-                                                @error('hubungan')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="alamat_penanggung_jawab">Alamat Penanggung Jawab</label>
-                                                <textarea rows="4" wire:model.lazy='alamat_penanggung_jawab' class="form-control @error('alamat_penanggung_jawab') is-invalid @enderror" placeholder="Masukkan alamat"></textarea>
-                                              
-                                                @error('alamat_penanggung_jawab')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>  
-                                            
-                                        </div>
-                                    </div>
-
-                                   
-                                    <div class="form-group" style="margin-top: 3% ;">
-                                        @if ($pendaftaranId)
-                                            <button class="btn btn-primary">Update</button>
-                                            <button type="button" wire:click='closeFormCreatePendaftaran' class="btn btn-sm btn-primary" style="margin-left: 5px">X</button>
-                                        @else
-                                            <button class="btn btn-primary">Submit</button>
-                                            <button type="button" wire:click='closeFormCreatePendaftaran' class="btn btn-sm btn-primary" style="margin-left: 5px">X</button>
-                                        @endif
-                                    </div>
-
-                                </form>
-                            </div>
+                            @include('livewire.admin.components.pasien')
 
                             @else
 
@@ -296,9 +135,20 @@
     </div>
 
     @section('js')
+
+        <script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
+    
         <script src="{{  asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
         <script src="{{  asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
         <script src="{{  asset('assets/js/main.js') }}"></script>
+
+        
     @endsection
 </div>
+
+
+
+
+

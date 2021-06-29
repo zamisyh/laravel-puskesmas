@@ -4,11 +4,11 @@
     </div>
     <div class="card-body">
         <form wire:submit.prevent='saveResepObat'>
-            <div class="form-group">
+            <div class="form-group" wire:ignore>
                 <label for="nama_obat">Nama Obat</label>
                 <select wire:model.lazy='nama_obat' class="form-control @error('nama_obat')
                         is-invalid
-                    @enderror">
+                    @enderror" id="nama_obat">
                     <option value="" selected>Pilih</option>
                     @foreach ($data_obat as $item)
                         <option value="{{ $item->obat->id }}">{{ $item->obat->nama_obat }}</option>
@@ -59,8 +59,22 @@
             </div>
 
             <div class="form-group">
-                <button class="btn btn-success">Submit</button>
+                @if ($stock_obat && $stock_obat > 1)
+                    <button class="btn btn-success">Submit</button>
+                @else
+                    <button class="btn btn-danger" disabled>Submit</button>
+                @endif
             </div>
         </form>
     </div> 
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#nama_obat').select2();
+
+        $('#nama_obat').on('change', function() {
+                @this.nama_obat = $(this).val();
+         })
+    });
+</script>

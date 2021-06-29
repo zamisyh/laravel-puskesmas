@@ -94,6 +94,8 @@ class Pendaftaran extends Component
         $this->nama_penanggung_jawab = $user->nama_penanggung_jawab;
         $this->hubungan = $user->hubungan_dengan_penanggung_jawab;
         $this->alamat = $user->alamat;
+        $this->nama_penanggung_jawab = $user->nama_penanggung_jawab;
+        $this->hubungan = $user->hubungan_dengan_penanggung_jawab;
 
         $this->pendaftaranId = $user->id;
         $this->openFormCreate = true;
@@ -115,6 +117,8 @@ class Pendaftaran extends Component
         $this->wilayah = $getData->wilayah;
         $this->alamat = $getData->alamat;
         $this->no_rekamedis = $getData->kode_paramedis;
+        $this->hubungan = $getData->hubungan_dengan_penanggung_jawab;
+        $this->nama_penanggung_jawab = $getData->nama_penanggung_jawab;
     }
 
     public function savePendaftaran()
@@ -131,9 +135,6 @@ class Pendaftaran extends Component
                 'id_dokter' => $this->dokter,
                 'id_poli' => $this->poli,
                 'id_pasien' => $this->pasien,
-                'nama_penanggung_jawab' => $this->nama_penanggung_jawab,
-                'hubungan_dengan_penanggung_jawab' => $this->hubungan,
-                'alamat' => $this->alamat,
                 'status_pasien' => $this->status_pasien,
                 'no_jaminan' => $this->no_jaminan
             ]);
@@ -168,9 +169,6 @@ class Pendaftaran extends Component
         $data->id_dokter = $this->dokter;
         $data->id_poli = $this->poli;
         $data->id_pasien = $this->pasien;
-        $data->nama_penanggung_jawab = $this->nama_penanggung_jawab;
-        $data->hubungan_dengan_penanggung_jawab = $this->hubungan;
-        $data->alamat = $this->alamat;
 
 
 
@@ -256,9 +254,7 @@ class Pendaftaran extends Component
             'dokter' => 'required',
             'poli' => 'required',
             'pasien' => 'required',
-            'nama_penanggung_jawab' => 'required|min:4',
             'hubungan' => 'required',
-            'alamat_penanggung_jawab' => 'required'
         ]);
     }
 }

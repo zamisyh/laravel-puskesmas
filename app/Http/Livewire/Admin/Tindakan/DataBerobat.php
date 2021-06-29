@@ -52,6 +52,7 @@ class DataBerobat extends Component
 
     public $i_lab, $i_tindakan, $i_resep_obat, $i_rujukan;
 
+
     public function render()
     {
 
@@ -73,7 +74,7 @@ class DataBerobat extends Component
                 $this->poli_tujuan = $pasien->poli->nama_poli;
                 $this->poliId = $pasien->poli->id;
                 $this->data_diagnosa = Diagnosa::orderBy('created_at', 'DESC')->get();
-                $this->data_tindakan = Tindakan::orderBy('created_at', 'DESC')->get();
+              
             } else if ($this->i_resep_obat) {
                 $this->data_obat = StokObat::with('obat')
                     ->orderBy('created_at', 'DESC')
@@ -173,14 +174,16 @@ class DataBerobat extends Component
 
     public function saveTindakan()
     {
-        $this->validateTindakan();
+
+
+        // $this->validateTindakan();
 
 
 
         try {
             $data = RiwayatTindakan::create([
                 'id_poli' => $this->poliId,
-                'id_tindakan' => $this->nama_tindakan,
+                'nama_tindakan' => $this->nama_tindakan,
                 'no_rawat' => $this->no_rawat,
                 'hasil_periksa' => $this->hasil_periksa,
                 'keluhan' => $this->keluhan,
@@ -244,8 +247,13 @@ class DataBerobat extends Component
                 'no_rekammedis' => $this->no_rekamedis
             ]);
 
-            $stok = StokObat::findOrFail($this->nama_obat);
+            $stok = StokObat::where('id_obat', $this->nama_obat)->first();
             $stok->jumlah = $stok->jumlah - $this->jumlah_obat;
+
+            $stok->jumlah <= 0 ? $stok->jumlah = 0 : $stok->jumlah;
+            $this->reset(['nama_obat', 'jenis_obat', 'dosis', 'jumlah_obat', 'kode_obat', 'stock_obat']);
+            
+          
 
             $stok->save();
 

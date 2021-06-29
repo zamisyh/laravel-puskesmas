@@ -118,8 +118,6 @@
                     <ul class="submenu ">
                         <li class="submenu-item ">
                             <a href="{{ route('dash.tindakan.penanganan-operasi') }}">Penanganan Operasi</a>
-                            <a href="{{ route('dash.tindakan.poli-kia') }}">Data Poli Kia</a>
-                            <a href="{{ route('dash.tindakan.perbaikan-gizi') }}">Data Perbaikan Gizi</a>
                             <a href="{{ route('dash.tindakan.data-berobat') }}">Data Tidakan Berobat</a>
                         </li>
                     </ul>
@@ -132,6 +130,16 @@
                         <span>Laboratory</span>
                     </a>
                 </li>
+
+
+                <li class="sidebar-item">
+                    <a href="{{ route('dash.tindakan.perbaikan-gizi') }}" class='sidebar-link'>
+                        <i class="bi bi-journal-medical"></i>
+                        <span>Perbaikan Gizi</span>
+                    </a>
+                </li>
+
+            
                @endhasanyrole
 
                @hasanyrole('admin|pendaftaran')

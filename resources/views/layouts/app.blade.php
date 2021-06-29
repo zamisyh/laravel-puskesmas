@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+  
+
 
     @yield('css')
 
@@ -19,8 +21,11 @@
     @yield('content')
 
 
-
+    
     @yield('js')
+
+  
+
     @livewireScripts
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

@@ -85,7 +85,7 @@ class PenangananOperasi extends Component
         $this->ditangani_oleh = $user->ditangani_oleh;
         $this->tanggal_operasi = $user->tanggal_operasi;
 
-        if ($user->status_pasien == 'bpjs') {
+        if ($user->status_pasien == 'kis') {
             $this->biaya = 0;
             $this->dibayar = 0;
             $this->kembalian = 0;

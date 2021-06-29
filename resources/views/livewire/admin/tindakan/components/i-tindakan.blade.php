@@ -136,16 +136,18 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
             <div class="form-group" wire:ignore>
                 <label for="tindakan">Tindakan</label>
                 <select wire:model.lazy='nama_tindakan' class="form-control @error('nama_tindakan')
                     is-invalid
                 @enderror" id="js-example-basic-single">
                     <option value="" selected>Pilih</option>
-                    @foreach ($data_tindakan as $tindakan)
-                        <option value="{{ $tindakan->id }}">{{ $tindakan->nama_tindakan }}</option>
-                    @endforeach
+                    <option value="Pengobatan">Pengobatan</option>
+                    <option value="Perawatan Luka">Perawatan Luka</option>
+                    <option value="Tindakan">Tindakan</option>
+                    <option value="Rujuk">Rujuk</option>
+                    <option value="Pembuatan Surat Keterangan">Pembuatan Surat Keterangan</option>
+                    <option value="Konsultasi">Konsultasi</option>
                 </select>
                 @error('nama_tindakan')
                     <span class="text-danger">{{ $message }}</span>
@@ -189,6 +191,10 @@
 
         $('#select2_diagnosa').on('change', function() {
                 @this.diagnosa = $(this).val();
+         })
+
+         $('#js-example-basic-single').on('change', function() {
+             @this.nama_tindakan = $(this).val();
          })
 
     });

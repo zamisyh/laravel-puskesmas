@@ -66,7 +66,7 @@
                                         <label for="status_pasien">Status Pasien</label>
                                         <select wire:model.lazy='status_pasien' class="form-control @error('status_pasien') is-invalid @enderror" id="status_pasien">
                                             <option>Pilih</option>
-                                            <option value="bpjs">BPJS</option>
+                                            <option value="kis">KIS</option>
                                             <option value="umum">Umum</option>
                                             
                                         </select>
@@ -78,7 +78,7 @@
 
                                    @if ($formBpjs)
                                     <div class="form-group">
-                                        <label for="no_bpjs">No BPJS</label>
+                                        <label for="no_bpjs">No Jaminan Kesehatan</label>
                                         <input type="text" wire:model.lazy='no_bpjs' class="form-control @error('np_bpjs')
                                             is-invalid
                                         @enderror" placeholder="Masukkan no bpjs">

@@ -11,6 +11,12 @@ class PerbaikanGizi extends Model
     protected $table = 'perbaikan_gizi';
 
     protected $fillable = [
-        'nama_anak', 'nama_tindakan', 'nama_obat', 'jumlah', 'satuan', 'tanggal'
+        'id_pasien', 'hasil', 'terapi', 'tanggal'
     ];
+
+
+    public function pasien()
+    {
+        return $this->belongsTo(Pasien::class, 'id_pasien');
+    }
 }

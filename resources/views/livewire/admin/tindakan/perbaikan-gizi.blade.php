@@ -1,6 +1,11 @@
 <div>
 
-    @section('title', 'Tindakan - Perbaikan Gizi')
+
+    @section('css')
+        <link rel="stylesheet" href="{{ asset('assets/vendors/select2/select2.min.css') }}">
+    @endsection
+
+    @section('title', 'Perbaikan Gizi')
 
     <div id="app">
         @include('livewire.admin.components.sidebar')
@@ -12,7 +17,7 @@
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Tindakan - Perbaikan Gizi</h3>
+                                <h3>Perbaikan Gizi</h3>
                                 <p class="text-subtitle text-muted">Hi, this is page for manajement data Perbaikan Gizi</p>
                             </div>
                             <div class="col-12 col-md-6 order-md-2 order-first">
@@ -41,75 +46,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <form
-                                        @if ($perbaikanGiziId)
-                                            wire:submit.prevent='updatePerbaikanGizi({{ $perbaikanGiziId }})'
-                                        @else
-                                            wire:submit.prevent='savePerbaikanGizi'
-                                        @endif
-                                    >
-
-                                        <div class="form-group">
-                                            <label for="nama_anak">Nama Anak</label>
-                                            <input type="text" wire:model.lazy='nama_anak' class="form-control @error('nama_anak') is-invalid @enderror" placeholder="Masukkan nama anak">
-                                            @error('nama_anak')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="nama_tindakan">Nama Tindakan</label>
-                                            <input type="text" wire:model.lazy='nama_tindakan' class="form-control @error('nama_tindakan') is-invalid @enderror" placeholder="Masukkan nama timdakan">
-                                            @error('nama_tindakan')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="tanggal">Nama Obat</label>
-                                            <input type="text" wire:model.lazy='nama_obat' class="form-control @error('nama_obat') is-invalid @enderror" placeholder="Masukkan nama obat">
-                                            @error('nama_obat')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="jumlah">Jumlah</label>
-                                            <input type="number" wire:model.lazy='jumlah' class="form-control @error('jumlah') is-invalid @enderror" placeholder="Masukkan jumlah">
-                                            @error('jumlah')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="satuan">Satuan</label>
-                                            <input type="text" wire:model.lazy='satuan' class="form-control @error('satuan') is-invalid @enderror" placeholder="Masukkan satuan">
-                                            @error('satuan')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="tanggal">Tanggal</label>
-                                            <input type="date" wire:model.lazy='tanggal' class="form-control @error('tanggal') is-invalid @enderror">
-                                            @error('tanggal')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-
-
-                                       
-                                        
-
-                                                        
-                                        @if ($perbaikanGiziId)
-                                            <button class="btn btn-primary">Update</button>
-                                        @else
-                                            <button class="btn btn-primary">Submit</button>
-                                        @endif
-
-                                    </form>
+                                   @include('livewire.admin.components.perbaikan-gizi')
                                 </div>
 
                             @else
@@ -143,12 +80,10 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Anak</th>
-                                                <th>Tidakan</th>    
-                                                <th>Nama Obat</th>
-                                                <th>Jumlah</th>
-                                                <th>Satuan</th>
-                                                <th>Tanggal</th>
+                                                <th>Nama Pasien</th>
+                                                <th>Terapi</th>   
+                                                <th>Tanggal Terapi</th> 
+                                                <th>Hasil</th>
                                                 <th>Actions</th>
                                             </tr>   
                                         </thead>
@@ -156,13 +91,11 @@
                                             @forelse ($perbaikan_gizis as $key => $item)
                                                 <tr>
                                                     <td>{{ $perbaikan_gizis->firstItem() + $key }}</td>
-                                                    <td>{{ $item->nama_anak }}</td>
-                                                    <td>{{ $item->nama_tindakan }}</td>    
-                                                    <td>{{ $item->nama_obat }}</td>
-                                                    <td>{{ $item->jumlah }}</td>
-                                                    <td>{{ $item->satuan }}</td>
-                                                    <td>{{ Carbon\carbon::parse($item->tanggal)->format('d M Y') }}</td>
-                                                   
+                                                    <td>{{ $item->pasien->nama_pasien }}</td>
+                                                    <td>{{ $item->terapi }}</td>  
+                                                    <td>{{ Carbon\carbon::parse($item->tanggal)->format('d M Y') }}</td>  
+                                                    <td>{{ $item->hasil }}</td>
+                                                    
                                                     <td class="d-flex">
                                                         <button wire:click="openFormUpdatePerbaikanGizi({{ $item->id }})" class="btn btn-primary btn-sm">
                                                             <i class="bi bi-pencil-square"></i>
@@ -196,6 +129,11 @@
     </div>
 
     @section('js')
+
+        <script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
+
+
         <script src="{{  asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
         <script src="{{  asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
