@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Pasien as Pasiens;
 use App\Models\Jaminan;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Carbon;
 
 class Pasien extends Component
@@ -20,10 +21,11 @@ class Pasien extends Component
 
     public $openFormCreate, $openFormUpdate, $details, $openForm;
     public $data_jaminan, $pasienId;
+    public $printPage, $dataPrintWithId;
 
     public $no_rekamedis, $nama_pasien, $jenis_kelamin, $no_ktp, $no_kk,
         $no_antrian, $jaminan, $no_jaminan, $tanggal_lahir, $alamat,
-        $wilayah, $status_pasien, $keterangan, $nama_penanggung_jawab, $hubungan;
+        $wilayah, $status_pasien, $keterangan, $nama_penanggung_jawab, $hubungan, $nama_kk;
 
     public function render()
     {
@@ -85,6 +87,7 @@ class Pasien extends Component
         $this->keterangan = $user->keterangan;
         $this->nama_penanggung_jawab = $user->nama_penanggung_jawab;
         $this->hubungan = $user->hubungan_dengan_penanggung_jawab;
+        $this->nama_kk = $user->nama_kk;
 
         $this->pasienId = $user->id;
         $this->openFormCreate = true;
@@ -122,6 +125,7 @@ class Pasien extends Component
                 'usia' => $age,
                 'hubungan_dengan_penanggung_jawab' => $this->hubungan,
                 'nama_penanggung_jawab' => $this->nama_penanggung_jawab,
+                'nama_kk' => $this->nama_kk
             ]);
 
 
@@ -168,6 +172,7 @@ class Pasien extends Component
         $data->keterangan = $this->keterangan;
         $data->nama_penanggung_jawab = $this->nama_penanggung_jawab;
         $data->hubungan_dengan_penanggung_jawab = $this->hubungan;
+        $data->nama_kk = $this->nama_kk;
 
         $data->save();
 
@@ -187,6 +192,12 @@ class Pasien extends Component
         $this->openFormCreate = false;
     }
 
+    public function printStrukAntrian($id)
+    {
+        $this->dataPrintWithId = Pasiens::where('id', $id)->get();
+        $this->printPage = true;
+    }
+
 
     public function deletePasien($id)
     {
@@ -195,6 +206,9 @@ class Pasien extends Component
 
         $this->triggerConfirm();
     }
+
+
+
 
     public function triggerConfirm()
     {
@@ -254,7 +268,8 @@ class Pasien extends Component
             'alamat' => 'required',
             'wilayah' => 'required',
             'nama_penanggung_jawab' => 'required',
-            'hubungan' => 'required'
+            'hubungan' => 'required',
+            'nama_kk' => 'required'
 
         ]);
     }

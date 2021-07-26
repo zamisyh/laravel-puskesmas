@@ -11,7 +11,7 @@ class StokObat extends Model
     protected $table = 'stok_obat';
 
     protected $fillable = [
-        'id_obat', 'jumlah'
+        'id_obat', 'jumlah', 'stock_awal'
     ];
 
     public function obat()

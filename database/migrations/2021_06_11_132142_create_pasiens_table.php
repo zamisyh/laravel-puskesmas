@@ -19,6 +19,7 @@ class CreatePasiensTable extends Migration
             $table->string('no_kk');
             $table->string('no_antrian');
             $table->string('nama_pasien');
+            $table->string('nama_kk');
             $table->string('usia');
             $table->string('kode_paramedis');
             $table->string('no_ktp');

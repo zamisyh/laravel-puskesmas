@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Obat;
 use App\Models\Pasien;
 use App\Models\PengeluaranObat as PengeluaranObats;
+use App\Models\StokObat;
 
 class PengeluaranObat extends Component
 {
@@ -123,6 +124,11 @@ class PengeluaranObat extends Component
                 'keterangan' => !is_null($this->keterangan) ? $this->keterangan : '-',
             ]);
 
+            $data = StokObat::where('id_obat', $this->obat)->first();
+            $data->jumlah = $data->jumlah - $this->jumlah;
+
+            $data->save();
+
 
             $this->alert('success', 'Succesfully create pengeluaran obat', [
                 'position' =>  'top-end',
@@ -147,6 +153,18 @@ class PengeluaranObat extends Component
 
         $this->validasi();
         $data = PengeluaranObats::findOrFail($id);
+        $stok =  StokObat::where('id_obat', $this->obat)->first();
+
+
+
+        if ($data->jumlah != $this->jumlah) {
+            $stok->jumlah = $stok->jumlah - $this->jumlah + $data->jumlah;
+        } else {
+            $stok->jumlah = $data->jumlah;
+        }
+
+
+        $stok->save();
 
         $data->id_pasien = $this->nama_pasien;
         $data->id_obat = $this->obat;
@@ -155,6 +173,7 @@ class PengeluaranObat extends Component
 
 
         $data->save();
+
 
         $this->alert('success', 'Succesfully update pengeluaran obat', [
             'position' =>  'top-end',

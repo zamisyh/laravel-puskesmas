@@ -16,11 +16,11 @@ class CreateStokObatsTable extends Migration
         Schema::create('stok_obat', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_obat');
+            $table->string('stock_awal');
             $table->string('jumlah');
             $table->timestamps();
 
             $table->foreign('id_obat')->references('id')->on('obat')->onDelete('cascade')->onUpdate('cascade');
-
         });
     }
 

@@ -79,7 +79,8 @@ class Stock extends Component
 
             StokObat::create([
                 'id_obat' => $this->nama,
-                'jumlah' => $this->jumlah
+                'jumlah' => $this->jumlah,
+                'stock_awal' => $this->jumlah
             ]);
 
 

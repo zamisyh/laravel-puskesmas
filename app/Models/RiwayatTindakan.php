@@ -29,6 +29,6 @@ class RiwayatTindakan extends Model
 
     public function diagnosaMany()
     {
-        return $this->belongsToMany(Diagnosa::class, 'riwayat_tindakan_diagnosa')->withTimestamps();
+        return $this->belongsToMany(Diagnosa::class, 'diagnosa_riwayat_tindakan')->withTimestamps();
     }
 }

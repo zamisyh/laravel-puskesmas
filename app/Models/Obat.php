@@ -13,4 +13,10 @@ class Obat extends Model
     protected $fillable = [
         'kode_obat', 'nama_obat', 'jenis_obat', 'dosis_aturan_obat', 'satuan', 'sediaan'
     ];
+
+
+    public function stock()
+    {
+        return $this->hasOne(StokObat::class, 'id_obat');
+    }
 }

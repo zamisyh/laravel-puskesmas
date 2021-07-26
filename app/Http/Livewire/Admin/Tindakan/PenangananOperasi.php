@@ -261,7 +261,7 @@ class PenangananOperasi extends Component
 
     public function checkBiaya()
     {
-        if ($this->status_pasien == 'bpjs') {
+        if ($this->status_pasien == 'kis') {
             $this->formBpjs = true;
             $this->freeBpjs = true;
             $this->biaya = 0;

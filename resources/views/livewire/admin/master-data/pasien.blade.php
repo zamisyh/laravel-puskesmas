@@ -1,5 +1,40 @@
 <div>
 
+    @section('css')
+        <style>
+            td{
+                border: none;
+            }
+        </style>
+    @endsection
+
+
+    @if ($printPage)
+        @foreach ($dataPrintWithId as $item)
+            <table class="table w-25" border="none">
+                <tr>
+                    <td style="font-weight: 700">No. MR </td>
+                    <td>{{ $item->kode_paramedis }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700">KK</td>
+                    <td>{{ $item->no_kk }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700">Nama</td>
+                    <td>{{ $item->nama_pasien }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700">Jenis Kelamin</td>
+                    <td>{{ $item->jenis_kelamin }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700">Alamat</td>
+                    <td>{{ $item->alamat }}</td>
+                </tr>
+            </table>
+        @endforeach
+    @else
     @section('title', 'Master Data - Pasien')
 
     <div id="app">
@@ -68,6 +103,14 @@
                                             <label for="nama_pasien">Nama Pasien</label>
                                             <input type="text" wire:model.lazy='nama_pasien' class="form-control @error('nama_pasien') is-invalid @enderror" placeholder="Masukkan nama pasien">
                                             @error('nama_pasien')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label for="nama_kk">Nama KK</label>
+                                            <input type="text" wire:model.lazy='nama_kk' class="form-control @error('nama_kk') is-invalid @enderror" placeholder="Masukkan nama pasien">
+                                            @error('nama_kk')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -266,10 +309,11 @@
                                                     <th>No Rekamedis</th>
                                                     <th>No Antrian</th>
                                                     <th>Nama Pasien</th>
+                                                    <th>Nama KK</th>
                                                     <th>Usia</th>
                                                     <th>No KK</th>
-                                                    <th>No KTP Pasien</th>
                                                     @if ($details)
+                                                        <th>No KTP Pasien</th>
                                                         <th>Jaminan</th>
                                                         <th>No Jaminan</th>
                                                         <th>Jenis Kelamin</th>
@@ -287,10 +331,11 @@
                                                     <td>{{ $item->kode_paramedis }}</td>
                                                     <td>{{ $item->no_antrian }}</td>
                                                     <td>{{ $item->nama_pasien }}</td>
+                                                    <td>{{ $item->nama_kk }}</td>
                                                     <td>{{ $item->usia }}</td>
                                                     <td>{{ $item->no_kk }}</td>
-                                                    <td>{{ $item->no_ktp }}</td>
                                                     @if ($details)
+                                                        <td>{{ $item->no_ktp }}</td>
                                                         <td>{{ $item->jaminan->nama_jaminan }}</td>
                                                         <td>{{ $item->no_jaminan }}</td>
                                                         <td>{{ $item->jenis_kelamin }}</td>
@@ -308,6 +353,9 @@
                                                         </button>
                                                         <button wire:click.prevent='deletePasien({{ $item->id }})' style="margin-left: 5px" class="btn btn-danger btn-sm">
                                                             <i class="bi bi-trash-fill"></i>
+                                                        </button>
+                                                        <button wire:click='printStrukAntrian({{ $item->id }})' class="btn btn-info btn-sm" style="margin-left: 5px">
+                                                            <i class="bi bi-printer-fill"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -342,4 +390,5 @@
 
         <script src="{{  asset('assets/js/main.js') }}"></script>
     @endsection
+    @endif
 </div>

@@ -51,7 +51,7 @@
                                             <td>{{ $no_rekamedis }}</td>
                                         </tr>
                                         <tr>
-                                            <td>No Rawat</td>
+                                            <td>Nama Pasien</td>
                                             <td>{{ $nama_pasien }}</td>
                                         </tr>
                                     </table>

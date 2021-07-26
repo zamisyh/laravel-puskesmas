@@ -39,7 +39,7 @@
                                 <a href="{{ route('dash.master-data.poli') }}">Poli</a>
                                 <a href="{{ route('dash.master-data.jadwal-praktek-dokter') }}">Jadwal Praktek Dokter</a>
                                 <a href="{{ route('dash.master-data.diagnosa') }}">Diagnosa</a>
-                                <a href="{{ route('dash.master-data.tindakan') }}">Tindakan</a>
+                                {{-- <a href="{{ route('dash.master-data.tindakan') }}">Tindakan</a> --}}
                                 <a href="{{ route('dash.master-data.supplier') }}">Supplier</a>
                                 <a href="{{ route('dash.master-data.operasi') }}">Operasi</a>
                                 <a href="{{ route('dash.master-data.obat') }}">Obat-Obatan</a>
@@ -73,6 +73,7 @@
                                 <a href="{{ route('dash.transaksi.stock-obat') }}">Stock Obat</a>
                                 <a href="{{ route('dash.transaksi.pengadaan-obat') }}">Pengadaan Obat</a>
                                 <a href="{{ route('dash.transaksi.pengeluaran-obat') }}">Pengeluaran Obat</a>
+                                <a href="{{ route('dash.transaksi.lplpo') }}">LPLPO</a>
                             </li>
                         </ul>
                     </li>
@@ -144,7 +145,7 @@
 
                @hasanyrole('admin|pendaftaran')
                 <li class="sidebar-item  ">
-                    <a href="index.html" class='sidebar-link'>
+                    <a href="{{ route('dash.report') }}" class='sidebar-link'>
                         <i class="bi bi-calendar3-fill"></i>
                         <span>Report</span>
                     </a>

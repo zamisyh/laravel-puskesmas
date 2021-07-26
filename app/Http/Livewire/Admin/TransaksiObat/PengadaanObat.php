@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Models\PengadaanObat as PengadaanObats;
 use App\Models\Supplier;
 use App\Models\Obat;
+use App\Models\StokObat;
 use Carbon\Carbon;
 
 class PengadaanObat extends Component
@@ -143,6 +144,14 @@ class PengadaanObat extends Component
             ]);
 
 
+            $data = StokObat::where('id_obat', $this->obat)->first();
+            $data->jumlah = $data->jumlah + $this->jumlah;
+
+            $data->save();
+
+
+
+
             $this->alert('success', 'Succesfully create pengadaan obat', [
                 'position' =>  'top-end',
                 'timer' =>  3000,
@@ -167,6 +176,27 @@ class PengadaanObat extends Component
         $this->validasi();
         $data = PengadaanObats::findOrFail($id);
 
+        $stok =  StokObat::where('id_obat', $this->obat)->first();
+
+
+
+        if ($data->jumlah <= $this->jumlah) {
+            if ($data->jumlah != $this->jumlah) {
+                $stok->jumlah = $stok->jumlah + $this->jumlah;
+            } else {
+                $stok->jumlah = $stok->jumlah;
+            }
+        } else {
+            if ($data->jumlah == $this->jumlah) {
+                $stok->jumlah = $stok->jumlah;
+            } else {
+                $stok->jumlah = $stok->jumlah - $this->jumlah;
+            }
+        }
+
+
+        $stok->save();
+
         $data->id_obat = $this->obat;
         $data->no_trans = $this->no_batch;
         $data->harga_beli = $this->harga_beli;
@@ -175,7 +205,11 @@ class PengadaanObat extends Component
         $data->keterangan = $this->keterangan;
 
 
+
         $data->save();
+
+
+
 
         $this->alert('success', 'Succesfully update pengadaan obat', [
             'position' =>  'top-end',

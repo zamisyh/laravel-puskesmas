@@ -28,8 +28,11 @@ use App\Http\Livewire\Admin\Tindakan\PoliKia;
 use App\Http\Livewire\Admin\Tindakan\PerbaikanGizi;
 use App\Http\Livewire\Admin\Tindakan\DataBerobat;
 use App\Http\Livewire\Admin\Laboratorium;
+use App\Http\Livewire\Admin\Reports;
+use App\Http\Livewire\Test;
 
 use App\Http\Livewire\Admin\Home;
+use App\Http\Livewire\Admin\TransaksiObat\Lplpo;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +48,8 @@ use App\Http\Livewire\Admin\Home;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('test', Test::class);
 
 Route::prefix('auth')->group(function () {
     Route::get('signin', Login::class)->name('login');
@@ -95,6 +100,7 @@ Route::prefix('dash')->group(function () {
 
                 Route::prefix('transaksi')->group(function () {
                     Route::name('transaksi.')->group(function () {
+                        Route::get('lplpo', Lplpo::class)->name('lplpo');
                         Route::get('stock-obat', Stock::class)->name('stock-obat');
                         Route::get('pengadaan-obat', PengadaanObat::class)->name('pengadaan-obat');
                         Route::get('pengeluaran-obat', PengeluaranObat::class)->name('pengeluaran-obat');
@@ -118,6 +124,10 @@ Route::prefix('dash')->group(function () {
                 });
 
                 Route::get('laboratorium', Laboratorium::class)->name('laboratorium');
+            });
+
+            Route::middleware(['role:admin|dokter|laboratorium|pendaftaran'])->group(function () {
+                Route::get('reports',  Reports::class)->name('report');
             });
         });
     });
