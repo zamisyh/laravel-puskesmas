@@ -16,50 +16,46 @@ class Laboratorium extends Component
     ];
 
     public $search, $pageSize = 5;
-    
+
 
     public $openLab, $data_pasien, $data_labo, $openUpdateHasil;
     public $nama_pasien, $no_rawat, $no_rekamedis, $hasil = [];
-    
-    
+    public $printPage;
+
+
     public function render()
     {
 
 
         if ($this->search) {
-            
-            $data_lab = Lab::whereHas('pasien', function($q) {
+
+            $data_lab = Lab::whereHas('pasien', function ($q) {
                 $q->where('nama_pasien', 'LIKE', '%' . $this->search . '%')
                     ->orWhere('no_rawat', 'LIKE', '%' . $this->search . '%')
                     ->orWhere('no_rekammedis', 'LIKE', '%' . $this->search . '%');
             })->with('pasien')->paginate($this->pageSize);
-        
-        }else{
+        } else {
             $data_lab = Lab::with('pasien')->orderBy('created_at', 'DESC')->paginate($this->pageSize);
         }
 
         return view('livewire.admin.laboratorium', compact('data_lab'))->extends('layouts.app')->section('content');
     }
 
-    public function openFormLab($id) 
-    { 
-        $this->openLab = true; 
+    public function openFormLab($id)
+    {
+        $this->openLab = true;
         $this->data_pasien = Lab::where('id', $id)->with('pasien')->first();
         $this->nama_pasien = $this->data_pasien->pasien->nama_pasien;
         $this->no_rawat = $this->data_pasien->no_rawat;
         $this->no_rekamedis = $this->data_pasien->no_rekammedis;
-
     }
 
     public function updatedHasil()
     {
         $lab = Lab::where('no_rawat', $this->no_rawat)->first();
         foreach ($this->hasil as $key => $value) {
-           $lab->jenis_laboratorium()->updateExistingPivot($key, ['hasil' => $value]);
+            $lab->jenis_laboratorium()->updateExistingPivot($key, ['hasil' => $value]);
         }
-
-
-      
     }
 
     public function openInputUpdateHasil()
@@ -74,7 +70,7 @@ class Laboratorium extends Component
 
     public function refreshData()
     {
-        $this->emit('updatedHasil');   
+        $this->emit('updatedHasil');
     }
 
     public function updateData()
@@ -82,4 +78,9 @@ class Laboratorium extends Component
         $this->closeInputUpdateHasil();
     }
 
+    public function openPrint($id)
+    {
+        $this->data_pasien = Lab::where('id', $id)->with('pasien')->first();
+        $this->printPage = true;
+    }
 }
