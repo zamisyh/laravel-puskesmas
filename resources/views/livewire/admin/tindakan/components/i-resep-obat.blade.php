@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <form wire:submit.prevent='saveResepObat'>
-            <div class="form-group" wire:ignore>
+            <div class="form-group">
                 <label for="nama_obat">Nama Obat</label>
                 <select wire:model.lazy='nama_obat' class="form-control @error('nama_obat')
                         is-invalid
@@ -47,7 +47,7 @@
                 <label for="stock_obat">Stock Obat</label>
                 <input type="text" wire:model.lazy='stock_obat' class="form-control" readonly>
             </div>
-            
+
             <div class="form-group">
                 <label for="jumlah_obat">Jumlah</label>
                 <input type="text" wire:model.lazy='jumlah_obat' class="form-control @error('jumlah_obat')
@@ -66,7 +66,7 @@
                 @endif
             </div>
         </form>
-    </div> 
+    </div>
 </div>
 
 <script>

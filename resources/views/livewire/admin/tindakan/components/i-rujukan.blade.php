@@ -12,23 +12,25 @@
             </div>
             <div class="form-group">
                 <label for="diagnosa">Diagnosa</label>
-            
+
                 <p>
                     <ul>
                         @foreach ($nama_diagnosa->diagnosaMany as $item)
                             <li>[ {{ $item->code }} ] {{ $item->nama_penyakit }}</li>
                         @endforeach
+
+
                     </ul>
                 </p>
             </div>
-    
+
             <div class="form-group">
                 <label for="nama_rumah_sakit">Nama Rumah Sakit</label>
                 <input type="text" wire:model='nama_rumah_sakit' class="form-control @error('nama_rumah_sakit')
                     is-invalid
                 @enderror">
             </div>
-    
+
             <div class="form-group">
                 <label for="poli_rujukan_tujuan">Poli Tujuan</label>
                 <input type="text" wire:model='poli_rujukan_tujuan' class="form-control @error('poli_rujukan_tujuan')
@@ -38,5 +40,5 @@
 
             <button class="btn btn-success">Submit</button>
         </form>
-    </div> 
+    </div>
 </div>

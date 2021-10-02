@@ -69,12 +69,12 @@ class DataBerobat extends Component
 
 
 
-            //tindakan 
+            //tindakan
             if ($this->i_tindakan) {
                 $this->poli_tujuan = $pasien->poli->nama_poli;
                 $this->poliId = $pasien->poli->id;
                 $this->data_diagnosa = Diagnosa::orderBy('created_at', 'DESC')->get();
-              
+
             } else if ($this->i_resep_obat) {
                 $this->data_obat = StokObat::with('obat')
                     ->orderBy('created_at', 'DESC')
@@ -84,7 +84,7 @@ class DataBerobat extends Component
                     ->with('diagnosa')->orderBy('created_at', 'DESC')->first();
 
                 if (is_null($data_rujukan)) {
-                    $this->nama_diagnosa = 'Silahkan input tindakan terlebih dahulu';
+                    dd('Masukan tindakan terlebih dahulu');
                 } else {
                     $this->nama_diagnosa = RiwayatTindakan::where('no_rawat', $this->no_rawat)->first();
                 }
@@ -252,8 +252,8 @@ class DataBerobat extends Component
 
             $stok->jumlah <= 0 ? $stok->jumlah = 0 : $stok->jumlah;
             $this->reset(['nama_obat', 'jenis_obat', 'dosis', 'jumlah_obat', 'kode_obat', 'stock_obat']);
-            
-          
+
+
 
             $stok->save();
 
