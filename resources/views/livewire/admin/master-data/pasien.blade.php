@@ -17,6 +17,10 @@
                     <td>{{ $item->kode_paramedis }}</td>
                 </tr>
                 <tr>
+                    <td style="font-weight: 700">No. Antrian </td>
+                    <td>{{ $item->no_antrian }}</td>
+                </tr>
+                <tr>
                     <td style="font-weight: 700">KK</td>
                     <td>{{ $item->no_kk }}</td>
                 </tr>
@@ -46,11 +50,11 @@
                 <div class="page-heading">
                     <div class="page-title">
                         <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
+                            <div class="order-last col-12 col-md-6 order-md-1">
                                 <h3>Pendaftaran - Pasien</h3>
                                 <p class="text-subtitle text-muted">Hi, this is page for manajement data Pasien</p>
                             </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
+                            <div class="order-first col-12 col-md-6 order-md-2">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('dash.home') }}">Dashboard</a></li>
@@ -93,7 +97,7 @@
 
                                         <div class="form-group">
                                             <label for="no_antrian">Nomor Antrian</label>
-                                            <input type="text" wire:model.lazy='no_antrian' class="form-control @error('no_antrian') is-invalid @enderror" placeholder="Masukkan no jaminan pasien">
+                                            <input type="text" wire:model.lazy='no_antrian' class="form-control @error('no_antrian') is-invalid @enderror" placeholder="Masukkan no antrian">
                                             @error('no_antrian')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -127,7 +131,7 @@
                                             @enderror
                                         </div>
 
-                                     
+
 
                                         <div class="form-group">
                                             <label for="no_kk">Nomor Kartu Keluarga</label>
@@ -145,15 +149,15 @@
                                             @enderror
                                         </div>
 
-                                     
-                                    
+
+
                                        @if (!$openForm)
                                             <button type="button" class="btn btn-primary" wire:loading.remove wire:click='openLoadForm'>Load More</button>
                                             <button wire:loading wire:target='openLoadForm' type="button" disabled class="btn btn-primary">
                                                 <span class="spinner-border" role="status"
                                                 aria-hidden="true"></span>
                                             </button>
-                        
+
                                        @endif
 
                                         @if ($openForm)
@@ -193,7 +197,7 @@
                                                 @error('nama_penanggung_jawab')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
-                                            </div>  
+                                            </div>
 
                                             <div class="form-group">
                                                 <label for="hubungan">Hubungan</label>
@@ -219,7 +223,7 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            
+
                                             <div class="form-group">
                                                 <label for="wilayah">Wilayah</label>
                                                 <select wire:model.lazy='wilayah' class="form-control @error('wilayah') is-invalid @enderror">
@@ -240,7 +244,7 @@
                                                 @enderror
                                             </div>
 
-                                           
+
                                             <div class="form-group">
                                                 <label for="keterangan">Keterangan</label>
                                                 <textarea rows="4" wire:model.lazy='keterangan' class="form-control @error('keterangan') is-invalid @enderror" placeholder="Masukkan keterangan pasien"></textarea>
@@ -249,10 +253,10 @@
                                                 @enderror
                                             </div>
 
-                                            
 
-                                    
-                                            
+
+
+
 
                                             @if ($pasienId)
                                                 <button class="btn btn-primary">Update</button>
@@ -260,7 +264,7 @@
                                                 <button class="btn btn-primary">Submit</button>
                                         @endif
                                         @endif
-                                        
+
 
                                     </form>
                                 </div>
@@ -341,8 +345,8 @@
                                                         <td>{{ $item->jenis_kelamin }}</td>
                                                         <td>
                                                             {{ ucwords(strtolower($item->tempat_lahir)) }},
-                                                            {{ Carbon\carbon::parse($item->tanggal_lahir)->format('d M Y') }} 
-                                                        
+                                                            {{ Carbon\carbon::parse($item->tanggal_lahir)->format('d M Y') }}
+
                                                         </td>
                                                         <td>{{ $item->alamat }}</td>
                                                         <td>{{ $item->wilayah }}</td>
