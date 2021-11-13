@@ -30,6 +30,8 @@ class CreateRiwayatTindakansTable extends Migration
             $table->string('rr');
             $table->string('bb');
             $table->string('lp');
+            $table->string('imt');
+            $table->string('jenis_kasus');
             $table->string('rencana_pengobatan');
             $table->string('no_rekamedis');
             $table->timestamps();

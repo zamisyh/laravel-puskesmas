@@ -10,7 +10,7 @@
                     is-invalid
                 @enderror" readonly>
             </div>
-    
+
             <div class="form-group">
                 <label for="keluhan">Keluhan</label>
                 <input type="text" wire:model.lazy='keluhan' class="form-control @error('keluhan')
@@ -20,7 +20,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
+
             <div class="form-group">
                 <label for="pemeriksaan_fisik">Pemeriksaan Fisik</label>
                 <input type="text" wire:model.lazy='pemeriksaan_fisik' class="form-control @error('pemeriksaan_fisik')
@@ -30,8 +30,8 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
-    
+
+
             <div class="form-group">
                 <label for="temperatur">Temperatur</label>
                 <input type="number" wire:model.lazy='temperatur' class="form-control @error('temperatur')
@@ -41,22 +41,15 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
+
+
             <div class="form-group">
-                <label for="tinggi_badan">Tinggi Badan</label>
-                <input type="number" wire:model.lazy='tinggi_badan' class="form-control @error('tinggi_badan')
-                    is-invalid
-                @enderror" placeholder="Masukkan tinggi badan">
-                @error('tinggi_badan')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-    
-            <div class="form-group">
-                <label for="tekanan_nadi">Tekanan Nadi</label>
-                <input type="text" wire:model.lazy='tekanan_nadi' class="form-control @error('tekanan_nadi')
-                    is-invalid
-                @enderror" placeholder="Masukkan tekanan nadi">
+                <label for="tekanan_nadi">Nadi</label>
+                <select wire:model.lazy='tekanan_nadi' class="form-control @error('tekanan_nadi') is-invalid @enderror">
+                    <option value="">Pilih</option>
+                    <option value="lemah">Lemah</option>
+                    <option value="kuat">Kuat</option>
+                </select>
                 @error('tekanan_nadi')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -71,7 +64,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
+
             <div class="form-group">
                 <label for="hr">HR</label>
                 <input type="text" wire:model.lazy='hr' class="form-control @error('hr')
@@ -81,7 +74,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
+
             <div class="form-group">
                 <label for="rr">RR</label>
                 <input type="text" wire:model.lazy='rr' class="form-control @error('rr')
@@ -91,17 +84,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
-            <div class="form-group">
-                <label for="bb">BB</label>
-                <input type="text" wire:model.lazy='bb' class="form-control @error('bb')
-                    is-invalid
-                @enderror" placeholder="Masukkan bb">
-                @error('bb')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-    
+
             <div class="form-group">
                 <label for="lp">LP</label>
                 <input type="text" wire:model.lazy='lp' class="form-control @error('lp')
@@ -111,7 +94,32 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
+
+            <div class="form-group">
+                <label for="tinggi_badan">TT</label>
+                <input type="number" wire:model.lazy='tinggi_badan' class="form-control @error('tinggi_badan')
+                    is-invalid
+                @enderror" placeholder="Masukkan tinggi badan">
+                @error('tinggi_badan')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="bb">BB</label>
+                <input type="number" wire:model.lazy='bb' class="form-control @error('bb')
+                    is-invalid
+                @enderror" placeholder="Masukkan bb">
+                @error('bb')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="imt">IMT</label>
+                <input type="text" class="form-control" wire:model='imt' readonly>
+            </div>
+
             <div class="form-group">
                 <label for="pemeriksaan_penunjang">Pemeriksa Penunjang</label>
                 <input type="text" wire:model.lazy='pemeriksaan_penunjang' class="form-control @error('pemeriksaan_penunjang')
@@ -121,7 +129,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
+
             <div class="form-group" wire:ignore>
                 <label for="diagnosa">Diagnosa</label>
                 <select wire:model.lazy='diagnosa' id="select2_diagnosa" class="form-control @error('diagnosa')
@@ -163,7 +171,19 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
+
+            <div class="form-group">
+                <label for="jenis_kasus">Jenis Kasus</label>
+                <select wire:model.lazy='jenis_kasus' class="form-control @error('jenis_kasus') is-invalid @enderror">
+                    <option value="">Pilih</option>
+                    <option value="baru">Baru</option>
+                    <option value="lama">Lama</option>
+                </select>
+                @error('jenis_kasus')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
             <div class="form-group">
                 <label for="rencana_pengobatan">Rencana Pengobatan</label>
                 <input type="text" wire:model.lazy='rencana_pengobatan' class="form-control @error('rencana_pengobatan')
@@ -173,13 +193,13 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-    
+
             <div class="form-group">
                 <button class="btn btn-success">Submit</button>
             </div>
         </form>
 
-    </div> 
+    </div>
 </div>
 
 <script>

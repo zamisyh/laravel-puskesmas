@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use function Complex\tanh;
+
 class CreatePasiensTable extends Migration
 {
     /**
@@ -26,8 +28,10 @@ class CreatePasiensTable extends Migration
             $table->string('no_jaminan');
             $table->string('jenis_kelamin');
             $table->date('tanggal_lahir');
+            $table->date('tanggal_lahir_kk');
+            $table->string('jenis_kelamin_kk');
             $table->string('alamat');
-            $table->string('nama_penanggung_jawab');
+            $table->string('nama_faskes');
             $table->string('hubungan_dengan_penanggung_jawab');
             $table->string('status_pasien');
             $table->string('wilayah');

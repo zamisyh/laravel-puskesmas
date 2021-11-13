@@ -5,7 +5,7 @@
     @endsection
 
     @section('title', 'Tindakan - Data Berobat')
-    
+
 
     <div id="app">
         @include('livewire.admin.components.sidebar')
@@ -16,11 +16,11 @@
                 <div class="page-heading">
                     <div class="page-title">
                         <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
+                            <div class="order-last col-12 col-md-6 order-md-1">
                                 <h3>Tindakan - Data Berobat</h3>
                                 <p class="text-subtitle text-muted">Hi, this is page for manajement data Berobat</p>
                             </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
+                            <div class="order-first col-12 col-md-6 order-md-2">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('dash.home') }}">Dashboard</a></li>
@@ -44,8 +44,8 @@
                                         <div class="card-body">
                                             <table class="table table-bordered">
                                                 <tr>
-                                                    <td>No Rawat</td>
-                                                    <td>{{ $no_rawat }}</td>
+                                                    <td>No Antrian</td>
+                                                    <td>{{ $no_antrian }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>No Rekamedis</td>
@@ -99,11 +99,11 @@
                                                 <table class="table table-bordered table-hover">
                                                     <tbody>
                                                         @foreach ($data_lab as $item)
-                                                            <tr>                                                                
+                                                            <tr>
                                                                 <td>
-                                                                    @if ($item->keterangan == 'Hematologi' OR 
-                                                                    $item->keterangan == 'Kimia Darah' OR 
-                                                                    $item->keterangan == 'Urinalisa' OR 
+                                                                    @if ($item->keterangan == 'Hematologi' OR
+                                                                    $item->keterangan == 'Kimia Darah' OR
+                                                                    $item->keterangan == 'Urinalisa' OR
                                                                     $item->keterangan == 'Imuno / Serologi')
                                                                         <h4>{{ $item->keterangan }}</h4>
 
@@ -113,7 +113,7 @@
                                                                 </td>
                                                                  @if ($item->keterangan != 'Hematologi' &&
                                                                     $item->keterangan != 'Kimia Darah' &&
-                                                                    $item->keterangan != 'Urinalisa' && 
+                                                                    $item->keterangan != 'Urinalisa' &&
                                                                     $item->keterangan != 'Imuno / Serologi')
                                                                     <td>
                                                                         <input type="checkbox" wire:model='lab_keterangan' value="{{ $item->id }}">
@@ -126,7 +126,7 @@
 
                                                 <button class="btn btn-success">Submit</button>
                                             </form>
-                                        </div> 
+                                        </div>
                                     </div>
 
                                 @elseif ($i_tindakan)
@@ -142,7 +142,7 @@
                                 <div class="card-header bg-success">
                                     <h4 class="text-white">Riwayat Tindakan</h4>
                                 </div>
-                                <div class="card-body mt-4">
+                                <div class="mt-4 card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-striped table-hover">
                                             <thead>
@@ -208,7 +208,7 @@
                                 <div class="card-header bg-success">
                                     <h4 class="text-white">Resep Obat</h4>
                                 </div>
-                                <div class="card-body mt-4">
+                                <div class="mt-4 card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-striped table-hover">
                                             <thead>
@@ -221,7 +221,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                 
+
                                              @foreach ($data_resep_obat as $key => $item)
                                                  <tr>
                                                      <td>{{ $data_resep_obat->firstItem() + $key }}</td>
@@ -242,7 +242,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="card">  
+                            <div class="card">
                                 <div class="card-header">
                                     <h4>Data Berobat</h4>
                                 </div>
@@ -277,10 +277,10 @@
                                         <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>No Rawat</th>
+                                                    <th>No Antrian</th>
                                                     <th>No Rekamedis</th>
                                                     <th>Nama Pasien</th>
-                                                    <th>Status</th>
+                                                    <th>Jaminan</th>
                                                     @if ($details)
                                                         <th>Nama Dokter</th>
                                                         <th>Jenis Poli</th>
@@ -292,7 +292,7 @@
                                             @forelse ($data_berobat as $key => $item)
                                                 <tr>
                                                     <td>{{ $data_berobat->firstItem() + $key }}</td>
-                                                    <td>{{ $item->no_rawat }}</td>
+                                                    <td>{{ $item->pasien->no_antrian }}</td>
                                                     <td>{{ $item->no_rekammedis }}</td>
                                                     <td>{{ $item->pasien->nama_pasien }}</td>
                                                     <td>{{ $item->status_pasien }}</td>
@@ -321,10 +321,10 @@
                                     <div>
                                         {{ $data_berobat->links() }}
                                     </div>
-                                
+
                                 </div>
 
-                                
+
                             </div>
                         @endif
                     </section>

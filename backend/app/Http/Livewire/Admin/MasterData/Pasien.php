@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Pasien as Pasiens;
 use App\Models\Jaminan;
+use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Carbon;
 
@@ -23,13 +24,12 @@ class Pasien extends Component
     public $data_jaminan, $pasienId;
     public $printPage, $dataPrintWithId;
 
-    public $no_rekamedis, $nama_pasien, $jenis_kelamin, $no_ktp, $no_kk,
+    public $no_rekamedis, $nama_pasien, $jenis_kelamin, $jenis_kelamin_kk, $no_ktp, $no_kk,
         $no_antrian, $jaminan, $no_jaminan, $tanggal_lahir, $alamat,
-        $wilayah, $status_pasien, $keterangan, $nama_penanggung_jawab, $hubungan, $nama_kk;
+        $wilayah, $status_pasien, $keterangan, $nama_faskes, $hubungan, $nama_kk, $tanggal_lahir_kk;
 
     public function render()
     {
-
         $this->data_jaminan = Jaminan::orderBy('created_at', 'DESC')->get();
 
         if ($this->search) {
@@ -76,6 +76,7 @@ class Pasien extends Component
         $this->no_rekamedis = $user->kode_paramedis;
         $this->nama_pasien = $user->nama_pasien;
         $this->jenis_kelamin = $user->jenis_kelamin;
+        $this->jenis_kelamin_kk = $user->jenis_kelamin_kk;
         $this->no_kk = $user->no_kk;
         $this->no_ktp = $user->no_ktp;
         $this->no_antrian = $user->no_antrian;
@@ -85,9 +86,10 @@ class Pasien extends Component
         $this->alamat = $user->alamat;
         $this->wilayah = $user->wilayah;
         $this->keterangan = $user->keterangan;
-        $this->nama_penanggung_jawab = $user->nama_penanggung_jawab;
+        $this->nama_faskes = $user->nama_faskes;
         $this->hubungan = $user->hubungan_dengan_penanggung_jawab;
         $this->nama_kk = $user->nama_kk;
+        $this->tanggal_lahir_kk = $user->tanggal_lahir_kk;
 
         $this->pasienId = $user->id;
         $this->openFormCreate = true;
@@ -109,7 +111,7 @@ class Pasien extends Component
         try {
 
             Pasiens::create([
-                'kode_paramedis' => strtoupper($this->no_rekamedis),
+                'kode_paramedis' => $this->getNameRekamMedis(),
                 'nama_pasien' => $this->nama_pasien,
                 'jenis_kelamin' => $this->jenis_kelamin,
                 'no_kk' => $this->no_kk,
@@ -124,8 +126,10 @@ class Pasien extends Component
                 'status_pasien' => $findJaminan->nama_jaminan,
                 'usia' => $age,
                 'hubungan_dengan_penanggung_jawab' => $this->hubungan,
-                'nama_penanggung_jawab' => $this->nama_penanggung_jawab,
-                'nama_kk' => $this->nama_kk
+                'nama_faskes' => $this->nama_faskes,
+                'nama_kk' => $this->nama_kk,
+                'tanggal_lahir_kk' => $this->tanggal_lahir_kk,
+                'jenis_kelamin_kk' => $this->jenis_kelamin_kk
             ]);
 
 
@@ -170,9 +174,11 @@ class Pasien extends Component
         $data->wilayah = $this->wilayah;
         $data->usia = \Carbon\Carbon::parse($this->tanggal_lahir)->age;
         $data->keterangan = $this->keterangan;
-        $data->nama_penanggung_jawab = $this->nama_penanggung_jawab;
+        $data->nama_faskes = $this->nama_faskes;
         $data->hubungan_dengan_penanggung_jawab = $this->hubungan;
         $data->nama_kk = $this->nama_kk;
+        $data->tanggal_lahir_kk = $this->tanggal_lahir_kk;
+        $data->jenis_kelamin_kk = $this->jenis_kelamin_kk;
 
         $data->save();
 
@@ -245,6 +251,20 @@ class Pasien extends Component
         return 'NIP-' . date('His') . '-' . rand(10000, 100000);
     }
 
+    public function getNameRekamMedis()
+    {
+        $words = explode(" ", $this->nama_kk);
+        $name = "";
+
+        foreach ($words as $w) {
+            $name .= $w[0];
+        }
+
+        $date = date('dmY', strtotime($this->tanggal_lahir_kk));
+
+        return $name . '-'. $date . '-' . strtoupper(Str::random(5));
+    }
+
     public function resetForm()
     {
         $this->resetErrorBag();
@@ -255,7 +275,7 @@ class Pasien extends Component
     public function validasi()
     {
         return $this->validate([
-            'no_rekamedis' => 'required',
+            // 'no_rekamedis' => 'required',
             'nama_pasien' => 'required|min:4',
             'jenis_kelamin' => 'required',
             'no_kk' => 'required|numeric',
@@ -267,9 +287,11 @@ class Pasien extends Component
             'tanggal_lahir' => 'required',
             'alamat' => 'required',
             'wilayah' => 'required',
-            'nama_penanggung_jawab' => 'required',
+            'nama_faskes' => 'required',
             'hubungan' => 'required',
-            'nama_kk' => 'required'
+            'nama_kk' => 'required',
+            'tanggal_lahir_kk' => 'required',
+            'jenis_kelamin_kk' => 'required'
 
         ]);
     }

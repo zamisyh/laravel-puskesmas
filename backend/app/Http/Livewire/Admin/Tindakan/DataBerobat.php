@@ -19,6 +19,9 @@ use App\Models\Laboratorium;
 class DataBerobat extends Component
 {
 
+
+
+
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['confirmed'];
@@ -34,7 +37,9 @@ class DataBerobat extends Component
     //tindakan
     public $poli_tujuan, $keluhan, $pemeriksaan_fisik, $temperatur, $tinggi_badan,
         $tekanan_darah, $tekanan_nadi, $hr, $rr, $bb, $lp, $pemeriksaan_penunjang,
-        $diagnosa, $nama_tindakan, $rencana_pengobatan, $hasil_periksa;
+        $diagnosa, $nama_tindakan, $rencana_pengobatan, $hasil_periksa, $no_antrian,
+        $imt, $jenis_kasus;
+
 
 
     //resep obat
@@ -57,11 +62,13 @@ class DataBerobat extends Component
     {
 
 
+
         if ($this->openDataDetails) {
             $pasien = Pendaftaran::with('pasien', 'poli')->findOrFail($this->formId);
 
 
             $this->no_rawat = $pasien->no_rawat;
+            $this->no_antrian = $pasien->pasien->no_antrian;
             $this->no_rekamedis = $pasien->no_rekammedis;
             $this->nama_pasien = $pasien->pasien->nama_pasien;
             $this->id_pasien = $pasien->pasien->id;
@@ -172,11 +179,18 @@ class DataBerobat extends Component
         $this->i_lab = false;
     }
 
+    public function updatedBb(){
+       if ($this->tinggi_badan == true) {
+           $tb =  $this->tinggi_badan / 100;
+           $this->imt = number_format($this->bb / ($tb * $tb), 1, '.', '');
+       }
+    }
+
     public function saveTindakan()
     {
 
 
-        // $this->validateTindakan();
+        $this->validateTindakan();
 
 
 
@@ -198,7 +212,9 @@ class DataBerobat extends Component
                 'lp' => !empty($this->lp) ? $this->lp : 0,
                 'penunjang' => $this->pemeriksaan_penunjang,
                 'no_rekamedis' => $this->no_rekamedis,
-                'rencana_pengobatan' => $this->rencana_pengobatan
+                'rencana_pengobatan' => $this->rencana_pengobatan,
+                'imt' => $this->imt,
+                'jenis_kasus' => $this->jenis_kasus,
             ]);
 
             $data->diagnosaMany()->attach($this->diagnosa);
@@ -450,7 +466,8 @@ class DataBerobat extends Component
             'pemeriksaan_penunjang' => 'required',
             'diagnosa' => 'required',
             'nama_tindakan' => 'required',
-            'rencana_pengobatan' => 'required'
+            'rencana_pengobatan' => 'required',
+            'jenis_kasus' => 'required'
         ]);
     }
 

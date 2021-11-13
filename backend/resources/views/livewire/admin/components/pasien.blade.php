@@ -6,14 +6,14 @@
             wire:submit.prevent='savePendaftaran'
         @endif
     >
-       
+
         <div class="row">
             <div class="col-lg-5">
                 <h5>Data Pendaftaran</h5>
 
                 <div class="form-group">
-                    <label for="no_rawat">No Rawat</label>
-                    <input wire:model.lazy='no_rawat' type="text" class="form-control" readonly>
+                    <label for="no_antrian">No Antrian</label>
+                    <input wire:model.lazy='no_antrian' type="text" class="form-control" readonly>
                 </div>
 
                 <div class="form-group">
@@ -41,11 +41,11 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-            </div> 
+            </div>
             <div class="col-lg-7">
                 <h5>Data Pasien</h5>
-                
-        
+
+
                 <div class="form-group" wire:ignore>
                     <label for="pasien">Pasien</label>
                     <select  id="pasien" wire:model.lazy='pasien' class="form-control @error('pasien') is-invalid @enderror">
@@ -71,7 +71,7 @@
                         <a href="#!" wire:click='closeDetailPasien'>Tutup semua data</a>
                     @endif
                 </div>
-                
+
                 @if ($showDataPasien)
                     <div class="form-group">
                         <label for="no_kk">No KK</label>
@@ -111,7 +111,7 @@
                         @error('nama_penanggung_jawab')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>  
+                    </div>
 
                     <div class="form-group">
                         <label for="hubungan">Hubungan</label>
@@ -139,12 +139,12 @@
                     </div>
                 @endif
 
-           
+
 
             </div>
         </div>
 
-       
+
         <div class="form-group" style="margin-top: 3% ;">
             @if ($pendaftaranId)
                 <button class="btn btn-primary">Update</button>

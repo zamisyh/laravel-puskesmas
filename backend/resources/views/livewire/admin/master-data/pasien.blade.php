@@ -11,32 +11,51 @@
 
     @if ($printPage)
         @foreach ($dataPrintWithId as $item)
-            <table class="table w-25" border="none">
-                <tr>
-                    <td style="font-weight: 700">No. MR </td>
-                    <td>{{ $item->kode_paramedis }}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: 700">No. Antrian </td>
-                    <td>{{ $item->no_antrian }}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: 700">KK</td>
-                    <td>{{ $item->no_kk }}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: 700">Nama</td>
-                    <td>{{ $item->nama_pasien }}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: 700">Jenis Kelamin</td>
-                    <td>{{ $item->jenis_kelamin }}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: 700">Alamat</td>
-                    <td>{{ $item->alamat }}</td>
-                </tr>
-            </table>
+            <center>
+                <div class="">
+                    <img src="{{ asset('logo.ico') }}" height="80" width="80" class="mt-10">
+                    <h5 class="p-1">UPTD Puskesmas Perumnas 2</h5>
+                    <span>JL Belut Raya, No. 1, Kayuringin, <br> Bekasi Bekasi, Jawa Barat <br>Indonesia 17144. Phone: (021) 88954619</span>
+                </div>
+                <table class="table mt-2 w-25 table-bordered" border="4">
+                    <tr>
+                        <td style="font-weight: 700">No. MR</td>
+                        <td>{{ $item->kode_paramedis }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700">No. Antrian </td>
+                        <td>{{ $item->no_antrian }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700">Nama Pasien</td>
+                        <td>{{ $item->nama_pasien }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700">Nama KK</td>
+                        <td>{{ $item->nama_kk }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700">Jaminan</td>
+                        <td>{{ $item->jaminan->nama_jaminan }} / {{ $item->no_jaminan }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700">Tanggal Lahir</td>
+                        <td>{{ Carbon\carbon::parse($item->tanggal_lahir_kk)->format('d-m-Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700">Usia</td>
+                        <td>{{ $item->usia }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700">Jenis Kelamin</td>
+                        <td>{{ $item->jenis_kelamin }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700">Alamat</td>
+                        <td>{{ $item->alamat }}</td>
+                    </tr>
+                </table>
+        </center>
         @endforeach
     @else
     @section('title', 'Master Data - Pasien')
@@ -70,97 +89,80 @@
                     <section class="section">
                         <div class="card">
                             @if ($openFormCreate)
-                                <div class="card-header">
-                                    <div class="d-flex justify-content-between">
-                                        <h4>Create Pasien</h4>
-                                        <div>
-                                            <button wire:click='closeFormCreatePasien' class="btn btn-sm btn-primary">X</button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="card-body">
+                                <form
+                                    @if ($pasienId)
+                                        wire:submit.prevent='updatePasien({{ $pasienId }})'
+                                    @else
+                                        wire:submit.prevent='savePasien'
+                                    @endif
+                                >
 
-                                <div class="card-body">
-                                    <form
-                                        @if ($pasienId)
-                                            wire:submit.prevent='updatePasien({{ $pasienId }})'
-                                        @else
-                                            wire:submit.prevent='savePasien'
-                                        @endif
-                                    >
-                                        <div class="form-group">
-                                            <label for="no_rekamedis">No Rekamedis</label>
-                                            <input type="text" wire:model.lazy='no_rekamedis' class="form-control @error('no_rekamedis') is-invalid @enderror" placeholder="Masukkan No Rekamedis">
-                                            @error('no_rekamedis')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <h5>Data Pasien</h5>
 
-                                        <div class="form-group">
-                                            <label for="no_antrian">Nomor Antrian</label>
-                                            <input type="text" wire:model.lazy='no_antrian' class="form-control @error('no_antrian') is-invalid @enderror" placeholder="Masukkan no antrian">
-                                            @error('no_antrian')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                            {{-- <div class="form-group">
+                                                <label for="no_rekamedis">No Rekamedis</label>
+                                                <input type="text" wire:model.lazy='no_rekamedis' class="form-control @error('no_rekamedis') is-invalid @enderror" placeholder="Masukkan No Rekamedis">
+                                                @error('no_rekamedis')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div> --}}
 
-                                        <div class="form-group">
-                                            <label for="nama_pasien">Nama Pasien</label>
-                                            <input type="text" wire:model.lazy='nama_pasien' class="form-control @error('nama_pasien') is-invalid @enderror" placeholder="Masukkan nama pasien">
-                                            @error('nama_pasien')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="no_antrian">Nomor Antrian</label>
+                                                <input type="text" wire:model.lazy='no_antrian' class="form-control @error('no_antrian') is-invalid @enderror" placeholder="Masukkan no antrian">
+                                                @error('no_antrian')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
-                                         <div class="form-group">
-                                            <label for="nama_kk">Nama KK</label>
-                                            <input type="text" wire:model.lazy='nama_kk' class="form-control @error('nama_kk') is-invalid @enderror" placeholder="Masukkan nama pasien">
-                                            @error('nama_kk')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="jenis_kelamin">Jenis Kelamin</label>
-                                            <select wire:model.lazy='jenis_kelamin' class="form-control @error('jenis_kelamin') is-invalid @enderror">
-                                                <option selected>Pilih</option>
-                                                <option value="L">Laki-laki</option>
-                                                <option value="P">Perempuan</option>
-                                            </select>
-                                            @error('jenis_kelamin')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="nama_pasien">Nama Pasien</label>
+                                                <input type="text" wire:model.lazy='nama_pasien' class="form-control @error('nama_pasien') is-invalid @enderror" placeholder="Masukkan nama pasien">
+                                                @error('nama_pasien')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
 
+                                            <div class="form-group">
+                                                <label for="jenis_kelamin">Jenis Kelamin</label>
+                                                <select wire:model.lazy='jenis_kelamin' class="form-control @error('jenis_kelamin') is-invalid @enderror">
+                                                    <option selected>Pilih</option>
+                                                    <option value="L">Laki-laki</option>
+                                                    <option value="P">Perempuan</option>
+                                                </select>
+                                                @error('jenis_kelamin')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label for="no_kk">Nomor Kartu Keluarga</label>
-                                            <input type="number" wire:model.lazy='no_kk' class="form-control @error('no_kk') is-invalid @enderror" placeholder="Masukkan no kk pasien">
-                                            @error('no_kk')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="tanggal_lahir">Tanggal Lahir</label>
+                                                <input type="date" wire:model.lazy='tanggal_lahir' class="form-control @error('tanggal_lahir') is-invalid @enderror">
+                                                @error('tanggal_lahir')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label for="no_ktp">Nomor KTP</label>
-                                            <input type="number" wire:model.lazy='no_ktp' class="form-control @error('no_ktp') is-invalid @enderror" placeholder="Masukkan no ktp pasien">
-                                            @error('no_ktp')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="no_kk">Nomor Kartu Keluarga</label>
+                                                <input type="number" wire:model.lazy='no_kk' class="form-control @error('no_kk') is-invalid @enderror" placeholder="Masukkan no kk pasien">
+                                                @error('no_kk')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
+                                            <div class="form-group">
+                                                <label for="no_ktp">Nomor KTP</label>
+                                                <input type="number" wire:model.lazy='no_ktp' class="form-control @error('no_ktp') is-invalid @enderror" placeholder="Masukkan no ktp pasien">
+                                                @error('no_ktp')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
-
-                                       @if (!$openForm)
-                                            <button type="button" class="btn btn-primary" wire:loading.remove wire:click='openLoadForm'>Load More</button>
-                                            <button wire:loading wire:target='openLoadForm' type="button" disabled class="btn btn-primary">
-                                                <span class="spinner-border" role="status"
-                                                aria-hidden="true"></span>
-                                            </button>
-
-                                       @endif
-
-                                        @if ($openForm)
                                             <div class="form-group">
                                                 <label for="jaminan">Jaminan</label>
                                                 <select wire:model.lazy='jaminan' class="form-control @error('jaminan') is-invalid @enderror">
@@ -175,7 +177,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="no_jaminan">Nomor Jaminan Kesehatan (KIS / ASKES / LM-NIK)</label>
+                                                <label for="no_jaminan">Nomor Jaminan Kesehatan (KIS / ASKES / LM-NIK / Umum)</label>
                                                 <input type="text" wire:model.lazy='no_jaminan' class="form-control @error('no_jaminan') is-invalid @enderror" placeholder="Masukkan no jaminan pasien">
                                                 @error('no_jaminan')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -183,21 +185,63 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="tanggal_lahir">Tanggal Lahir</label>
-                                                <input type="date" wire:model.lazy='tanggal_lahir' class="form-control @error('tanggal_lahir') is-invalid @enderror">
-                                                @error('tanggal_lahir')
+                                                <label for="alamat">Alamat</label>
+                                                <textarea rows="4" wire:model.lazy='alamat' class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukkan alamat pasien"></textarea>
+                                                @error('alamat')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="keterangan">Keterangan</label>
+                                                <textarea rows="4" wire:model.lazy='keterangan' class="form-control @error('keterangan') is-invalid @enderror" placeholder="Masukkan keterangan pasien"></textarea>
+                                                @error('keterangan')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <h5>Data Kepala Keluarga</h5>
+                                            <div class="form-group">
+                                                <label for="nama_faskes">Nama Faskes I</label>
+                                                <input wire:model.lazy='nama_faskes' type="text" class="form-control @error('nama_faskes') is-invalid @enderror"
+                                                placeholder="Masukkan nama faskes">
+                                                @error('nama_faskes')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="nama_kk">Nama KK</label>
+                                                <input type="text" wire:model.lazy='nama_kk' class="form-control @error('nama_kk') is-invalid @enderror" placeholder="Masukkan nama pasien">
+                                                @error('nama_kk')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="nama_penanggung_jawab">Nama Penanggung Jawab</label>
-                                                <input wire:model.lazy='nama_penanggung_jawab' type="text" class="form-control @error('nama_penanggung_jawaba') is-invalid @enderror"
-                                                placeholder="Masukkan nama penanggung jawab">
-                                                @error('nama_penanggung_jawab')
+                                                <label for="tanggal_lahir_kk">Tanggal Lahir KK</label>
+                                                <input type="date" wire:model.lazy='tanggal_lahir_kk' class="form-control @error('tanggal_lahir_kk') is-invalid @enderror">
+                                                @error('tanggal_lahir_kk')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
+
+                                            <div class="form-group">
+                                                <label for="jenis_kelamin_kk">Jenis Kelamin KK</label>
+                                                <select wire:model.lazy='jenis_kelamin_kk' class="form-control @error('jenis_kelamin_kk') is-invalid @enderror">
+                                                    <option selected>Pilih</option>
+                                                    <option value="L">Laki-laki</option>
+                                                    <option value="P">Perempuan</option>
+                                                </select>
+                                                @error('jenis_kelamin_kk')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+
 
                                             <div class="form-group">
                                                 <label for="hubungan">Hubungan</label>
@@ -237,37 +281,18 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="alamat">Alamat</label>
-                                                <textarea rows="4" wire:model.lazy='alamat' class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukkan alamat pasien"></textarea>
-                                                @error('alamat')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+
+                                                @if ($pasienId)
+                                                    <button class="btn btn-primary">Update</button>
+                                                @else
+                                                    <button class="btn btn-primary">Submit</button>
+
+                                                @endif
                                             </div>
-
-
-                                            <div class="form-group">
-                                                <label for="keterangan">Keterangan</label>
-                                                <textarea rows="4" wire:model.lazy='keterangan' class="form-control @error('keterangan') is-invalid @enderror" placeholder="Masukkan keterangan pasien"></textarea>
-                                                @error('keterangan')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-
-
-
-
-
-
-                                            @if ($pasienId)
-                                                <button class="btn btn-primary">Update</button>
-                                            @else
-                                                <button class="btn btn-primary">Submit</button>
-                                        @endif
-                                        @endif
-
-
-                                    </form>
-                                </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
 
                             @else
 

@@ -18,13 +18,12 @@ class Pendaftaran extends Component
     public $search;
     public $rows = 5;
 
-    public $openFormCreate, $openFormUpdate, $details, $showDataPasien;
-    public $data_dokter, $data_poli, $data_pasien, $pendaftaranId;
+    public $openFormCreate, $openFormUpdate, $details, $showDataPasien, $printPendaftaran;
+    public $data_dokter, $data_poli, $data_pasien, $pendaftaranId, $dataPrint;
 
     public $no_rawat, $dokter, $poli, $no_rekamedis, $pasien, $no_kk, $tanggal_lahir,
         $nama_penanggung_jawab, $status_pasien, $no_jaminan, $wilayah, $alamat,
-        $alamat_penanggung_jawab, $hubungan;
-
+        $alamat_penanggung_jawab, $hubungan, $no_antrian;
     public function render()
     {
 
@@ -33,7 +32,7 @@ class Pendaftaran extends Component
         $this->data_pasien = Pasien::orderBy('created_at', 'DESC')->get();
 
 
-        is_null($this->pendaftaranId) ?  $this->no_rawat = $this->noRawat() : null;
+        // is_null($this->pendaftaranId) ?  $this->no_rawat = $this->noRawat() : null;
 
 
         if ($this->search) {
@@ -87,7 +86,7 @@ class Pendaftaran extends Component
     {
         $user = ModelsPendaftaran::findOrFail($id);
 
-        $this->no_rawat = $user->no_rawat;
+        // $this->no_rawat = $user->no_rawat;
         $this->dokter = $user->id_dokter;
         $this->poli = $user->id_poli;
         $this->pasien = $user->id_pasien;
@@ -119,6 +118,7 @@ class Pendaftaran extends Component
         $this->no_rekamedis = $getData->kode_paramedis;
         $this->hubungan = $getData->hubungan_dengan_penanggung_jawab;
         $this->nama_penanggung_jawab = $getData->nama_penanggung_jawab;
+        $this->no_antrian = $getData->no_antrian;
     }
 
     public function savePendaftaran()
@@ -165,7 +165,7 @@ class Pendaftaran extends Component
         $data = ModelsPendaftaran::findOrFail($id);
 
 
-        $data->no_rawat = $this->no_rawat;
+        // $data->no_rawat = $this->no_rawat;
         $data->id_dokter = $this->dokter;
         $data->id_poli = $this->poli;
         $data->id_pasien = $this->pasien;
@@ -199,6 +199,13 @@ class Pendaftaran extends Component
 
 
         $this->triggerConfirm();
+    }
+
+    public function printStructPendaftaran($id)
+    {
+        $this->printPendaftaran = true;
+        $this->dataPrint = Pasien::where('id', $id)->first();
+
     }
 
     public function triggerConfirm()
