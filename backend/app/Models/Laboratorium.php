@@ -17,7 +17,7 @@ class Laboratorium extends Model
         return $this->belongsTo(Pasien::class, 'id_pasien');
     }
 
-   
+
     public function pendaftaran()
     {
         return $this->belongsTo(Pendaftaran::class, 'id_pasien');
@@ -39,5 +39,10 @@ class Laboratorium extends Model
     {
         return $this->belongsToMany(JenisLaboratorium::class, 'laboratorium_jenis_laboratorium')
             ->withPivot('hasil')->withTimestamps();
+    }
+
+    public function jenis_laboratorum_tambahan()
+    {
+        return $this->hasMany(JenisLaboratorumTambahan::class, 'id_laboratorium', 'id');
     }
 }

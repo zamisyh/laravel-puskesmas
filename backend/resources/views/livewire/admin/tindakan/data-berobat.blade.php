@@ -121,10 +121,44 @@
                                                                  @endif
                                                             </tr>
                                                         @endforeach
+
                                                     </tbody>
                                                 </table>
 
+                                               <div class="mt-3 mb-3">
+                                                    @if ($openFormAddLab)
+                                                        <div>
+                                                            <div class="form-group">
+                                                                <label for="keterangan">Keterangan</label>
+                                                                <input wire:model='keterangan_lab' type="text" class="form-control" placeholder="Masukkan keterangan">
+                                                            </div>
+                                                             <div class="form-group">
+                                                                 <label for="nilai">Nilai</label>
+                                                                 <input wire:model='nilai_lab' type="text" class="form-control" placeholder="Masukkan nilai">
+                                                             </div>
+                                                             <div class="form-group">
+                                                                 <label for="satuan">Satuan</label>
+                                                                 <input wire:model='satuan_lab' type="text" class="form-control" placeholder="Masukkan satuan">
+                                                             </div>
+                                                             <div class="form-group">
+                                                                 <label for="nilai_rujukan">Nilai Rujukan</label>
+                                                                 <input wire:model='nilai_rujukan_lab' type="text" class="form-control" placeholder="Masukkan nilai rujukan">
+                                                             </div>
+                                                        </div>
+
+                                                        <div class="mt-3">
+                                                            <span role="button" class="text-primary" wire:click='closeFormInputAddLab'>Tutup</span>
+                                                        </div>
+                                                    @endif
+
+                                                    @if (!$openFormAddLab)
+                                                        <span role="button" class="text-primary" wire:click='openFormInputAddLab'>Tambah Keterangan Baru</span>
+                                                    @endif
+                                               </div>
+
+                                               <div class="mt-3">
                                                 <button class="btn btn-success">Submit</button>
+                                               </div>
                                             </form>
                                         </div>
                                     </div>

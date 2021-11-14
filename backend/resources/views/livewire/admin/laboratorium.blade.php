@@ -2,12 +2,12 @@
 
    @if ($printPage)
    <div class="card">
-    <div class="card-body mt-3">
+    <div class="mt-3 card-body">
         <h4> Biodata Pasien - Pemeriksaan Laboratorium</h4>
         <table class="table table-bordered">
             <tr>
-                <td>No Rawat</td>
-                <td>{{ $no_rawat }}</td>
+                <td>No Antrian</td>
+                <td>{{ $no_antrian }}</td>
             </tr>
             <tr>
                 <td>No Rekamedis</td>
@@ -32,14 +32,14 @@
                         </tr>
                     </thead>
                     <tbody>
-        
+
                         @foreach ($data_pasien->jenis_laboratorium as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
                                     @if (!is_null($item->pivot->hasil))
-                                       
+
                                         @if (!$openUpdateHasil)
                                             {{ $item->pivot->hasil }}
                                         @else
@@ -56,7 +56,7 @@
                 </table>
 
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -68,7 +68,7 @@
            .edit:hover{
                cursor:pointer;
            }
-           
+
 
        </style>
    @endsection
@@ -82,11 +82,11 @@
                <div class="page-heading">
                    <div class="page-title">
                        <div class="row">
-                           <div class="col-12 col-md-6 order-md-1 order-last">
+                           <div class="order-last col-12 col-md-6 order-md-1">
                                <h3>Laboratorium</h3>
                                <p class="text-subtitle text-muted">Hi, this is page for manage data laboratorium</p>
                            </div>
-                           <div class="col-12 col-md-6 order-md-2 order-first">
+                           <div class="order-first col-12 col-md-6 order-md-2">
                                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                    <ol class="breadcrumb">
                                        <li class="breadcrumb-item"><a href="{{ route('dash.home') }}">Dashboard</a></li>
@@ -103,11 +103,11 @@
                                <div class="card-header bg-success">
                                    <h4 class="text-white">Biodata Pasien - Pemeriksaan Laboratorium</h4>
                                </div>
-                               <div class="card-body mt-3">
+                               <div class="mt-3 card-body">
                                    <table class="table table-bordered">
                                        <tr>
-                                           <td>No Rawat</td>
-                                           <td>{{ $no_rawat }}</td>
+                                           <td>No Antrian</td>
+                                           <td>{{ $no_antrian }}</td>
                                        </tr>
                                        <tr>
                                            <td>No Rekamedis</td>
@@ -129,17 +129,22 @@
                                                        <th>Keterangan</th>
                                                        <th>Hasil <span class="edit" style="margin-left:30px;" wire:click='openInputUpdateHasil'><i class="bi bi-pencil-square"></i></span></th>
                                                        <th>Satuan</th>
+                                                       <th>Nilai Rujukan</th>
                                                    </tr>
                                                </thead>
                                                <tbody>
-                                   
+
+                                                  @php
+                                                      $data = null;
+                                                  @endphp
+
                                                    @foreach ($data_pasien->jenis_laboratorium as $item)
                                                        <tr>
-                                                           <td>{{ $loop->iteration }}</td>
+                                                           <td>{{  $data = $loop->iteration }}</td>
                                                            <td>{{ $item->keterangan }}</td>
                                                            <td>
                                                                @if (!is_null($item->pivot->hasil))
-                                                                  
+
                                                                    @if (!$openUpdateHasil)
                                                                        {{ $item->pivot->hasil }}
                                                                    @else
@@ -150,18 +155,29 @@
                                                                @endif
                                                            </td>
                                                            <td>{{ $item->satuan }}</td>
+                                                           <td>{{ $item->nilai_rujukan }}</td>
+                                                       </tr>
+                                                   @endforeach
+
+                                                   @foreach ($data_lab_tambahan as $key => $item)
+                                                       <tr>
+                                                           <td>{{ $data + 1 + $key }}</td>
+                                                           <td>{{ $item->keterangan }}</td>
+                                                           <td>{{ $item->nilai }}</td>
+                                                           <td>{{ $item->satuan }}</td>
+                                                           <td>{{ $item->nilai_rujukan }}</td>
                                                        </tr>
                                                    @endforeach
                                                </tbody>
                                            </table>
 
-                                           <div class="form-grup mb-3 mt-4">
+                                           <div class="mt-4 mb-3 form-grup">
                                                <button class="btn btn-success" wire:click='refreshData'><i class="bi bi-arrow-repeat"></i> Refresh</button>
                                                <button class="btn btn-success" wire:click='openPrint({{ $data_pasien->id }})'><i class="bi bi-printer-fill"></i> Print</button>
-                                              
+
                                            </div>
                                        </div>
-                                       
+
                                    </div>
                                </div>
                            </div>
@@ -185,7 +201,7 @@
                                            <thead>
                                                <tr>
                                                    <th>No</th>
-                                                   <th>No Rawat</th>
+                                                   <th>No Antrian</th>
                                                    <th>No Rekamedis</th>
                                                    <th>Nama Pasien</th>
                                                    <th>Created At</th>
@@ -196,7 +212,7 @@
                                                @forelse ($data_lab as $key => $item)
                                                    <tr>
                                                        <td>{{ $data_lab->firstItem() + $key }}</td>
-                                                       <td>{{ $item->no_rawat }}</td>
+                                                       <td>{{ $item->pasien->no_antrian }}</td>
                                                        <td>{{ $item->no_rekammedis }}</td>
                                                        <td>{{ $item->pasien->nama_pasien }}</td>
                                                        <td>{{ $item->created_at }}</td>
@@ -204,7 +220,7 @@
                                                            <button wire:click='openFormLab({{$item->id}})' class="btn btn-primary btn-sm">
                                                                <i class="bi bi-eye-fill"></i>
                                                            </button>
-                                                           <button class="btn btn-danger btn-sm"
+                                                           <button wire:click='deleteLab({{ $item->id }})' class="btn btn-danger btn-sm"
                                                            style="margin-left: 4px">
                                                                <i class="bi bi-trash"></i>
                                                            </button>

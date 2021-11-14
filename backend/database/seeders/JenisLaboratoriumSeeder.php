@@ -346,6 +346,12 @@ class JenisLaboratoriumSeeder extends Seeder
                 'nilai_rujukan' => 'Posifif / Negatif'
             ],
             [
+                'keterangan' => 'Urin Lengkap',
+                'nilai' => '',
+                'satuan' => '',
+                'nilai_rujukan' => ''
+            ],
+            [
                 'keterangan' => 'Imuno / Serologi',
                 'nilai' => 'hasil',
                 'satuan' => 'satuan',

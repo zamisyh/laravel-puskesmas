@@ -14,6 +14,7 @@ use App\Models\ResepObat;
 use App\Models\StokObat;
 use App\Models\Rujukan;
 use App\Models\JenisLaboratorium;
+use App\Models\JenisLaboratorumTambahan;
 use App\Models\Laboratorium;
 
 class DataBerobat extends Component
@@ -49,7 +50,8 @@ class DataBerobat extends Component
     public $nama_diagnosa, $nama_rumah_sakit, $poli_rujukan_tujuan;
 
     //lab
-    public $data_lab;
+    public $data_lab, $openFormAddLab, $keterangan_lab, $nilai_lab, $satuan_lab,
+    $nilai_rujukan_lab;
 
     public $lab_keterangan = [];
 
@@ -153,6 +155,17 @@ class DataBerobat extends Component
         $this->i_tindakan = false;
         $this->i_resep_obat = false;
         $this->i_rujukan = false;
+        $this->openFormAddLab = false;
+    }
+
+    public function openFormInputAddLab()
+    {
+        $this->openFormAddLab = true;
+    }
+
+    public function closeFormInputAddLab()
+    {
+        $this->openFormAddLab = false;
     }
 
     public function openFormInputTindakan()
@@ -161,6 +174,7 @@ class DataBerobat extends Component
         $this->i_lab = false;
         $this->i_resep_obat = false;
         $this->i_rujukan = false;
+        $this->openFormAddLab = false;
     }
 
     public function openFormInputResepObat()
@@ -169,6 +183,7 @@ class DataBerobat extends Component
         $this->i_tindakan = false;
         $this->i_lab = false;
         $this->i_rujukan = false;
+        $this->openFormAddLab = false;
     }
 
     public function openFormInputRujujan()
@@ -177,6 +192,7 @@ class DataBerobat extends Component
         $this->i_tindakan = false;
         $this->i_resep_obat = false;
         $this->i_lab = false;
+        $this->openFormAddLab = false;
     }
 
     public function updatedBb(){
@@ -335,8 +351,36 @@ class DataBerobat extends Component
             ]);
 
             $lab->jenis_laboratorium()->attach($this->lab_keterangan);
+
+            if ($this->openFormAddLab) {
+                $x = new JenisLaboratorumTambahan([
+                    'keterangan' => $this->keterangan_lab,
+                    'nilai' => $this->nilai_lab,
+                    'satuan' => $this->satuan_lab,
+                    'nilai_rujukan' => $this->nilai_rujukan_lab
+                ]);
+
+                $lab->jenis_laboratorum_tambahan()->save($x);
+            }
+
+
+
         } else {
-            $find->jenis_laboratorium()->sync($this->lab_keterangan);
+
+            if ($this->openFormAddLab) {
+                $x = new JenisLaboratorumTambahan([
+                    'keterangan' => $this->keterangan_lab,
+                    'nilai' => $this->nilai_lab,
+                    'satuan' => $this->satuan_lab,
+                    'nilai_rujukan' => $this->nilai_rujukan_lab
+                ]);
+
+                $find->jenis_laboratorum_tambahan()->save($x);
+            }
+
+            if ($this->lab_keterangan != null) {
+                $find->jenis_laboratorium()->sync($this->lab_keterangan);
+            }
         }
 
 
