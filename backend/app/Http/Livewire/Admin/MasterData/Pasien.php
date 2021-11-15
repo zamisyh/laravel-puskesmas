@@ -9,6 +9,7 @@ use App\Models\Jaminan;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Pasien extends Component
 {
@@ -22,19 +23,23 @@ class Pasien extends Component
 
     public $openFormCreate, $openFormUpdate, $details, $openForm;
     public $data_jaminan, $pasienId;
-    public $printPage, $dataPrintWithId;
+    public $printPage, $dataPrintWithId, $getLastNoAntrian;
 
     public $no_rekamedis, $nama_pasien, $jenis_kelamin, $jenis_kelamin_kk, $no_ktp, $no_kk,
         $no_antrian, $jaminan, $no_jaminan, $tanggal_lahir, $alamat,
         $wilayah, $status_pasien, $keterangan, $nama_faskes, $hubungan, $nama_kk, $tanggal_lahir_kk;
 
+    public $searchRekammedis, $data_rekammedis, $cari_rekammedis;
+
     public function render()
     {
+
         $this->data_jaminan = Jaminan::orderBy('created_at', 'DESC')->get();
 
         if ($this->search) {
             $pasiens = Pasiens::where('nama_pasien', 'LIKE', '%' . $this->search . '%')
                 ->orWhere('kode_paramedis', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('nama_kk', 'LIKE', '%' . $this->search . '%')
                 ->with('jaminan')
                 ->orderBy('created_at', 'DESC')
                 ->paginate($this->rows);
@@ -49,6 +54,11 @@ class Pasien extends Component
 
     public function openFormCreatePasien()
     {
+
+        $p = Pasiens::orderBy('created_at', 'DESC')->pluck('no_antrian')->first();
+        $data = (int) substr($p, 1) + 1;
+        $res = substr($p, 0, 1);
+        $this->no_antrian =  $res . $data;
         $this->openFormCreate = true;
     }
     public function closeFormCreatePasien()
@@ -67,6 +77,45 @@ class Pasien extends Component
     public function openLoadForm()
     {
         $this->openForm = true;
+    }
+
+    public function openFormSearchRekammedis()
+    {
+        $this->data_rekammedis = Pasiens::distinct()->select('kode_paramedis', 'nama_kk')->orderBy('created_at', 'DESC')->get();
+        $this->searchRekammedis = true;
+    }
+
+    public function closeFormSearchRekammedis()
+    {
+        $this->searchRekammedis = false;
+    }
+
+    public function updatedCariRekammedis($id){
+
+        if ($this->cari_rekammedis == 'kosong') {
+            $this->no_kk = null;
+            $this->alamat = null;
+            $this->nama_kk = null;
+            $this->hubungan = null;
+            $this->jenis_kelamin_kk = null;
+            $this->tanggal_lahir_kk = null;
+            $this->wilayah = null;
+            $this->nama_faskes = null;
+            $this->kode_paramedis = null;
+        }else{
+            $data = Pasiens::where('kode_paramedis', $id)->first();
+            $this->no_kk = $data->no_kk;
+            $this->alamat = $data->alamat;
+            $this->nama_kk = $data->nama_kk;
+            $this->hubungan = $data->hubungan_dengan_penanggung_jawab;
+            $this->jenis_kelamin_kk = $data->jenis_kelamin_kk;
+            $this->tanggal_lahir_kk = $data->tanggal_lahir_kk;
+            $this->wilayah = $data->wilayah;
+            $this->nama_faskes = $data->nama_faskes;
+            $this->no_rekamedis = $data->kode_paramedis;
+
+        }
+
     }
 
     public function openFormUpdatePasien($id)
@@ -107,11 +156,10 @@ class Pasien extends Component
         $findJaminan = Jaminan::findOrFail($this->jaminan);
         $age = \Carbon\Carbon::parse($this->tanggal_lahir)->age;
 
-
         try {
 
             Pasiens::create([
-                'kode_paramedis' => $this->getNameRekamMedis(),
+                'kode_paramedis' => !is_null($this->no_rekamedis) ? $this->no_rekamedis : $this->getNameRekamMedis(),
                 'nama_pasien' => $this->nama_pasien,
                 'jenis_kelamin' => $this->jenis_kelamin,
                 'no_kk' => $this->no_kk,
@@ -253,16 +301,19 @@ class Pasien extends Component
 
     public function getNameRekamMedis()
     {
-        $words = explode(" ", $this->nama_kk);
-        $name = "";
+        // $words = explode(" ", $this->nama_kk);
+        // $name = "";
 
-        foreach ($words as $w) {
-            $name .= $w[0];
-        }
+        // foreach ($words as $w) {
+        //     $name .= $w[0];
+        // }
 
-        $date = date('dmY', strtotime($this->tanggal_lahir_kk));
+        // $date = date('dmY', strtotime($this->tanggal_lahir_kk));
+        $p = Pasiens::orderBy('id', 'DESC')->pluck('kode_paramedis')->first();
+        $data = substr($p, 1, 10);
+        $res = $data + 1;
 
-        return $name . '-'. $date . '-' . strtoupper(Str::random(5));
+        return substr($this->nama_kk, 0, 1) . $res;
     }
 
     public function resetForm()

@@ -1,6 +1,8 @@
 <div>
 
     @section('css')
+        <link rel="stylesheet" href="{{ asset('assets/vendors/select2/select2.min.css') }}">
+
         <style>
             td{
                 border: none;
@@ -109,6 +111,22 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div> --}}
+
+                                            @if ($searchRekammedis)
+                                                @include('livewire.admin.components.search-rekammedis')
+                                            @endif
+
+                                            @if (!$searchRekammedis)
+                                                <div class="form-group">
+                                                    <i class="bi bi-search" role="button"></i>
+                                                    <span class="text-primary"
+                                                        role="button"
+                                                        wire:click='openFormSearchRekammedis'
+                                                        style="margin-left: 10px"
+
+                                                    >Cari Rekammedis</span>
+                                                </div>
+                                            @endif
 
                                             <div class="form-group">
                                                 <label for="no_antrian">Nomor Antrian</label>
@@ -338,8 +356,8 @@
                                                     <th>No Rekamedis</th>
                                                     <th>No Antrian</th>
                                                     <th>Nama Pasien</th>
-                                                    <th>Nama KK</th>
                                                     <th>Usia</th>
+                                                    <th>Nama KK</th>
                                                     <th>No KK</th>
                                                     @if ($details)
                                                         <th>No KTP Pasien</th>
@@ -360,8 +378,8 @@
                                                     <td>{{ $item->kode_paramedis }}</td>
                                                     <td>{{ $item->no_antrian }}</td>
                                                     <td>{{ $item->nama_pasien }}</td>
-                                                    <td>{{ $item->nama_kk }}</td>
                                                     <td>{{ $item->usia }}</td>
+                                                    <td>{{ $item->nama_kk }}</td>
                                                     <td>{{ $item->no_kk }}</td>
                                                     @if ($details)
                                                         <td>{{ $item->no_ktp }}</td>
@@ -414,10 +432,15 @@
     </div>
 
     @section('js')
+
+        <script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
+
         <script src="{{  asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
         <script src="{{  asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
         <script src="{{  asset('assets/js/main.js') }}"></script>
+
     @endsection
     @endif
 </div>
