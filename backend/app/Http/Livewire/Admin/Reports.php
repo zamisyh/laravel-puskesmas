@@ -8,6 +8,7 @@ use App\Models\Obat;
 use App\Models\Pasien;
 use App\Models\Pendaftaran;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DokterExport;
@@ -20,6 +21,9 @@ use App\Exports\PendaftaranExport;
 
 class Reports extends Component
 {
+
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
     public $title = 'Dokter';
     public $choice = 'dokter';
@@ -132,7 +136,7 @@ class Reports extends Component
         $this->filter = false;
     }
 
-    //Exporting 
+    //Exporting
     public function dokterExportAll()
     {
         return Excel::download(new DokterExport, 'dokter.xlsx');

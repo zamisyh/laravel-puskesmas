@@ -4,7 +4,8 @@
             <th>No</th>
             <th>No Antrian</th>
             <th>No RM</th>
-            <th>KIS/BPJS</th>
+            <th>Jaminan</th>
+            <th>No Jaminan</th>
             <th>Nama Pasien</th>
             <th>Nama KK</th>
             <th colspan="2">Usia</th>
@@ -13,7 +14,7 @@
             <th>DW</th>
             <th>LW</th>
             <th>Ket</th>
-            
+
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
             <td></td>
 			<td></td>
 			<td></td>
+            <td></td>
 			<td></td>
 			<td></td>
             <td></td>
@@ -35,6 +37,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->no_antrian }}</td>
                 <td>{{ $item->kode_paramedis }}</td>
+                <td>{{ $item->jaminan->nama_jaminan }}</td>
                 <td>{{ $item->no_jaminan }}</td>
                 <td>{{ $item->nama_pasien }}</td>
                 <td>{{ $item->nama_kk }}</td>
@@ -55,8 +58,8 @@
                     <td>&#10004;</td>
                 @endif
                 <td>{{ $item->keterangan }}</td>
-                    
-               
+
+
             </tr>
         @endforeach
     </tbody>

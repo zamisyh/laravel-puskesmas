@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>No Rawat</th>
+            <th>No Antrian</th>
             <th>No RM</th>
             <th>Tanggal Daftar</th>
             <th>Nama Pasien</th>
@@ -11,9 +11,9 @@
             <th colspan="2">Usia</th>
             <th>Nama Dokter</th>
             <th>Poli Tujuan</th>
-            <th>Status Pasien</th>
-            <th>No Jaminan Kesehatan</th>
-            
+            <th>Nama Jaminan</th>
+            <th>Nomor Jaminan</th>
+
         </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
         @foreach ($pendaftaran as $item)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->no_rawat }}</td>
+                <td>{{ $item->pasien->no_antrian }}</td>
                 <td>{{ $item->no_rekammedis }}</td>
                 <td>{{ $item->tanggal_daftar }}</td>
                 <td>{{ $item->pasien->nama_pasien }}</td>
@@ -50,8 +50,8 @@
                 <td>{{ $item->poli->nama_poli }}</td>
                 <td>{{ $item->status_pasien }}</td>
                 <td>{{ $item->no_jaminan }}</td>
-                    
-               
+
+
             </tr>
         @endforeach
     </tbody>

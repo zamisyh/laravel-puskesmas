@@ -14,7 +14,7 @@
             <h5 class="p-1">UPTD Puskesmas Perumnas 2</h5>
             <span>JL Belut Raya, No. 1, Kayuringin, <br> Bekasi Bekasi, Jawa Barat <br>Indonesia 17144. Phone: (021) 88954619</span>
         </div>
-        <table class="table w-25 mt-2 table-bordered" border="4">
+        <table class="table mt-2 w-25 table-bordered" border="4">
             <tr>
                 <td style="font-weight: 700">No. MR</td>
                 <td>{{ $this->dataPrint->kode_paramedis }}</td>
@@ -47,11 +47,11 @@
                 <div class="page-heading">
                     <div class="page-title">
                         <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
+                            <div class="order-last col-12 col-md-6 order-md-1">
                                 <h3>Pendaftaran</h3>
                                 <p class="text-subtitle text-muted">Hi, this is page for manajement data Pendaftaran</p>
                             </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
+                            <div class="order-first col-12 col-md-6 order-md-2">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('dash.home') }}">Dashboard</a></li>

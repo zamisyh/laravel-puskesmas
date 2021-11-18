@@ -22,11 +22,11 @@
                 <div class="page-heading">
                     <div class="page-title">
                         <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
+                            <div class="order-last col-12 col-md-6 order-md-1">
                                 <h3>Reports</h3>
                                 <p class="text-subtitle text-muted">Hi, this is the main report page</p>
                             </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
+                            <div class="order-first col-12 col-md-6 order-md-2">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('dash.home') }}">Dashboard</a></li>
@@ -74,12 +74,12 @@
                                                     <i class="bi bi-eye-fill"></i>
                                                 </button>
                                         @endif
-                                            
+
                                     </div>
                                     <div></div>
                                </div>
 
-                               <div class="mb-4 mt-1 d-flex">
+                               <div class="mt-1 mb-4 d-flex">
                                 @if (!$filter)
                                      <div>
                                         <button wire:click='openFormFilter' class="btn btn-success btn-sm">
@@ -87,7 +87,7 @@
                                         </button>
                                      </div>
                                 @else
-                                     
+
                                     <div class="d-flex">
                                          <span style="margin-right:6px;" class="text-danger closed" wire:click='closeFormFilter'>
                                              <i class="bi bi-x-square"></i>
@@ -98,7 +98,7 @@
                                              <option value="byAll">By All</option>
                                          </select>
                                     </div>
-                                   
+
                                 @endif
 
                                 <div style="margin-left:5px;">
@@ -111,7 +111,7 @@
                                             <button wire:click='pasienExportByDate' class="btn btn-success btn-sm"><i class="bi bi-check2-square"></i></button>
                                         @endif
 
-                                       
+
                                     @endif
                                 </div>
                              </div>
@@ -136,7 +136,7 @@
                                                     <th>Alamat</th>
                                                     <th>Wilayah</th>
                                                 @endif
-                                                <th>Actions</th>
+
                                             </tr>
                                     </thead>
                                     <tbody>
@@ -157,14 +157,14 @@
                                                     <td>{{ $item->jenis_kelamin }}</td>
                                                     <td>
                                                         {{ ucwords(strtolower($item->tempat_lahir)) }},
-                                                        {{ Carbon\carbon::parse($item->tanggal_lahir)->format('d M Y') }} 
-                                                    
+                                                        {{ Carbon\carbon::parse($item->tanggal_lahir)->format('d M Y') }}
+
                                                     </td>
                                                     <td>{{ $item->alamat }}</td>
                                                     <td>{{ $item->wilayah }}</td>
                                                 @endif
                                                 <td>
-                                                  
+
                                                 </td>
                                             </tr>
 
@@ -190,18 +190,18 @@
                                             <option value="15" selected>15</option>
                                             <option value="20" selected>20</option>
                                         </select>
-                                       
+
                                         @if (!$details)
                                                 <button wire:click='openDetails' class="btn btn-primary btn-sm">
                                                     <i class="bi bi-eye-slash-fill"></i>
                                                 </button>
-    
+
                                             @else
                                                 <button wire:click='closeDetails' class="btn btn-primary btn-sm">
                                                     <i class="bi bi-eye-fill"></i>
                                                 </button>
                                         @endif
-    
+
                                     </div>
                                     <div>
                                         <button class="btn btn-success btn-sm" wire:click='dokterExportAll'>Export</button>
@@ -216,15 +216,15 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama</th>
-                                            <th>Jenis Kelamin</th>    
+                                            <th>Jenis Kelamin</th>
                                             <th>Nomor Induk Dokter</th>
                                             <th>Poli</th>
                                             @if ($details)
                                                 <th>TTL</th>
                                                 <th>Alamat</th>
                                             @endif
-                                            
-                                        </tr>   
+
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         @forelse ($data as $key => $item)
@@ -237,8 +237,8 @@
 
                                                     @else
                                                         <span class="badge bg-success">P</span>
-                                                    @endif    
-                                                </td>    
+                                                    @endif
+                                                </td>
                                                 <td>{{ $item->nid }}</td>
                                                 <td>{{ $item->poli->nama_poli }}</td>
                                                 @if ($details)
@@ -248,8 +248,8 @@
                                                     </td>
                                                     <td>{{ $item->alamat }}</td>
                                                 @endif
-                                               
-                                            </tr>   
+
+                                            </tr>
                                         @empty
                                         <td colspan="8" class="text-center">Data not found</td>
                                         @endforelse
@@ -283,12 +283,12 @@
                                                             <i class="bi bi-eye-fill"></i>
                                                         </button>
                                                 @endif
-                                                    
+
                                             </div>
                                             <div></div>
                                     </div>
 
-                                    <div class="mb-4 mt-1 d-flex">
+                                    <div class="mt-1 mb-4 d-flex">
                                         @if (!$filter)
                                             <div>
                                                 <button wire:click='openFormFilter' class="btn btn-success btn-sm">
@@ -296,7 +296,7 @@
                                                 </button>
                                             </div>
                                         @else
-                                            
+
                                             <div class="d-flex">
                                                 <span style="margin-right:6px;" class="text-danger closed" wire:click='closeFormFilter'>
                                                     <i class="bi bi-x-square"></i>
@@ -307,7 +307,7 @@
                                                     <option value="byAll">By All</option>
                                                 </select>
                                             </div>
-                                        
+
                                         @endif
 
                                         <div style="margin-left:5px;">
@@ -320,13 +320,13 @@
                                                     <button wire:click='pendaftaranExportByDate' class="btn btn-success btn-sm"><i class="bi bi-check2-square"></i></button>
                                                 @endif
 
-                                            
+
                                             @endif
                                         </div>
                                     </div>
-                                    
 
-                                    
+
+
 
                                     <p></p>
 
@@ -335,7 +335,7 @@
                                         <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>No Rawat</th>
+                                                    <th>No Antrian</th>
                                                     <th>No Rekamedis</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Status</th>
@@ -343,14 +343,14 @@
                                                         <th>Nama Dokter</th>
                                                         <th>Jenis Poli</th>
                                                     @endif
-                                                    <th>Actions</th>
+
                                                 </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($data as $key => $item)
                                                 <tr>
                                                     <td>{{ $data->firstItem() + $key }}</td>
-                                                    <td>{{ $item->no_rawat }}</td>
+                                                    <td>{{ $item->pasien->no_antrian }}</td>
                                                     <td>{{ $item->no_rekammedis }}</td>
                                                     <td>{{ $item->pasien->nama_pasien }}</td>
                                                     <td>{{ $item->status_pasien }}</td>
@@ -359,7 +359,7 @@
                                                         <td>{{ $item->poli->nama_poli }}</td>
                                                     @endif
                                                     <td>
-                                                        
+
                                                     </td>
                                                 </tr>
 
@@ -388,7 +388,7 @@
                                                 <option value="20" selected>20</option>
                                             </select>
                                         </div>
-                                        
+
                                         <div>
                                             <button class="btn btn-success btn-sm" wire:click='obatExportAll'>Export</button>
                                         </div>
@@ -402,24 +402,24 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Kode</th>
-                                                <th>Nama</th>    
+                                                <th>Nama</th>
                                                 <th>Jenis</th>
                                                 <th>Dosis</th>
                                                 <th>Satuan</th>
                                                 <th>Sediaan</th>
-                                            </tr>   
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($data as $key => $item)
                                                 <tr>
                                                     <td>{{ $data->firstItem() + $key }}</td>
                                                     <td>{{ $item->kode_obat }}</td>
-                                                    <td>{{ $item->nama_obat }}</td>    
+                                                    <td>{{ $item->nama_obat }}</td>
                                                     <td>{{ $item->jenis_obat }}</td>
                                                     <td>{{ $item->dosis_aturan_obat }}</td>
                                                     <td>{{ $item->satuan }}</td>
                                                     <td>{{ $item->sediaan }}</td>
-                                                </tr>   
+                                                </tr>
                                             @empty
                                             <td colspan="8" class="text-center">Data not found</td>
                                             @endforelse
@@ -430,7 +430,7 @@
                                     <div>
                                         {{ $data->links() }}
                                     </div>
-                                    
+
 
                                     @elseif ($choice == 'lab')
 
@@ -460,7 +460,7 @@
                                                     <th>No Rekamedis</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Created At</th>
-                                                    <th>Actions</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -510,7 +510,7 @@
             let table1 = document.querySelector('#table');
             let dataTable = new simpleDatatables.DataTable(table);
         </script>
-    
+
 
         <script src="{{  asset('assets/js/main.js') }}"></script>
     @endsection
