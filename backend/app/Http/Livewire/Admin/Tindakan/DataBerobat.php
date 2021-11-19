@@ -47,7 +47,7 @@ class DataBerobat extends Component
     public $nama_obat, $kode_obat, $jenis_obat, $dosis, $stock_obat, $jumlah_obat;
 
     //rujukan
-    public $nama_diagnosa, $nama_rumah_sakit, $poli_rujukan_tujuan;
+    public $nama_diagnosa, $nama_rumah_sakit, $poli_rujukan_tujuan, $data_nama_penyakit;
 
     //lab
     public $data_lab, $openFormAddLab, $keterangan_lab, $nilai_lab, $satuan_lab,
@@ -95,7 +95,16 @@ class DataBerobat extends Component
                 if (is_null($data_rujukan)) {
                     dd('Masukan tindakan terlebih dahulu');
                 } else {
+                    $getNamaPenyakit = [];
+                    $getCode = [];
                     $this->nama_diagnosa = RiwayatTindakan::where('no_rawat', $this->no_rawat)->first();
+                    for ($i=0; $i < count($this->nama_diagnosa->diagnosaMany) ; $i++) {
+                        $getCode[] = $this->nama_diagnosa->diagnosaMany[$i]['code'];
+                        $getNamaPenyakit[] = $this->nama_diagnosa->diagnosaMany[$i]['nama_penyakit'];
+                    }
+
+                    $this->data_nama_penyakit = implode(", ", $getNamaPenyakit);
+
                 }
             } else if ($this->i_lab) {
                 $this->data_lab = JenisLaboratorium::all('id', 'keterangan');
@@ -310,13 +319,14 @@ class DataBerobat extends Component
 
     public function saveRujukan()
     {
+
         $this->validateRujukan();
 
         try {
             Rujukan::create([
                 'no_rujukan' => $this->noRujukan(),
                 'id_pasien' => $this->id_pasien,
-                'nama_penyakit' => '-',
+                'nama_penyakit' => $this->data_nama_penyakit,
                 'nama_rumah_sakit' => $this->nama_rumah_sakit,
                 'poli_tujuan' => $this->poli_rujukan_tujuan,
                 'tanggal_rujukan' => date('Y-m-d'),
