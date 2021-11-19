@@ -11,11 +11,11 @@
                 <div class="page-heading">
                     <div class="page-title">
                         <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
+                            <div class="order-last col-12 col-md-6 order-md-1">
                                 <h3>Master Data - Diagnosa</h3>
                                 <p class="text-subtitle text-muted">Hi, this is page for manajement data Diagnosa</p>
                             </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
+                            <div class="order-first col-12 col-md-6 order-md-2">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('dash.home') }}">Dashboard</a></li>
@@ -64,8 +64,8 @@
                                             @enderror
                                         </div>
 
-                                       
-                                        
+
+
 
                                         @if ($diagnosaId)
                                             <button class="btn btn-primary">Update</button>
@@ -76,12 +76,40 @@
                                     </form>
                                 </div>
 
+                            @elseif($openFormUpload)
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between">
+                                        <h4>Upload Diagnosa</h4>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="file_excel">File</label>
+                                        <input type="file" class="form-control @error('file_excel') is-invalid @enderror"
+                                        wire:model='file_excel'>
+                                        @error('file_excel')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button wire:click='uploadExcel' wire:loading.remove class="btn btn-primary">Submit</button>
+                                        <button wire:loading wire:target='uploadExcel' type="button" disabled class="btn btn-primary">
+                                            <span class="spinner-border" role="status"
+                                            aria-hidden="true"></span>
+                                        </button> <span wire:loading wire:target='uploadExcel'>Deleting old file and uploading new file ...</span>
+                                    </div>
+                                </div>
                             @else
 
                                 <div class="card-header">
                                     <div class="d-flex justify-content-between">
                                         <h4>Data Diagnosa</h4>
                                         <div>
+                                            <button wire:click='openFormUploadExcel' class="btn btn-success btn-sm">
+                                                <i class="bi bi-file-excel-fill"></i> <span>Import</span>
+                                            </button>
                                             <button wire:click='openFormCreateDiagnosa' class="btn btn-sm btn-primary">Tambah Data</button>
                                         </div>
                                     </div>
@@ -117,7 +145,7 @@
                                                     <td>{{ $diagnosas->firstItem() + $key }}</td>
                                                     <td>{{ $item->code }}</td>
                                                     <td>{{ $item->nama_penyakit }}</td>
-                                    
+
                                                     <td class="d-flex">
                                                         <button wire:click="openFormUpdateDiagnosa({{ $item->id }})" class="btn btn-primary btn-sm">
                                                             <i class="bi bi-pencil-square"></i>

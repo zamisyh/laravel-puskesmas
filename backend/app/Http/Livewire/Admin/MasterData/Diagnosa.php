@@ -4,22 +4,26 @@ namespace App\Http\Livewire\Admin\MasterData;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Models\Diagnosa as Diagnosas;
+use App\Imports\DiagnosaImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class Diagnosa extends Component
 {
 
-    use WithPagination;
+    use WithPagination, WithFileUploads;
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['confirmed'];
 
     public $search;
     public $rows = 5;
 
-    public $openFormCreate, $openFormUpdate;
+    public $openFormCreate, $openFormUpdate, $openFormUpload;
     public $diagnosaId;
 
-    public $kode, $nama_penyakit;
+    public $kode, $nama_penyakit, $file_excel;
 
     public function render()
     {
@@ -44,6 +48,11 @@ class Diagnosa extends Component
     {
         $this->openFormCreate = false;
         $this->resetForm();
+    }
+
+    public function openFormUploadExcel()
+    {
+        $this->openFormUpload = true;
     }
 
     public function openFormUpdateDiagnosa($id)
@@ -130,6 +139,33 @@ class Diagnosa extends Component
         $this->diagnosaId = $data->id;
 
         $this->triggerConfirm();
+    }
+
+    public function uploadExcel()
+    {
+        $this->validate([
+            'file_excel' => 'required|mimes:xlsx, xls'
+        ]);
+
+        try {
+            DB::table('diagnosa')->delete();
+            Excel::import(new DiagnosaImport, $this->file_excel);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        $this->alert('success', 'Succesfully upload file', [
+            'position' =>  'top-end',
+            'timer' =>  3000,
+            'toast' =>  true,
+            'text' =>  '',
+            'confirmButtonText' =>  'Ok',
+            'cancelButtonText' =>  'Cancel',
+            'showCancelButton' =>  false,
+            'showConfirmButton' =>  false,
+        ]);
+
+        $this->openFormUpload = false;
     }
 
     public function triggerConfirm()
