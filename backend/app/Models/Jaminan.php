@@ -11,4 +11,9 @@ class Jaminan extends Model
     protected $table = 'jaminan';
 
     protected $fillable = ['nama_jaminan'];
+
+    public function pasien()
+    {
+        return $this->belongsTo(Pasien::class, 'id_pasien', 'id');
+    }
 }

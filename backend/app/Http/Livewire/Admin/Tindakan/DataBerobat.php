@@ -45,9 +45,11 @@ class DataBerobat extends Component
 
     //resep obat
     public $nama_obat, $kode_obat, $jenis_obat, $dosis, $stock_obat, $jumlah_obat;
+    public $openPagePrintResepObat, $dataPrintResepObat, $dataPrintResepObatPasien;
 
     //rujukan
     public $nama_diagnosa, $nama_rumah_sakit, $poli_rujukan_tujuan, $data_nama_penyakit;
+    public $openPagePrintRujukan, $dataPrintRujukan, $rs_tujuan, $dataTindakanPrintRujukan;
 
     //lab
     public $data_lab, $openFormAddLab, $keterangan_lab, $nilai_lab, $satuan_lab,
@@ -261,6 +263,13 @@ class DataBerobat extends Component
         }
     }
 
+    public function cetakTindakan()
+    {
+       $data = RiwayatTindakan::where('no_rawat', $this->no_rawat)
+            ->orderBy('created_at', 'DESC')->first();
+       dd($data);
+    }
+
     // Management data save Obat
 
     public function updatedNamaObat()
@@ -317,6 +326,17 @@ class DataBerobat extends Component
         }
     }
 
+    public function cetakResepObat()
+    {
+        $this->openPagePrintResepObat = true;
+        $this->dataPrintResepObat = ResepObat::where('no_rawat', $this->no_rawat)
+                ->with('obat')->orderBy('created_at', 'DESC')->first();
+        $this->dataPrintResepObatPasien = Pendaftaran::where('no_rawat', $this->no_rawat)
+                ->with('pasien')->first();
+
+    }
+
+
     public function saveRujukan()
     {
 
@@ -348,6 +368,19 @@ class DataBerobat extends Component
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
+    }
+
+    public function cetakRujukan()
+    {
+        $this->openPagePrintRujukan = true;
+        $this->dataPrintRujukan = Pendaftaran::where('no_rawat', $this->no_rawat)
+            ->with('poli', 'pasien:id,nama_pasien,usia,tanggal_lahir,alamat,id_jaminan', 'pasien.jaminan')->orderBy('created_at', 'DESC')->first();
+        $this->rs_tujuan = Rujukan::where('no_rawat', $this->no_rawat)->first();
+        $this->dataTindakanPrintRujukan = RiwayatTindakan::where('no_rawat', $this->no_rawat)
+            ->orderBy('created_at', 'DESC')->first(
+                ['id', 'no_rawat', 'tekanan_darah', 'tekanan_nadi', 'tinggi_badan', 'rr', 'bb', 'lp']
+            );
+
     }
 
     public function saveRujukanLab()
@@ -409,6 +442,21 @@ class DataBerobat extends Component
         $this->i_lab = false;
         $this->resetForm();
     }
+
+    public function cetakRujukanLab()
+    {
+        $this->alert('info', 'Untuk cetak data lab masuk ke menu laboratorium', [
+            'position' =>  'center',
+            'timer' =>  3000,
+            'toast' =>  false,
+            'text' =>  '',
+            'confirmButtonText' =>  'Ok',
+            'cancelButtonText' =>  'Cancel',
+            'showCancelButton' =>  false,
+            'showConfirmButton' =>  false,
+        ]);
+    }
+
 
     public function deleteDataResepObat($id)
     {

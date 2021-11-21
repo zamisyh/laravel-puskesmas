@@ -96,7 +96,7 @@
             </div>
 
             <div class="form-group">
-                <label for="tinggi_badan">TT</label>
+                <label for="tinggi_badan">TB</label>
                 <input type="number" wire:model.lazy='tinggi_badan' class="form-control @error('tinggi_badan')
                     is-invalid
                 @enderror" placeholder="Masukkan tinggi badan">

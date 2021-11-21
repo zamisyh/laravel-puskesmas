@@ -11,8 +11,5 @@ class KesehatanIbuAnak extends Model
     protected $table = 'kesehatan_ibu_anak';
     protected $guarded = [];
 
-    public function pasien()
-    {
-        return $this->belongsTo(Pasien::class, 'id_pasien', 'id');
-    }
+
 }
