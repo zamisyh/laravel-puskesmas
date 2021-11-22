@@ -40,10 +40,8 @@
                 <td style="font-weight: 700">Diagnosa</td>
                 <td>
                     <ol>
-                        @foreach ($data_riwayat as $item)
-                            @foreach ($item->diagnosaMany as $d)
-                                <li> [ {{ $d->code }} ] {{ $d->nama_penyakit }},</li>
-                            @endforeach
+                        @foreach ($dataTindakanPrintRujukan->diagnosaMany as $d)
+                            <li> [ {{ $d->code }} ] {{ $d->nama_penyakit }}</li>
                         @endforeach
                     </ol>
                 </td>
@@ -118,6 +116,69 @@
                 <td style="font-weight: 700">Satuan</td>
                 <td>{{ $this->dataPrintResepObat->obat->satuan }}</td>
             </tr>
+        </table>
+    </center>
+    @elseif($openPrintPageTindakan)
+    <center>
+        <div class="">
+            <img src="{{ asset('logo.ico') }}" height="80" width="80" class="mt-10">
+            <h5 class="p-1">UPTD Puskesmas Perumnas 2</h5>
+            <span>JL Belut Raya, No. 1, Kayuringin, <br> Bekasi Bekasi, Jawa Barat <br>Indonesia 17144. Phone: (021) 88954619</span>
+        </div>
+        <table class="table mt-2 table-bordered" border="3" style="width: 30%">
+            <tr>
+                <td style="font-weight: 700">Tanggal Daftar</td>
+                <td>{{ Carbon\carbon::parse( $dataPrintCetakTindakanPasien->tanggal_daftar)->format('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Nama Pasien </td>
+                <td>{{ $dataPrintCetakTindakanPasien->pasien->nama_pasien }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">No RM </td>
+                <td>{{ $dataPrintCetakTindakanPasien->no_rekammedis }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Keluhan </td>
+                <td>{{ $dataPrintCetakTindakan->keluhan }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Cek Fisik </td>
+                <td>{{ $dataPrintCetakTindakan->cek_fisik }}</td>
+            </tr>
+            {{-- <tr>
+                <td>TMP : {{ $dataPrintCetakTindakan->temperatur }}</td>
+                <td>N : {{ $dataPrintCetakTindakan->tekanan_nadi }}</td>
+            </tr>
+            <tr>
+                <td>HR : {{ $dataPrintCetakTindakan->hr }}</td>
+                <td>RR : {{ $dataPrintCetakTindakan->rr }}</td>
+            </tr>
+            <tr>
+                <td>TB : {{ $dataPrintCetakTindakan->tinggi_badan }}</td>
+                <td>BB : {{ $dataPrintCetakTindakan->bb }}</td>
+            </tr>
+            <tr>
+                <td>LP : {{ $dataPrintCetakTindakan->lp }}</td>
+                <td>IMT : {{ $dataPrintCetakTindakan->imt }}</td>
+            </tr> --}}
+            <tr>
+                <td style="font-weight: 700">Hasil Periksa </td>
+                <td>{{ $dataPrintCetakTindakan->hasil_periksa }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Jenis Kasus </td>
+                <td>{{ $dataPrintCetakTindakan->jenis_kasus }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Tindakan </td>
+                <td>{{ $dataPrintCetakTindakan->nama_tindakan }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Rencana Pengobatan</td>
+                <td>{{ $dataPrintCetakTindakan->rencana_pengobatan }}</td>
+            </tr>
+
         </table>
     </center>
     @else
@@ -325,7 +386,7 @@
                                                             </td>
                                                             <td>{{ $item->nama_tindakan }}</td>
                                                             <td>{{ $item->keluhan }}</td>
-                                                            <td>{{ $item->cek_fisil }}</td>
+                                                            <td>{{ $item->cek_fisik }}</td>
                                                             <td>{{ $item->temperatur }}</td>
                                                             <td>{{ $item->tekanan_darah }}</td>
                                                             <td>{{ $item->tekanan_nadi }}</td>
@@ -337,9 +398,12 @@
                                                             <td>{{ $item->imt }}</td>
                                                             <td>{{ $item->penunjang }}</td>
                                                             <td>{{ $item->rencana_pengobatan }}</td>
-                                                            <td>
+                                                            <td class="d-flex">
                                                                 <button wire:click.prevent='deleteDataRiwayatTindakan({{ $item->id }})' style="margin-left: 5px" class="btn btn-danger btn-sm">
                                                                     <i class="bi bi-trash-fill"></i>
+                                                                </button>
+                                                                <button wire:click='cetakPrintTindakan({{ $item->id }})' class="ml-3 btn btn-primary btn-sm" style="margin-left: 3px">
+                                                                    <i class="bi bi-printer"></i>
                                                                 </button>
                                                             </td>
                                                         </tr>

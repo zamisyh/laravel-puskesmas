@@ -16,6 +16,8 @@ use App\Models\Rujukan;
 use App\Models\JenisLaboratorium;
 use App\Models\JenisLaboratorumTambahan;
 use App\Models\Laboratorium;
+use App\Exports\RiwayatTindakanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataBerobat extends Component
 {
@@ -40,6 +42,8 @@ class DataBerobat extends Component
         $tekanan_darah, $tekanan_nadi, $hr, $rr, $bb, $lp, $pemeriksaan_penunjang,
         $diagnosa, $nama_tindakan, $rencana_pengobatan, $hasil_periksa, $no_antrian,
         $imt, $jenis_kasus;
+
+    public $openPrintPageTindakan, $dataPrintCetakTindakan, $dataPrintCetakTindakanPasien;
 
 
 
@@ -265,9 +269,18 @@ class DataBerobat extends Component
 
     public function cetakTindakan()
     {
-       $data = RiwayatTindakan::where('no_rawat', $this->no_rawat)
-            ->orderBy('created_at', 'DESC')->first();
-       dd($data);
+
+       return Excel::download(new RiwayatTindakanExport($this->no_rekamedis), $this->no_rekamedis . '.xlsx');
+    }
+
+    public function cetakPrintTindakan($id)
+    {
+        $this->openPrintPageTindakan = true;
+        $this->dataPrintCetakTindakan = RiwayatTindakan::where('id', $id)
+            ->with('poli', 'tindakan', 'diagnosa')->first();
+        $this->dataPrintCetakTindakanPasien = Pendaftaran::where('no_rawat', $this->no_rawat)
+            ->with('pasien:id,nama_pasien')
+            ->first(['id', 'tanggal_daftar', 'no_rekammedis', 'id_pasien']);
     }
 
     // Management data save Obat
