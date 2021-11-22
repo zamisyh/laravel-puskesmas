@@ -269,7 +269,6 @@ class DataBerobat extends Component
 
     public function cetakTindakan()
     {
-
        return Excel::download(new RiwayatTindakanExport($this->no_rekamedis), $this->no_rekamedis . '.xlsx');
     }
 
@@ -341,11 +340,29 @@ class DataBerobat extends Component
 
     public function cetakResepObat()
     {
-        $this->openPagePrintResepObat = true;
+
         $this->dataPrintResepObat = ResepObat::where('no_rawat', $this->no_rawat)
                 ->with('obat')->orderBy('created_at', 'DESC')->first();
-        $this->dataPrintResepObatPasien = Pendaftaran::where('no_rawat', $this->no_rawat)
-                ->with('pasien')->first();
+
+        if (is_null($this->dataPrintResepObat)) {
+            $this->alert('info', 'Silahkan masukkan resep obat terlebih dahulu', [
+                'position' =>  'center',
+                'timer' =>  3000,
+                'toast' =>  false,
+                'text' =>  '',
+                'confirmButtonText' =>  'Ok',
+                'cancelButtonText' =>  'Cancel',
+                'showCancelButton' =>  false,
+                'showConfirmButton' =>  false,
+            ]);
+        }else{
+            $this->openPagePrintResepObat = true;
+            $this->dataPrintResepObatPasien = Pendaftaran::where('no_rawat', $this->no_rawat)
+            ->with('pasien')->first();
+        }
+
+
+
 
     }
 
@@ -385,7 +402,7 @@ class DataBerobat extends Component
 
     public function cetakRujukan()
     {
-        $this->openPagePrintRujukan = true;
+
         $this->dataPrintRujukan = Pendaftaran::where('no_rawat', $this->no_rawat)
             ->with('poli', 'pasien:id,nama_pasien,usia,tanggal_lahir,alamat,id_jaminan', 'pasien.jaminan')->orderBy('created_at', 'DESC')->first();
         $this->rs_tujuan = Rujukan::where('no_rawat', $this->no_rawat)->first();
@@ -393,6 +410,34 @@ class DataBerobat extends Component
             ->orderBy('created_at', 'DESC')->first(
                 ['id', 'no_rawat', 'tekanan_darah', 'tekanan_nadi', 'tinggi_badan', 'rr', 'bb', 'lp']
             );
+
+        if (is_null($this->dataTindakanPrintRujukan)) {
+            $this->alert('info', 'Masukkan tindakan terlebih dahulu', [
+                'position' =>  'center',
+                'timer' =>  3000,
+                'toast' =>  false,
+                'text' =>  '',
+                'confirmButtonText' =>  'Ok',
+                'cancelButtonText' =>  'Cancel',
+                'showCancelButton' =>  false,
+                'showConfirmButton' =>  false,
+            ]);
+        }else if(is_null($this->rs_tujuan)) {
+            $this->alert('info', 'Masukkan rujukan terlebih dahulu', [
+                'position' =>  'center',
+                'timer' =>  3000,
+                'toast' =>  false,
+                'text' =>  '',
+                'confirmButtonText' =>  'Ok',
+                'cancelButtonText' =>  'Cancel',
+                'showCancelButton' =>  false,
+                'showConfirmButton' =>  false,
+            ]);
+        }
+        else {
+            $this->openPagePrintRujukan = true;
+        }
+
 
     }
 
