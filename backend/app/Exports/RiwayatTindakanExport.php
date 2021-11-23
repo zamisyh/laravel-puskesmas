@@ -19,32 +19,10 @@ class RiwayatTindakanExport implements FromView
     public function view() : View
     {
         return view('livewire.admin.exports.riwayat-tindakan', [
-            'riwayat_tindakan' => DB::table('riwayat_tindakan')
-            ->join('pendaftaran', 'riwayat_tindakan.no_rekamedis', '=', 'pendaftaran.no_rekammedis')
-            ->join('pasien', 'riwayat_tindakan.no_rekamedis', '=', 'pasien.kode_paramedis')
-            ->where('no_rekamedis', $this->no_rekamedis)
-            ->get([
-                'tanggal_daftar',
-                'no_rekamedis',
-                'nama_pasien',
-                'keluhan',
-                'cek_fisik',
-                'temperatur',
-                'tekanan_darah',
-                'tekanan_nadi',
-                'hr',
-                'rr',
-                'tinggi_badan',
-                'bb',
-                'lp',
-                'imt',
-                'hasil_periksa',
-                'jenis_kasus',
-                'nama_tindakan',
-                'rencana_pengobatan',
-            ])
+            'riwayat_tindakan' => RiwayatTindakan::where('no_rekamedis', $this->no_rekamedis)
+            ->with('pasien:id,nama_pasien', 'pendaftaran:id,tanggal_daftar')
+            ->orderBy('created_at', 'DESC')
+            ->get()
         ]);
-
-
     }
 }

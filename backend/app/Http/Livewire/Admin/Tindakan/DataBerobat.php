@@ -35,13 +35,13 @@ class DataBerobat extends Component
     public $openDataDetails, $details;
     public $dataBerobatId, $dataRiwayatTindakanId, $dataResepObatId,  $formId;
 
-    public $nama_pasien, $no_rawat, $no_rekamedis, $id_pasien;
+    public $nama_pasien, $no_rawat, $no_rekamedis, $id_pasien, $nama_kk_file;
 
     //tindakan
     public $poli_tujuan, $keluhan, $pemeriksaan_fisik, $temperatur, $tinggi_badan,
         $tekanan_darah, $tekanan_nadi, $hr, $rr, $bb, $lp, $pemeriksaan_penunjang,
         $diagnosa, $nama_tindakan, $rencana_pengobatan, $hasil_periksa, $no_antrian,
-        $imt, $jenis_kasus;
+        $imt, $jenis_kasus, $id_pendaftaran;
 
     public $openPrintPageTindakan, $dataPrintCetakTindakan, $dataPrintCetakTindakanPasien;
 
@@ -74,7 +74,8 @@ class DataBerobat extends Component
         if ($this->openDataDetails) {
             $pasien = Pendaftaran::with('pasien', 'poli')->findOrFail($this->formId);
 
-
+            $this->nama_kk_file = $pasien->pasien->nama_kk;
+            $this->id_pendaftaran = $pasien->id;
             $this->no_rawat = $pasien->no_rawat;
             $this->no_antrian = $pasien->pasien->no_antrian;
             $this->no_rekamedis = $pasien->no_rekammedis;
@@ -120,6 +121,7 @@ class DataBerobat extends Component
 
         $data_riwayat = RiwayatTindakan::where('no_rawat', $this->no_rawat)
             ->with('poli', 'tindakan', 'diagnosa')
+            ->orderBy('created_at', 'DESC')
             ->paginate(5);
 
         $data_resep_obat = ResepObat::where('no_rawat', $this->no_rawat)
@@ -246,6 +248,8 @@ class DataBerobat extends Component
                 'rencana_pengobatan' => $this->rencana_pengobatan,
                 'imt' => $this->imt,
                 'jenis_kasus' => $this->jenis_kasus,
+                'id_pasien' => $this->id_pasien,
+                'id_pendaftaran' => $this->id_pendaftaran
             ]);
 
             $data->diagnosaMany()->attach($this->diagnosa);
@@ -269,7 +273,7 @@ class DataBerobat extends Component
 
     public function cetakTindakan()
     {
-       return Excel::download(new RiwayatTindakanExport($this->no_rekamedis), $this->no_rekamedis . '.xlsx');
+       return Excel::download(new RiwayatTindakanExport($this->no_rekamedis), strtolower(str_replace(' ', '-', $this->nama_kk_file)) . '-' .$this->no_rekamedis . '.xlsx');
     }
 
     public function cetakPrintTindakan($id)

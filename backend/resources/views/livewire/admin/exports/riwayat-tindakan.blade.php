@@ -26,9 +26,9 @@
         @foreach ($riwayat_tindakan as $item)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ Carbon\carbon::parse($item->tanggal_daftar)->format('d-m-Y') }}</td>
+                <td>{{ Carbon\carbon::parse($item->pendaftaran->tangal_daftar)->format('d-m-Y') }}</td>
                 <td>{{ $item->no_rekamedis }}</td>
-                <td>{{ $item->nama_pasien }}</td>
+                <td>{{ $item->pasien->nama_pasien }}</td>
                 <td>{{ $item->keluhan }}</td>
                 <td>{{ $item->cek_fisik }}</td>
                 <td>{{ $item->temperatur }}</td>

@@ -151,6 +151,8 @@ class Pasien extends Component
 
     public function savePasien()
     {
+
+
         $this->validasi();
 
         $findJaminan = Jaminan::findOrFail($this->jaminan);

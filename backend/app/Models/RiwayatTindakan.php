@@ -12,6 +12,16 @@ class RiwayatTindakan extends Model
     protected $guarded = [];
 
 
+    public function pasien()
+    {
+        return $this->belongsTo(Pasien::class, 'id_pasien', 'id');
+    }
+
+    public function pendaftaran()
+    {
+        return $this->belongsTo(Pendaftaran::class, 'id_pendaftaran', 'id');
+    }
+
     public function poli()
     {
         return $this->belongsTo(Poli::class, 'id_poli', 'id');
