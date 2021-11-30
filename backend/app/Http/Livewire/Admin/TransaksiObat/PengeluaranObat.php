@@ -52,7 +52,17 @@ class PengeluaranObat extends Component
 
     public function openFormCreatePengeluaranObat()
     {
-        $this->openFormCreate = true;
+        // $this->openFormCreate = true;
+        // $this->alert('info', '', [
+        //     'position' =>  'center',
+        //     'timer' =>  3000,
+        //     'toast' =>  false,
+        //     'text' =>  '',
+        //     'confirmButtonText' =>  'Ok',
+        //     'cancelButtonText' =>  'Cancel',
+        //     'showCancelButton' =>  false,
+        //     'showConfirmButton' =>  false,
+        // ]);
     }
     public function closeFormCreatePengeluaranObat()
     {
@@ -235,7 +245,7 @@ class PengeluaranObat extends Component
     public function noPengeluaran()
     {
 
-        $no = PengeluaranObats::where('tanggal_serah_obat', date('ymd'))->count() + 1;
+        $no = PengeluaranObats::where('tanggal_serah_obat', date('ymd'))->count();
         $id = sprintf("%05s", abs($no + 1));
 
 

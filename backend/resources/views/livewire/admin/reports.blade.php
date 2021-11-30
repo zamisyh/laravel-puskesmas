@@ -46,7 +46,7 @@
                                         <option value="dokter">Dokter</option>
                                         <option value="pasien">Pasien</option>
                                         <option value="pendaftaran">Pendaftaran</option>
-                                        <option value="obat">Obat</option>
+                                        <option value="obat">Resep Obat</option>
                                         <option value="lab">Laboratorium</option>
                                     </select>
                                 </div>
@@ -380,7 +380,6 @@
 
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <input type="text" wire:model='search' placeholder="Search by kode, nama">
                                             <select wire:model='rows'>
                                                 <option value="5" selected>5</option>
                                                 <option value="10" selected>10</option>
@@ -401,30 +400,74 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Kode</th>
-                                                <th>Nama</th>
-                                                <th>Jenis</th>
-                                                <th>Dosis</th>
-                                                <th>Satuan</th>
-                                                <th>Sediaan</th>
+                                                <th>Nama Pasien</th>
+                                                <th>No RM</th>
+                                                <th>Nama Obat</th>
+                                                <th>Jumlah Obat</th>
+                                                <th>Jenis Obat</th>
+                                                <th>Jaminan</th>
+                                                <th>Poli</th>
+                                            </tr>
+                                            {{-- <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Biotik</th>
+                                                <th>Antibiotik</th>
+                                                <th>KIS</th>
+                                                <th>ASKES</th>
+                                                <th>LM-NIK</th>
+                                                <th>Umun</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($data as $key => $item)
-                                                <tr>
-                                                    <td>{{ $data->firstItem() + $key }}</td>
-                                                    <td>{{ $item->kode_obat }}</td>
-                                                    <td>{{ $item->nama_obat }}</td>
-                                                    <td>{{ $item->jenis_obat }}</td>
-                                                    <td>{{ $item->dosis_aturan_obat }}</td>
-                                                    <td>{{ $item->satuan }}</td>
-                                                    <td>{{ $item->sediaan }}</td>
-                                                </tr>
+                                           @php
+                                               $item_obat = null;
+                                               $jenis_obat = null;
+                                               $item = null;
+                                           @endphp
+                                           @forelse ($data as $key => $item)
+                                            <tr>
+                                                <td>{{ $data->firstItem() + $key }}</td>
+                                                <td>{{ $item->pasien->nama_pasien }}</td>
+                                                <td>{{ $item->pasien->kode_paramedis }}</td>
+                                                <td>{{ $item->obat->nama_obat }}</td>
+                                                <td>{{ $item->jumlah_obat }}</td>
+                                                <td>{{ $item->jenis_obat }} </td>
+                                                <td>{{ $item->pasien->jaminan->nama_jaminan }}</td>
+                                                <td>{{ $item->poli->nama_poli }}</td>
+                                                <input type="hidden" value="{{ $item_obat += $item->jumlah_obat }}">
+                                            </tr>
+
                                             @empty
-                                            <td colspan="8" class="text-center">Data not found</td>
-                                            @endforelse
+                                            <td class="text-center">Data Kosong .... </td>
+
+                                           @endforelse
                                         </tbody>
+
                                         </table>
+                                    </div>
+
+                                    <div class="card card-body">
+                                        Jumlah Resep Obat : {{ !is_null($item) ? $item->count() : $item }} <br>
+                                        Jumlah Item Obat : {{ $item_obat  }} <br>
+                                        Jenis Obat : <ul>
+                                            @foreach ($data_jenis_obat as $d)
+                                                <li>{{ $d->jenis_obat }} : {{ $d->total }}</li>
+                                            @endforeach
+                                        </ul>
+                                        Jenis Jaminan : <ul>
+                                            @foreach ($data_jenis_jaminan as $j)
+                                                 <li>{{ $j->nama_jaminan }} : {{ $j->total }}</li>
+                                            @endforeach
+                                        </ul>
+                                        Jenis Poli : <ul>
+                                            @foreach ($data_jenis_poli as $p)
+                                               <li> {{ $p->nama_poli }} : {{ $p->total }}</li>
+                                            @endforeach
+                                        </ul>
+
+                                        </tfoot>
                                     </div>
 
                                     <div>

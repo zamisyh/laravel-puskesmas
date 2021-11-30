@@ -16,8 +16,8 @@ use App\Exports\LaboratoriumExport;
 use App\Exports\ObatExport;
 use App\Exports\PasienExport;
 use App\Exports\PendaftaranExport;
-
-
+use App\Models\ResepObat;
+use Illuminate\Support\Facades\DB;
 
 class Reports extends Component
 {
@@ -33,6 +33,10 @@ class Reports extends Component
     public $filter, $resFilter;
     public $idLabReport;
     public $from, $to;
+
+    //Obat
+
+    public $data_obat, $data_jenis_obat, $data_jenis_jaminan, $data_jenis_poli;
 
 
     public function render()
@@ -87,15 +91,56 @@ class Reports extends Component
         } else if ($this->choice == 'obat') {
             $this->title = 'Obat-obatan';
 
-            if ($this->search) {
-                $data = Obat::where('nama_obat', 'LIKE', '%' . $this->search . '%')
-                    ->orWhere('kode_obat', 'LIKE', '%' . $this->search . '%')
-                    ->orderBy('created_at', 'DESC')
-                    ->paginate($this->rows);
-            } else {
-                $data = Obat::orderBy('created_at', 'DESC')
-                    ->paginate($this->rows);
-            }
+            // if ($this->search) {
+            //     $data = Obat::where('nama_obat', 'LIKE', '%' . $this->search . '%')
+            //         ->orWhere('kode_obat', 'LIKE', '%' . $this->search . '%')
+            //         ->orderBy('created_at', 'DESC')
+            //         ->paginate($this->rows);
+            // } else {
+            //     $data = Obat::orderBy('created_at', 'DESC')
+            //         ->paginate($this->rows);
+            // }
+
+            $data = ResepObat::with('obat', 'obat.stock', 'pasien.jaminan', 'poli')->paginate($this->rows);
+
+            $this->data_jenis_obat = DB::table('resep_obat')
+            ->select('jenis_obat', DB::raw('count(*) as total'))
+            ->groupBy('jenis_obat')
+            ->get();
+
+            $this->data_jenis_jaminan = DB::table('resep_obat')
+                    ->join('pasien', 'resep_obat.id_pasien', '=', 'pasien.id')
+                    ->join('jaminan', 'pasien.id_jaminan', '=', 'jaminan.id')
+                    ->select('jaminan.nama_jaminan', DB::raw('count(*) as total'))
+                    ->groupBy('jaminan.nama_jaminan')
+                    ->get();
+
+            $this->data_jenis_poli = DB::table('resep_obat')
+            ->join('poli', 'resep_obat.id_poli', '=', 'poli.id')
+            ->select('poli.nama_poli', DB::raw('count(*) as total'))
+            ->groupBy('poli.nama_poli')
+            ->get();
+
+
+
+            // $result = [];
+            // $resep_obat = [];
+            // $jumlah_item_obat = 0;
+            // $jenis_obat = [];
+            // $res = null;
+            // for ($i=0; $i < count($data) ; $i++) {
+            //     $resep_obat[] = $data[$i]->count();
+            //     $jumlah_item_obat += $data[$i]->jumlah_obat;
+            //     $jenis_obat[] = $data[$i]->select('jenis_obat', DB::raw(
+            //         'count(*) as total'
+            //     ))->get();
+            // }
+
+            // dd($jenis_obat);
+
+
+
+
         } else if ($this->choice == 'lab') {
             $this->title = 'Laboratorium';
 

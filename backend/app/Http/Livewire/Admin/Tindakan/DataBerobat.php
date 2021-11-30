@@ -17,6 +17,7 @@ use App\Models\JenisLaboratorium;
 use App\Models\JenisLaboratorumTambahan;
 use App\Models\Laboratorium;
 use App\Exports\RiwayatTindakanExport;
+use App\Models\PengeluaranObat;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DataBerobat extends Component
@@ -35,7 +36,7 @@ class DataBerobat extends Component
     public $openDataDetails, $details;
     public $dataBerobatId, $dataRiwayatTindakanId, $dataResepObatId,  $formId;
 
-    public $nama_pasien, $no_rawat, $no_rekamedis, $id_pasien, $nama_kk_file;
+    public $nama_pasien, $no_rawat, $no_rekamedis, $id_pasien, $nama_kk_file, $id_poli;
 
     //tindakan
     public $poli_tujuan, $keluhan, $pemeriksaan_fisik, $temperatur, $tinggi_badan,
@@ -76,6 +77,7 @@ class DataBerobat extends Component
 
             $this->nama_kk_file = $pasien->pasien->nama_kk;
             $this->id_pendaftaran = $pasien->id;
+            $this->id_poli = $pasien->id_poli;
             $this->no_rawat = $pasien->no_rawat;
             $this->no_antrian = $pasien->pasien->no_antrian;
             $this->no_rekamedis = $pasien->no_rekammedis;
@@ -303,9 +305,10 @@ class DataBerobat extends Component
         $this->validateResepObat();
 
         try {
-
             ResepObat::create([
                 'id_obat' => $this->nama_obat,
+                'id_pasien' => $this->id_pasien,
+                'id_poli' => $this->id_poli,
                 'jenis_obat' => $this->jenis_obat,
                 'dosis' => $this->dosis,
                 'jumlah_obat' => $this->jumlah_obat,
@@ -317,6 +320,16 @@ class DataBerobat extends Component
             $stok->jumlah = $stok->jumlah - $this->jumlah_obat;
 
             $stok->jumlah <= 0 ? $stok->jumlah = 0 : $stok->jumlah;
+
+            PengeluaranObat::create([
+                'no_terima_obat' => $this->noPengeluaran(),
+                'id_pasien' => $this->id_pasien,
+                'id_obat' => $this->nama_obat,
+                'jumlah' => $this->jumlah_obat,
+                'tanggal_serah_obat' => date('Ymd'),
+                'keterangan' => '-',
+            ]);
+
             $this->reset(['nama_obat', 'jenis_obat', 'dosis', 'jumlah_obat', 'kode_obat', 'stock_obat']);
 
 
@@ -591,6 +604,16 @@ class DataBerobat extends Component
 
 
         return 'R-' . date('Ymd') . '-' . $id;
+    }
+
+    public function noPengeluaran()
+    {
+
+        $no = PengeluaranObat::where('tanggal_serah_obat', date('ymd'))->count() + 1;
+        $id = sprintf("%05s", abs($no + 1));
+
+
+        return 'S-' . date('ymd') . '-' . $id;
     }
 
 

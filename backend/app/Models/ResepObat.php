@@ -16,4 +16,19 @@ class ResepObat extends Model
     {
         return $this->belongsTo(Obat::class, 'id_obat', 'id');
     }
+
+    public function pasien()
+    {
+        return $this->belongsTo(Pasien::class, 'id_pasien', 'id');
+    }
+
+    public function jaminan()
+    {
+        return $this->belongsTo(Jaminan::class, 'id_jaminan', 'id');
+    }
+
+    public function poli()
+    {
+        return $this->belongsTo(Poli::class, 'id_poli', 'id');
+    }
 }

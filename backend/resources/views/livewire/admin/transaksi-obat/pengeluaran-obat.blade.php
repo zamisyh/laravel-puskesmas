@@ -11,11 +11,11 @@
                 <div class="page-heading">
                     <div class="page-title">
                         <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
+                            <div class="order-last col-12 col-md-6 order-md-1">
                                 <h3>Transaksi - Pengeluaran Obat</h3>
                                 <p class="text-subtitle text-muted">Hi, this is page for manajement data Pengeluaran Obat</p>
                             </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
+                            <div class="order-first col-12 col-md-6 order-md-2">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('dash.home') }}">Dashboard</a></li>
@@ -35,7 +35,7 @@
                                     <div class="d-flex justify-content-between">
                                         <h4>Create Pengeluaran Obat</h4>
                                         <div>
-                                            <button wire:click='closeFormCreatePengeluaranObat' class="btn btn-sm btn-primary">X</button>
+                                            {{-- <button wire:click='closeFormCreatePengeluaranObat' class="btn btn-sm btn-primary">X</button> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                             wire:submit.prevent='savePengeluaranObat'
                                         @endif
                                     >
-                                        
+
                                         <div class="form-group">
                                             <label for="nama_pasien">Nama Pasien</label>
                                             <select wire:model.lazy='nama_pasien' class="form-control @error('nama_pasien') is-invalid @enderror" id="nama_pasien">
@@ -133,7 +133,7 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        
+
                                         @if ($pengeluaranObatId)
                                             <button class="btn btn-primary">Update</button>
                                         @else
@@ -149,7 +149,7 @@
                                     <div class="d-flex justify-content-between">
                                         <h4>Data Pengeluaran Obat</h4>
                                         <div>
-                                            <button wire:click='openFormCreatePengeluaranObat' class="btn btn-sm btn-primary">Tambah Data</button>
+                                            {{-- <button wire:click='openFormCreatePengeluaranObat' class="btn btn-sm btn-primary">Tambah Data</button> --}}
                                         </div>
                                     </div>
                                 </div>

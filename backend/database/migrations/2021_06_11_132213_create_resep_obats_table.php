@@ -16,6 +16,8 @@ class CreateResepObatsTable extends Migration
         Schema::create('resep_obat', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_obat');
+            $table->unsignedBigInteger('id_pasien');
+            $table->unsignedBigInteger('id_poli');
             $table->string('jenis_obat');
             $table->string('dosis');
             $table->string('jumlah_obat');
@@ -24,6 +26,9 @@ class CreateResepObatsTable extends Migration
             $table->timestamps();
 
             $table->foreign('id_obat')->references('id')->on('obat')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_pasien')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_poli')->references('id')->on('poli')->onDelete('cascade')->onUpdate('cascade');
+
         });
     }
 
