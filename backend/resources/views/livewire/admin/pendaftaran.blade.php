@@ -16,17 +16,32 @@
         </div>
         <table class="table mt-2 w-25 table-bordered" border="4">
             <tr>
-                <td style="font-weight: 700">No. MR</td>
+                <td style="font-weight: 700">No. RM</td>
                 <td>{{ $this->dataPrint->kode_paramedis }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">No. Antrian </td>
+                <td>{{ $this->dataPrint->no_antrian }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Nama Pasien</td>
+                <td>{{ $this->dataPrint->nama_pasien }}</td>
             </tr>
             <tr>
                 <td style="font-weight: 700">Nama KK</td>
                 <td>{{ $this->dataPrint->nama_kk }}</td>
             </tr>
-
+            <tr>
+                <td style="font-weight: 700">Jaminan</td>
+                <td>{{ $this->dataPrint->jaminan->nama_jaminan }} / {{ $this->dataPrint->no_jaminan }}</td>
+            </tr>
             <tr>
                 <td style="font-weight: 700">Tanggal Lahir</td>
                 <td>{{ Carbon\carbon::parse($this->dataPrint->tanggal_lahir_kk)->format('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Usia</td>
+                <td>{{ $this->dataPrint->usia }}</td>
             </tr>
             <tr>
                 <td style="font-weight: 700">Jenis Kelamin</td>

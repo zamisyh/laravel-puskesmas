@@ -76,16 +76,19 @@ class Reports extends Component
                     ->paginate($this->rows);
             }
         } else if ($this->choice == 'dokter') {
-            $this->title = 'Dokter';
+            $this->title = 'Report Dokter';
 
             if ($this->search) {
-                $data = Dokter::where('nama_dokter', 'LIKE', '%' . $this->search . '%')
-                    ->with('poli')
-                    ->orderBy('created_at', 'DESC')
-                    ->paginate($this->rows);
+                $data = Pasien::where('nama_pasien', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('kode_paramedis', 'LIKE', '%' . $this->search . '%')
+                ->with('jaminan')
+                ->orderBy('created_at', 'DESC')
+                ->paginate($this->rows);
             } else {
-                $data = Dokter::with('poli')
-                    ->orderBy('created_at', 'DESC')
+                $data = Pasien::orderBy('created_at', 'DESC')
+                ->with('jaminan')
+                ->paginate($this->rows);  $data = Pasien::orderBy('created_at', 'DESC')
+                    ->with('jaminan')
                     ->paginate($this->rows);
             }
         } else if ($this->choice == 'obat') {

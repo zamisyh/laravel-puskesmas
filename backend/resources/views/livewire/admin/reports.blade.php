@@ -215,13 +215,20 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Nomor Induk Dokter</th>
-                                            <th>Poli</th>
+                                            <th>No Rekamedis</th>
+                                            <th>No Antrian</th>
+                                            <th>Nama Pasien</th>
+                                            <th>Nama KK</th>
+                                            <th>Usia</th>
+                                            <th>No KK</th>
                                             @if ($details)
+                                                <th>No KTP Pasien</th>
+                                                <th>Jaminan</th>
+                                                <th>No Jaminan</th>
+                                                <th>Jenis Kelamin</th>
                                                 <th>TTL</th>
                                                 <th>Alamat</th>
+                                                <th>Wilayah</th>
                                             @endif
 
                                         </tr>
@@ -230,29 +237,35 @@
                                         @forelse ($data as $key => $item)
                                             <tr>
                                                 <td>{{ $data->firstItem() + $key }}</td>
-                                                <td>{{ $item->nama_dokter }}</td>
-                                                <td>
-                                                    @if ($item->jenis_kelamin == 'L')
-                                                        <span class="badge bg-primary">L</span>
-
-                                                    @else
-                                                        <span class="badge bg-success">P</span>
-                                                    @endif
-                                                </td>
-                                                <td>{{ $item->nid }}</td>
-                                                <td>{{ $item->poli->nama_poli }}</td>
+                                                <td>{{ $item->kode_paramedis }}</td>
+                                                <td>{{ $item->no_antrian }}</td>
+                                                <td>{{ $item->nama_pasien }}</td>
+                                                <td>{{ $item->nama_kk }}</td>
+                                                <td>{{ $item->usia }}</td>
+                                                <td>{{ $item->no_kk }}</td>
                                                 @if ($details)
+                                                <td>{{ $item->no_ktp }}</td>
+
+                                                    <td>{{ $item->jaminan->nama_jaminan }}</td>
+                                                    <td>{{ $item->no_jaminan }}</td>
+                                                    <td>{{ $item->jenis_kelamin }}</td>
                                                     <td>
                                                         {{ ucwords(strtolower($item->tempat_lahir)) }},
                                                         {{ Carbon\carbon::parse($item->tanggal_lahir)->format('d M Y') }}
+
                                                     </td>
                                                     <td>{{ $item->alamat }}</td>
+                                                    <td>{{ $item->wilayah }}</td>
                                                 @endif
+                                                <td>
 
+                                                </td>
                                             </tr>
+
                                         @empty
-                                        <td colspan="8" class="text-center">Data not found</td>
-                                        @endforelse
+
+                                        <td colspan="14" class="text-center">Data not found</td>
+                                    @endforelse
                                     </tbody>
                                     </table>
                                 </div>
@@ -338,7 +351,7 @@
                                                     <th>No Antrian</th>
                                                     <th>No Rekamedis</th>
                                                     <th>Nama Pasien</th>
-                                                    <th>Status</th>
+                                                    <th>Jaminan</th>
                                                     @if ($details)
                                                         <th>Nama Dokter</th>
                                                         <th>Jenis Poli</th>

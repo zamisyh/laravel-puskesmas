@@ -21,32 +21,17 @@
                 </div>
                 <table class="table mt-2 w-25 table-bordered" border="4">
                     <tr>
-                        <td style="font-weight: 700">No. MR</td>
+                        <td style="font-weight: 700">No. RM</td>
                         <td>{{ $item->kode_paramedis }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 700">No. Antrian </td>
-                        <td>{{ $item->no_antrian }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 700">Nama Pasien</td>
-                        <td>{{ $item->nama_pasien }}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 700">Nama KK</td>
                         <td>{{ $item->nama_kk }}</td>
                     </tr>
-                    <tr>
-                        <td style="font-weight: 700">Jaminan</td>
-                        <td>{{ $item->jaminan->nama_jaminan }} / {{ $item->no_jaminan }}</td>
-                    </tr>
+
                     <tr>
                         <td style="font-weight: 700">Tanggal Lahir</td>
                         <td>{{ Carbon\carbon::parse($item->tanggal_lahir_kk)->format('d-m-Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 700">Usia</td>
-                        <td>{{ $item->usia }}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 700">Jenis Kelamin</td>
