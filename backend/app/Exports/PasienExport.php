@@ -26,15 +26,12 @@ class PasienExport implements FromView
             1 => ['font' => ['bold' => true]]
         ];
     }
-
     public function view() : View
     {
-      
-
        if (!is_null($this->from) && !is_null($this->to)) {
             return view('livewire.admin.exports.pasien', [
                 'pasien' =>   Pasien::whereRaw(
-                    "(created_at >= ? AND created_at <= ?)", 
+                    "(created_at >= ? AND created_at <= ?)",
                     [$this->from." 00:00:00", $this->to." 23:59:59"]
                   )->with('jaminan')->get()
             ]);
@@ -44,6 +41,6 @@ class PasienExport implements FromView
             ]);
        }
 
-       
+
     }
 }

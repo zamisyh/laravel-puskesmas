@@ -23,8 +23,9 @@ class CreateResepObatsTable extends Migration
             $table->string('jumlah_obat');
             $table->string('no_rawat');
             $table->string('no_rekammedis');
+            $table->boolean('alergi_obat')->default(false);
+            $table->text('keterangan_alergi');
             $table->timestamps();
-
             $table->foreign('id_obat')->references('id')->on('obat')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_pasien')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_poli')->references('id')->on('poli')->onDelete('cascade')->onUpdate('cascade');

@@ -16,11 +16,33 @@
         <th>BB</th>
         <th>IMT</th>
         <th>Tekanan Darah</th>
-        <th>Hasil Lab</th>
+        <th colspan="2">Hasil Lab</th>
         <th>Jenis Kasus</th>
     </tr>
     </thead>
     <tbody>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Keterangan</td>
+        <td>Hasil</td>
+        <td></td>
+    </tr>
+
     @foreach($dokters as $item)
         <tr>
             <td>{{ $loop->iteration }}</td>
@@ -44,7 +66,21 @@
             <td>{{ $item->bb }}</td>
             <td>{{ $item->imt }}</td>
             <td>{{ $item->tekanan_darah }}</td>
-            <td>-</td>
+            <td>
+                <ul>
+                    @foreach ($item->pasien->laboratorium->jenis_laboratorium as $x)
+                        <li>{{ $x->keterangan }}</li>
+                    @endforeach
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    @foreach ($item->pasien->laboratorium->jenis_laboratorium as $x)
+                        <li>{{ $x->pivot->hasil }}</li>
+                    @endforeach
+                </ul>
+            </td>
+
             <td>{{ $item->jenis_kasus }}</td>
         </tr>
     @endforeach

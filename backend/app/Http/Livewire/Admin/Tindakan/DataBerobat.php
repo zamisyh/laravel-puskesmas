@@ -18,6 +18,7 @@ use App\Models\JenisLaboratorumTambahan;
 use App\Models\Laboratorium;
 use App\Exports\RiwayatTindakanExport;
 use App\Models\PengeluaranObat;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DataBerobat extends Component
@@ -44,13 +45,15 @@ class DataBerobat extends Component
         $diagnosa, $nama_tindakan, $rencana_pengobatan, $hasil_periksa, $no_antrian,
         $imt, $jenis_kasus, $id_pendaftaran;
 
-    public $openPrintPageTindakan, $dataPrintCetakTindakan, $dataPrintCetakTindakanPasien;
+    public $openPrintPageTindakan, $dataPrintCetakTindakan, $dataPrintCetakTindakanPasien,
+    $openPrintPageTindakanAll;
 
 
 
     //resep obat
     public $nama_obat, $kode_obat, $jenis_obat, $dosis, $stock_obat, $jumlah_obat;
     public $openPagePrintResepObat, $dataPrintResepObat, $dataPrintResepObatPasien;
+    public $alergi_obat, $keterangan_alergi, $dataPrintAlergiObat, $dataPrintResepObatTindakan;
 
     //rujukan
     public $nama_diagnosa, $nama_rumah_sakit, $poli_rujukan_tujuan, $data_nama_penyakit;
@@ -65,6 +68,7 @@ class DataBerobat extends Component
     public $data_diagnosa, $data_tindakan, $data_obat, $poliId;
 
     public $i_lab, $i_tindakan, $i_resep_obat, $i_rujukan;
+    public $usia, $tl, $jk, $hub, $jmn, $data_poli;
 
 
     public function render()
@@ -73,7 +77,7 @@ class DataBerobat extends Component
 
 
         if ($this->openDataDetails) {
-            $pasien = Pendaftaran::with('pasien', 'poli')->findOrFail($this->formId);
+            $pasien = Pendaftaran::with('pasien', 'pasien.jaminan', 'poli')->findOrFail($this->formId);
 
             $this->nama_kk_file = $pasien->pasien->nama_kk;
             $this->id_pendaftaran = $pasien->id;
@@ -83,14 +87,20 @@ class DataBerobat extends Component
             $this->no_rekamedis = $pasien->no_rekammedis;
             $this->nama_pasien = $pasien->pasien->nama_pasien;
             $this->id_pasien = $pasien->pasien->id;
+            $this->usia = $pasien->pasien->usia;
+            $this->tl = $pasien->pasien->tanggal_lahir;
+            $this->jk = $pasien->pasien->jenis_kelamin;
+            $this->hub = $pasien->hubungan_dengan_penanggung_jawab;
+            $this->jmn = $pasien->pasien->jaminan->nama_jaminan;
 
 
 
 
             //tindakan
             if ($this->i_tindakan) {
-                $this->poli_tujuan = $pasien->poli->nama_poli;
-                $this->poliId = $pasien->poli->id;
+                // $this->poli_tujuan = $pasien->poli->nama_poli;
+                // $this->poliId = $pasien->poli->id;
+                $this->data_poli = Poli::all();
                 $this->data_diagnosa = Diagnosa::orderBy('created_at', 'DESC')->get();
 
             } else if ($this->i_resep_obat) {
@@ -231,7 +241,7 @@ class DataBerobat extends Component
 
         try {
             $data = RiwayatTindakan::create([
-                'id_poli' => $this->poliId,
+                'id_poli' => $this->poli_tujuan,
                 'nama_tindakan' => $this->nama_tindakan,
                 'no_rawat' => $this->no_rawat,
                 'hasil_periksa' => $this->hasil_periksa,
@@ -284,8 +294,20 @@ class DataBerobat extends Component
         $this->dataPrintCetakTindakan = RiwayatTindakan::where('id', $id)
             ->with('poli', 'tindakan', 'diagnosa')->first();
         $this->dataPrintCetakTindakanPasien = Pendaftaran::where('no_rawat', $this->no_rawat)
-            ->with('pasien:id,nama_pasien')
+            ->with('pasien:id,kode_paramedis,nama_pasien,usia,jenis_kelamin,hubungan_dengan_penanggung_jawab,id_jaminan', 'pasien.jaminan')
             ->first(['id', 'tanggal_daftar', 'no_rekammedis', 'id_pasien']);
+
+    }
+
+    public function cetakPrintTindakanAll($no_rawat)
+    {
+        $this->openPrintPageTindakanAll = true;
+        $this->dataPrintCetakTindakan = RiwayatTindakan::where('no_rawat', $no_rawat)
+            ->with('poli', 'tindakan', 'diagnosa')->get();
+        $this->dataPrintCetakTindakanPasien = Pendaftaran::where('no_rawat', $this->no_rawat)
+            ->with('pasien:id,kode_paramedis,nama_pasien,usia,jenis_kelamin,hubungan_dengan_penanggung_jawab,id_jaminan', 'pasien.jaminan')
+            ->get(['id', 'tanggal_daftar', 'no_rekammedis', 'id_pasien']);
+
     }
 
     // Management data save Obat
@@ -313,12 +335,13 @@ class DataBerobat extends Component
                 'dosis' => $this->dosis,
                 'jumlah_obat' => $this->jumlah_obat,
                 'no_rawat' => $this->no_rawat,
-                'no_rekammedis' => $this->no_rekamedis
+                'no_rekammedis' => $this->no_rekamedis,
+                'alergi_obat' => $this->alergi_obat,
+                'keterangan_alergi' => $this->alergi_obat == 1 ? $this->keterangan_alergi : '-',
             ]);
 
             $stok = StokObat::where('id_obat', $this->nama_obat)->first();
             $stok->jumlah = $stok->jumlah - $this->jumlah_obat;
-
             $stok->jumlah <= 0 ? $stok->jumlah = 0 : $stok->jumlah;
 
             PengeluaranObat::create([
@@ -359,7 +382,18 @@ class DataBerobat extends Component
     {
 
         $this->dataPrintResepObat = ResepObat::where('no_rawat', $this->no_rawat)
-                ->with('obat')->orderBy('created_at', 'DESC')->first();
+                ->with('obat')
+                ->whereDate('created_at', Carbon::today())
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        $this->dataPrintAlergiObat = ResepObat::distinct()
+                ->select('alergi_obat', 'keterangan_alergi')
+                ->where('no_rawat', $this->no_rawat)
+                ->orderBy('created_at', 'DESC')
+                ->first();
+
+
+
 
         if (is_null($this->dataPrintResepObat)) {
             $this->alert('info', 'Silahkan masukkan resep obat terlebih dahulu', [
@@ -375,7 +409,11 @@ class DataBerobat extends Component
         }else{
             $this->openPagePrintResepObat = true;
             $this->dataPrintResepObatPasien = Pendaftaran::where('no_rawat', $this->no_rawat)
-            ->with('pasien')->first();
+            ->with('pasien', 'dokter', 'pasien.jaminan')->first();
+            $this->dataPrintResepObatTindakan = RiwayatTindakan::where('no_rawat', $this->no_rawat)
+            ->orderBy('created_at', 'DESC')->first(['id', 'bb']);
+
+
         }
 
 
@@ -640,6 +678,7 @@ class DataBerobat extends Component
     public function validateTindakan()
     {
         return $this->validate([
+            'poli_tujuan' => 'required',
             'keluhan' => 'required',
             'pemeriksaan_fisik' => 'required',
             'temperatur' => 'nullable|',
@@ -664,7 +703,9 @@ class DataBerobat extends Component
             'nama_obat' => 'required',
             'jenis_obat' => 'required',
             'dosis' => 'required',
-            'jumlah_obat' => 'required|numeric'
+            'jumlah_obat' => 'required|numeric',
+            'alergi_obat' => 'required',
+            'keterangan_alergi' => $this->alergi_obat == 1 ? 'required' : ''
         ]);
     }
 

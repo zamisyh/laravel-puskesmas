@@ -32,6 +32,18 @@
                 <td>{{ $this->dataPrint->nama_kk }}</td>
             </tr>
             <tr>
+                <td style="font-weight: 700">NIK</td>
+                <td>{{ $this->dataPrint->no_ktp }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Nama Poli</td>
+                <td>{{ $this->dataPrintPoli->poli->nama_poli }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Hubungan</td>
+                <td>{{ ucwords(strtolower($this->dataPrint->hubungan_dengan_penanggung_jawab)) }}</td>
+            </tr>
+            <tr>
                 <td style="font-weight: 700">Jaminan</td>
                 <td>{{ $this->dataPrint->jaminan->nama_jaminan }} / {{ $this->dataPrint->no_jaminan }}</td>
             </tr>

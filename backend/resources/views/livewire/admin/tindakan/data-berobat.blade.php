@@ -84,103 +84,194 @@
         </div>
         <table class="table mt-2 table-bordered" border="3" style="width: 30%">
             <tr>
-                <td style="font-weight: 700">Tanggal Pendaftaran</td>
+                <td style="font-weight: 700">Riwayat Alergi Obat</td>
+                <td>
+                    @if ($this->dataPrintAlergiObat->alergi_obat == 1)
+                        {{ $this->dataPrintAlergiObat->keterangan_alergi }}
+
+                    @else
+                        -
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">No. Urut</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Nama dr</td>
+                <td>{{ $this->dataPrintResepObatPasien->dokter->nama_dokter }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Tanggal</td>
                 <td>{{ Carbon\carbon::parse($this->dataPrintResepObatPasien->tanggal_daftar)->format('d-m-Y') }}</td>
             </tr>
             <tr>
-                <td style="font-weight: 700">No RM</td>
-                <td>{{ $this->dataPrintResepObatPasien->no_rekammedis }}</td>
+                <td style="font-weight: 700">Nama Obat / Jumlah</td>
+                <td>
+                    <ul>
+                        @foreach ($this->dataPrintResepObat as $item)
+                            <li>{{ $item->obat->nama_obat }} / {{ $item->jumlah_obat }}</li>
+
+                        @endforeach
+                    </ul>
+                </td>
             </tr>
             <tr>
-                <td style="font-weight: 700">Nama Pasien / Umur</td>
-                <td>{{ $this->dataPrintResepObatPasien->pasien->nama_pasien }} /
-                {{ $this->dataPrintResepObatPasien->pasien->usia }}</td>
+                <td style="font-weight: 700">Nama / JK</td>
+                <td>
+                    {{ $this->dataPrintResepObatPasien->pasien->nama_pasien }} /
+                    {{ $this->dataPrintResepObatPasien->pasien->jenis_kelamin }}
+
+                </td>
             </tr>
             <tr>
-                <td style="font-weight: 700">Jenis Kelamin</td>
-                <td>{{ $this->dataPrintResepObatPasien->pasien->jenis_kelamin }}</td>
+                <td style="font-weight: 700">No. RM</td>
+                <td>{{ $this->dataPrintResepObatPasien->pasien->kode_paramedis }}</td>
             </tr>
             <tr>
-                <td style="font-weight: 700">Nama Obat</td>
-                <td>{{ $this->dataPrintResepObat->obat->nama_obat }}</td>
+                <td style="font-weight: 700">Umur</td>
+                <td>{{ $this->dataPrintResepObatPasien->pasien->usia }}</td>
             </tr>
             <tr>
-                <td style="font-weight: 700">Jenis Obat</td>
-                <td>{{ $this->dataPrintResepObat->jenis_obat }}</td>
-            </tr>
-             <tr>
-                <td style="font-weight: 700">Dosis</td>
-                <td>{{ $this->dataPrintResepObat->dosis }}</td>
+                <td style="font-weight: 700">BB</td>
+                <td>{{ $this->dataPrintResepObatTindakan->bb }} kg</td>
             </tr>
             <tr>
-                <td style="font-weight: 700">Satuan</td>
-                <td>{{ $this->dataPrintResepObat->obat->satuan }}</td>
+                <td style="font-weight: 700">Diagnosa</td>
+                <td>
+                    <ul>
+                        @foreach ($this->dataPrintResepObatTindakan->diagnosaMany as $d)
+                            <li>{{ $d->nama_penyakit }}</li>
+                        @endforeach
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: 700">Jaminan</td>
+                <td>{{ $this->dataPrintResepObatPasien->pasien->jaminan->nama_jaminan }}</td>
             </tr>
         </table>
     </center>
     @elseif($openPrintPageTindakan)
-    <center>
-        <div class="">
-            <img src="{{ asset('logo.ico') }}" height="80" width="80" class="mt-10">
-            <h5 class="p-1">UPTD Puskesmas Perumnas 2</h5>
-            <span>JL Belut Raya, No. 1, Kayuringin, <br> Bekasi Bekasi, Jawa Barat <br>Indonesia 17144. Phone: (021) 88954619</span>
-        </div>
-        <table class="table mt-2 table-bordered" border="3" style="width: 30%">
-            <tr>
-                <td style="font-weight: 700">Tanggal Daftar</td>
-                <td>{{ Carbon\carbon::parse( $dataPrintCetakTindakanPasien->tanggal_daftar)->format('d-m-Y') }}</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700">Nama Pasien </td>
-                <td>{{ $dataPrintCetakTindakanPasien->pasien->nama_pasien }}</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700">No RM </td>
-                <td>{{ $dataPrintCetakTindakanPasien->no_rekammedis }}</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700">Keluhan </td>
-                <td>{{ $dataPrintCetakTindakan->keluhan }}</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700">Cek Fisik </td>
-                <td>{{ $dataPrintCetakTindakan->cek_fisik }}</td>
-            </tr>
-            {{-- <tr>
-                <td>TMP : {{ $dataPrintCetakTindakan->temperatur }}</td>
-                <td>N : {{ $dataPrintCetakTindakan->tekanan_nadi }}</td>
-            </tr>
-            <tr>
-                <td>HR : {{ $dataPrintCetakTindakan->hr }}</td>
-                <td>RR : {{ $dataPrintCetakTindakan->rr }}</td>
-            </tr>
-            <tr>
-                <td>TB : {{ $dataPrintCetakTindakan->tinggi_badan }}</td>
-                <td>BB : {{ $dataPrintCetakTindakan->bb }}</td>
-            </tr>
-            <tr>
-                <td>LP : {{ $dataPrintCetakTindakan->lp }}</td>
-                <td>IMT : {{ $dataPrintCetakTindakan->imt }}</td>
-            </tr> --}}
-            <tr>
-                <td style="font-weight: 700">Hasil Periksa </td>
-                <td>{{ $dataPrintCetakTindakan->hasil_periksa }}</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700">Jenis Kasus </td>
-                <td>{{ $dataPrintCetakTindakan->jenis_kasus }}</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700">Tindakan </td>
-                <td>{{ $dataPrintCetakTindakan->nama_tindakan }}</td>
-            </tr>
-            <tr>
-                <td style="font-weight: 700">Rencana Pengobatan</td>
-                <td>{{ $dataPrintCetakTindakan->rencana_pengobatan }}</td>
-            </tr>
+    <div class="container p-5">
+        <div class="d-flex justify-content-between">
+            <div>
+                Nama : {{ $nama_pasien }} <br />
+                Usia / TTL : {{ $usia }} /
+                            {{ Carbon\carbon::parse($tl)->format('d-m-Y') }} <br />
+                Jenis Kelamin : {{ $jk }}
 
-        </table>
-    </center>
+            </div>
+            <div>
+                Hubungan Dengan KK : {{ ucwords(strtolower($hub)) }} <br />
+                Kartu Jaminan Kesehatan : {{ $jmn }} <br />
+                No RM : {{ $no_rekamedis }} <br />
+                Pekerjaan :
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <table class="table table-bordered">
+                <thead class="text-white bg-success">
+                    <tr>
+                        <th rowspan="2">Tanggal Berobat</th>
+                        <th colspan="4">
+                            <center>
+                                Catatan Pemeriksaan Pasien Terintegrasi
+                            </center>
+                        </th>
+                        <th rowspan="2">TTD</th>
+                    </tr>
+                    <tr>
+
+                        <th><center>Anamnesis</center></th>
+                        <th><center>Pemeriksaan Fisik dan Penunjang</center></th>
+                        <th><center>Diagnosa</center></th>
+                        <th><center>Rencana Layanan</center></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>{{ $dataPrintCetakTindakan->created_at }}</td>
+                        <td>{{ $dataPrintCetakTindakan->hasil_periksa }}</td>
+                        <td>{{ $dataPrintCetakTindakan->cek_fisik }} - {{ $dataPrintCetakTindakan->penunjang }}</td>
+                        <td>
+                            <ul>
+                                @foreach ($dataPrintCetakTindakan->diagnosaMany as $item)
+                                    <li>[{{ $item->code }}] - {{ $item->nama_penyakit }}</li>
+                                @endforeach
+                            </ul>
+                        </td>
+                        <td>{{ $dataPrintCetakTindakan->rencana_pengobatan }}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @elseif($openPrintPageTindakanAll)
+    <div class="container p-5">
+        <div class="d-flex justify-content-between">
+            <div>
+                Nama : {{ $nama_pasien }} <br />
+                Usia / TTL : {{ $usia }} /
+                            {{ Carbon\carbon::parse($tl)->format('d-m-Y') }} <br />
+                Jenis Kelamin : {{ $jk }}
+
+            </div>
+            <div>
+                Hubungan Dengan KK : {{ ucwords(strtolower($hub)) }} <br />
+                Kartu Jaminan Kesehatan : {{ $jmn }} <br />
+                No RM : {{ $no_rekamedis }} <br />
+                Pekerjaan :
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <table class="table table-bordered">
+                <thead class="text-white bg-success">
+                    <tr>
+                        <th rowspan="2">Tanggal Berobat</th>
+                        <th colspan="4">
+                            <center>
+                                Catatan Pemeriksaan Pasien Terintegrasi
+                            </center>
+                        </th>
+                        <th rowspan="2">TTD</th>
+                    </tr>
+                    <tr>
+
+                        <th><center>Anamnesis</center></th>
+                        <th><center>Pemeriksaan Fisik dan Penunjang</center></th>
+                        <th><center>Diagnosa</center></th>
+                        <th><center>Rencana Layanan</center></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($dataPrintCetakTindakan as $item)
+                        <tr>
+                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->hasil_periksa }}</td>
+                            <td>{{ $item->cek_fisik }} - {{ $item->penunjang }}</td>
+                            <td>
+                                <ul>
+                                    @foreach ($item->diagnosaMany as $d)
+                                        <li>[{{ $d->code }}] - {{ $d->nama_penyakit }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>{{ $item->rencana_pengobatan }}</td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
     @else
         <div id="app">
             @include('livewire.admin.components.sidebar')
@@ -352,6 +443,9 @@
                                         <h4 class="text-white">Riwayat Tindakan</h4>
                                     </div>
                                     <div class="mt-4 card-body">
+
+                                        <button wire:click="cetakPrintTindakanAll({{ $no_rawat }})" class="mb-4 btn btn-primary">Cetak Riwayat Tindakan</button>
+
                                         <div class="table-responsive">
                                             <table class="table table-bordered table-striped table-hover">
                                                 <thead>
@@ -431,6 +525,7 @@
                                                         <th>Nama Obat</th>
                                                         <th>Jenis</th>
                                                         <th>Dosis</th>
+                                                        <th>Created At</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -442,6 +537,7 @@
                                                         <td>{{ $item->obat->nama_obat }}</td>
                                                         <td>{{ $item->jenis_obat }}</td>
                                                         <td>{{ $item->dosis }}</td>
+                                                        <td>{{ Carbon\carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                                                         <td>
                                                             <button wire:click.prevent='deleteDataResepObat({{ $item->id }})' style="margin-left: 5px" class="btn btn-danger btn-sm">
                                                                 <i class="bi bi-trash-fill"></i>

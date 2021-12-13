@@ -59,6 +59,33 @@
             </div>
 
             <div class="form-group">
+                <label for="alergi_obat">Alergi Obat</label>
+                <select wire:model.lazy='alergi_obat' class="form-control @error('alergi_obat')
+                    is-invalid
+                @enderror">
+                    <option value="" selected>Pilih</option>
+                    <option value="1">Ya</option>
+                    <option value="0">Tidak</option>
+                </select>
+                @error('alergi_obat')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            @if ($alergi_obat == 1)
+                <div class="form-group">
+                    <label for="keterangan_alergi">Keterangan Alergi</label>
+                    <textarea rows="3" wire:model.lazy='keterangan_alergi' class="form-control @error('keterangan_alergi')
+                        is-invalid
+                    @enderror" placeholder="Masukkan keterangan alergi"></textarea>
+                    @error('keterangan_alergi')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            @endif
+
+
+            <div class="form-group">
                 @if ($stock_obat && $stock_obat > 1)
                     <button class="btn btn-success">Submit</button>
                 @else

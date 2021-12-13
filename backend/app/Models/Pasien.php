@@ -16,4 +16,9 @@ class Pasien extends Model
     {
         return $this->belongsTo(Jaminan::class, 'id_jaminan', 'id');
     }
+
+    public function laboratorium()
+    {
+        return $this->hasOne(Laboratorium::class, 'id_pasien', 'id');
+    }
 }

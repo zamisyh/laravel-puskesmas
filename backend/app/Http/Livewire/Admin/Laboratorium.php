@@ -92,7 +92,7 @@ class Laboratorium extends Component
 
     public function openPrint($id)
     {
-        $this->data_pasien = Lab::where('id', $id)->with('pasien')->first();
+        $this->data_pasien = Lab::where('id', $id)->with('pasien', 'pasien.jaminan')->first();
         $this->printPage = true;
     }
 

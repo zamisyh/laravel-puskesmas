@@ -393,6 +393,10 @@
 
                                     <div class="d-flex justify-content-between">
                                         <div>
+                                            <input type="date" wire:model='from'> sampai
+                                            <input type="date" wire:model='to'>
+                                        </div>
+                                        <div>
                                             <select wire:model='rows'>
                                                 <option value="5" selected>5</option>
                                                 <option value="10" selected>10</option>
@@ -401,9 +405,9 @@
                                             </select>
                                         </div>
 
-                                        <div>
+                                        {{-- <div>
                                             <button class="btn btn-success btn-sm" wire:click='obatExportAll'>Export</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     <p></p>

@@ -35,7 +35,6 @@ class Pasien extends Component
     {
 
         $this->data_jaminan = Jaminan::orderBy('created_at', 'DESC')->get();
-
         if ($this->search) {
             $pasiens = Pasiens::where('nama_pasien', 'LIKE', '%' . $this->search . '%')
                 ->orWhere('kode_paramedis', 'LIKE', '%' . $this->search . '%')
@@ -153,7 +152,8 @@ class Pasien extends Component
     {
 
 
-        $this->validasi();
+        dd($this->getNameRekamMedis());
+        // $this->validasi();
 
         $findJaminan = Jaminan::findOrFail($this->jaminan);
         $age = \Carbon\Carbon::parse($this->tanggal_lahir)->age;
@@ -311,11 +311,15 @@ class Pasien extends Component
         // }
 
         // $date = date('dmY', strtotime($this->tanggal_lahir_kk));
-        $p = Pasiens::orderBy('id', 'DESC')->pluck('kode_paramedis')->first();
+        $p = Pasiens::where('kode_paramedis', 'LIKE', $this->nama_kk . '%')
+        ->orderBy('created_at', 'DESC')
+        ->pluck('kode_paramedis')
+        ->first();
+
         $data = substr($p, 1, 10);
         $res = $data + 1;
 
-        return substr($this->nama_kk, 0, 1) . $res;
+        return ucwords(substr($this->nama_kk, 0, 1)) . $res;
     }
 
     public function resetForm()

@@ -19,7 +19,7 @@ class Pendaftaran extends Component
     public $rows = 5;
 
     public $openFormCreate, $openFormUpdate, $details, $showDataPasien, $printPendaftaran;
-    public $data_dokter, $data_poli, $data_pasien, $pendaftaranId, $dataPrint;
+    public $data_dokter, $data_poli, $data_pasien, $pendaftaranId, $dataPrint, $dataPrintPoli;
 
     public $no_rawat, $dokter, $poli, $no_rekamedis, $pasien, $no_kk, $tanggal_lahir,
         $nama_penanggung_jawab, $status_pasien, $no_jaminan, $wilayah, $alamat,
@@ -205,6 +205,7 @@ class Pendaftaran extends Component
     {
         $this->printPendaftaran = true;
         $this->dataPrint = Pasien::where('id', $id)->first();
+        $this->dataPrintPoli = ModelsPendaftaran::with('poli')->where('id_pasien', $id)->first('id_poli');
 
     }
 
@@ -245,7 +246,7 @@ class Pendaftaran extends Component
         $id = sprintf("%05s", abs($no + 1));
 
 
-        return date('Y-m-d') . '-' . $id;
+        return date('Ymd') . $id;
     }
 
     public function resetForm()

@@ -6,9 +6,18 @@
         <form wire:submit.prevent='saveTindakan'>
             <div class="form-group">
                 <label for="poli_tujuan">Poli Tujuan</label>
-                <input type="text" wire:model.lazy='poli_tujuan' class="form-control @error('poli_tujuan')
+                {{-- <input type="text" wire:model.lazy='poli_tujuan' class="form-control @error('poli_tujuan')
                     is-invalid
-                @enderror" readonly>
+                @enderror"> --}}
+                <select wire:model.lazy='poli_tujuan' class="form-control @error('poli_tujuan') is-invalid @enderror">
+                    <option value="">Pilih</option>
+                    @foreach ($data_poli as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_poli }}</option>
+                    @endforeach
+                </select>
+                @error('poli_tujuan')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group">

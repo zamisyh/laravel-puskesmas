@@ -159,7 +159,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="no_ktp">Nomor KTP</label>
+                                                <label for="no_ktp">NIK</label>
                                                 <input type="number" wire:model.lazy='no_ktp' class="form-control @error('no_ktp') is-invalid @enderror" placeholder="Masukkan no ktp pasien">
                                                 @error('no_ktp')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -180,9 +180,35 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="no_jaminan">Nomor Jaminan Kesehatan (KIS / ASKES / LM-NIK / Umum)</label>
+                                                <label for="no_jaminan">Nomor Jaminan Kesehatan (KIS / LM-NIK / Umum)</label>
                                                 <input type="text" wire:model.lazy='no_jaminan' class="form-control @error('no_jaminan') is-invalid @enderror" placeholder="Masukkan no jaminan pasien">
                                                 @error('no_jaminan')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="hubungan">Hubungan</label>
+                                                <select wire:model.lazy='hubungan' class="form-control @error('hubungan') is-invalid @enderror" id="hubungan">
+                                                    <option selected>Pilih</option>
+                                                    <option value="anak">Anak</option>
+                                                    <option value="orang tua">Orang Tua</option>
+                                                    <option value="suami">Suami</option>
+                                                    <option value="istri">Istri</option>
+                                                    <option value="kakak">Kakak</option>
+                                                    <option value="adik">Adik</option>
+                                                    <option value="kakek">Kakek</option>
+                                                    <option value="nenek">Nenek</option>
+                                                    <option value="tetangga">Tetangga</option>
+                                                    <option value="saudara">Saudara</option>
+                                                    <option value="paman">Paman</option>
+                                                    <option value="bibi">Bibi</option>
+                                                    <option value="om">Om</option>
+                                                    <option value="tante">Tante</option>
+                                                    <option value="diri sendiri">Diri Sendiri</option>
+                                                    <option value="orang lain">Orang Lain</option>
+                                                </select>
+                                                @error('hubungan')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -240,33 +266,6 @@
                                                     <option value="P">Perempuan</option>
                                                 </select>
                                                 @error('jenis_kelamin_kk')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-
-
-
-                                            <div class="form-group">
-                                                <label for="hubungan">Hubungan</label>
-                                                <select wire:model.lazy='hubungan' class="form-control @error('hubungan') is-invalid @enderror" id="hubungan">
-                                                    <option selected>Pilih</option>
-                                                    <option value="anak">Anak</option>
-                                                    <option value="orang tua">Orang Tua</option>
-                                                    <option value="suami">Suami</option>
-                                                    <option value="istri">Istri</option>
-                                                    <option value="kakak">Kakak</option>
-                                                    <option value="adik">Adik</option>
-                                                    <option value="kakek">Kakek</option>
-                                                    <option value="nenek">Nenek</option>
-                                                    <option value="tetangga">Tetangga</option>
-                                                    <option value="saudara">Saudara</option>
-                                                    <option value="paman">Paman</option>
-                                                    <option value="bibi">Bibi</option>
-                                                    <option value="om">Om</option>
-                                                    <option value="tante">Tante</option>
-                                                    <option value="orang lain">Orang Lain</option>
-                                                </select>
-                                                @error('hubungan')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>

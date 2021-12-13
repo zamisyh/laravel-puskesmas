@@ -1,65 +1,119 @@
 <div>
 
    @if ($printPage)
-   <div class="card">
-    <div class="mt-3 card-body">
-        <h4> Biodata Pasien - Pemeriksaan Laboratorium</h4>
-        <table class="table table-bordered">
-            <tr>
-                <td>No Antrian</td>
-                <td>{{ $no_antrian }}</td>
-            </tr>
-            <tr>
-                <td>No Rekamedis</td>
-                <td>{{ $no_rekamedis }}</td>
-            </tr>
-            <tr>
-                <td>Nama Pasien</td>
-                <td>{{ $nama_pasien }}</td>
-            </tr>
-        </table>
+    <div class="container mt-10">
+        <div class="d-flex justify-content-between">
+            <div>
+                <img src="{{ asset('patriot.png') }}" height="100px" alt="">
+            </div>
+            <div>
+                <center>
+                    <h6>PEMERINTAH KOTA BEKASI</h6>
+                    <h4>DINAS KESEHATAN KOTA BEKASI</h4>
+                    <h5>UPTD PUSKESMAS PERUMNAS II</h5>
+                    <span>Jln. Belut Raya No. 1 - Kayuringin Jaya - Bekasi Selatan - Kayuringin Jaya - Kota Bekasi
+                        <br> Telp : (021)-8945-1520
+                    </span>
+                </center>
+            </div>
+            <div>
+                <img src="{{ asset('logo2.png') }}" height="100px" alt="">
+            </div>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <div class="col-lg-8 w-50">
+               <table class="table table-bordered table-xs table-condensed">
+                   <tr>
+                        <td> No. Laboratorium</td>
+                        <td></td>
+                   </tr>
+                   <tr>
+                       <td>Nama</td>
+                       <td>{{ ucwords(strtolower($nama_pasien)) }}</td>
+                   </tr>
+                   <tr>
+                       <td>Umur</td>
+                       <td>{{ $data_pasien->pasien->usia }}</td>
+                   </tr>
+                   <tr>
+                       <td>Alamat</td>
+                       <td>{{ $data_pasien->pasien->alamat }}</td>
+                   </tr>
+                   <tr>
+                       <td>No. RM</td>
+                       <td>{{ $data_pasien->pasien->kode_paramedis }}</td>
+                   </tr>
+                   <tr>
+                       <td>Jaminan Kesehatan</td>
+                       <td>{{ $data_pasien->pasien->jaminan->nama_jaminan }}</td>
+                   </tr>
+               </table>
+            </div>
+            <div class="col-lg-4 w-50">
+              <table class="table table-bordered table-condensed">
+                  <tr>
+                      <td>Dokter Pengirim</td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>Asal Poli</td>
+                      <td></td>
+                  </tr>
+                   <tr>
+                       <td>Tanggal</td>
+                       <td>{{  Carbon\carbon::parse($data_pasien->created_at)->format('d/m/y')  }}</td>
+                   </tr>
+              </table>
+            </div>
+        </div>
+        <hr>
+        <h3 class="text-center">HASIL PEMERIKSAAN</h3>
+        <center>
+           <div style="height: 40px; width: 50%; border: 1px; border-style:solid;">
+               <span style="margin-left: -35%; line-height:40px;">Waktu Pengambilan Sampel : </span>
+           </div>
+        </center>
+        <div class="mt-3 table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="text-white bg-success">
+                    <tr>
+                        <th>No</th>
+                        <th>Keterangan</th>
+                        <th>Hasil</th>
+                        <th>Satuan</th>
+                        <th>Nilai Rujukan</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-        <div class="mt-4 mb-3">
-            <h4>Hasil Rujukan Lab</h4>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead>
+                    @foreach ($data_pasien->jenis_laboratorium as $item)
                         <tr>
-                            <th>No</th>
-                            <th>Keterangan</th>
-                            <th>Hasil</th>
-                            <th>Satuan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->keterangan }}</td>
+                            <td>
+                                @if (!is_null($item->pivot->hasil))
 
-                        @foreach ($data_pasien->jenis_laboratorium as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->keterangan }}</td>
-                                <td>
-                                    @if (!is_null($item->pivot->hasil))
-
-                                        @if (!$openUpdateHasil)
-                                            {{ $item->pivot->hasil }}
-                                        @else
-                                             <input type="text" wire:model='hasil.{{ $item->id }}' placeholder="Masukkan {{ $item->keterangan }}">
-                                        @endif
+                                    @if (!$openUpdateHasil)
+                                        {{ $item->pivot->hasil }}
                                     @else
                                          <input type="text" wire:model='hasil.{{ $item->id }}' placeholder="Masukkan {{ $item->keterangan }}">
                                     @endif
-                                </td>
-                                <td>{{ $item->satuan }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-            </div>
+                                @else
+                                     <input type="text" wire:model='hasil.{{ $item->id }}' placeholder="Masukkan {{ $item->keterangan }}">
+                                @endif
+                            </td>
+                            <td>{{ $item->satuan }}</td>
+                            <td>{{ $item->nilai_rujukan }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
         </div>
     </div>
-</div>
+
+    </div>
    @else
    @section('title', 'Laboratorium')
 
@@ -186,6 +240,7 @@
                                <div class="card-header">
                                    <h4 class="card-title">Data Laboratorium</h4>
                                </div>
+
                                <div class="card-body">
                                    <div class="mb-4">
                                        <input type="text" wire:model='search' placeholder="Search data..">
