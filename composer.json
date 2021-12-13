@@ -13,7 +13,6 @@
         "jantinnerezo/livewire-alert": "^2.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.4",
         "maatwebsite/excel": "^3.1",
         "printnode/printnode-php": "^2.0@RC",
         "rappasoft/laravel-livewire-tables": "^1.10",
@@ -44,8 +43,7 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
+            "@php artisan package:discover --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
