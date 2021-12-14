@@ -94,7 +94,7 @@ class Pasien extends Component
         if ($this->cari_rekammedis == 'kosong') {
             $this->no_kk = null;
             $this->alamat = null;
-            $this->nama_kk = null;
+            $this->nama_kk = '';
             $this->hubungan = null;
             $this->jenis_kelamin_kk = null;
             $this->tanggal_lahir_kk = null;
@@ -151,9 +151,7 @@ class Pasien extends Component
     public function savePasien()
     {
 
-
-        dd($this->getNameRekamMedis());
-        // $this->validasi();
+        $this->validasi();
 
         $findJaminan = Jaminan::findOrFail($this->jaminan);
         $age = \Carbon\Carbon::parse($this->tanggal_lahir)->age;
@@ -161,7 +159,9 @@ class Pasien extends Component
         try {
 
             Pasiens::create([
-                'kode_paramedis' => !is_null($this->no_rekamedis) ? $this->no_rekamedis : $this->getNameRekamMedis(),
+                'kode_paramedis' =>  is_null($this->no_rekamedis) || $this->cari_rekammedis == 'kosong'
+                                    ? $this->getNameRekamMedis()
+                                    : $this->no_rekamedis,
                 'nama_pasien' => $this->nama_pasien,
                 'jenis_kelamin' => $this->jenis_kelamin,
                 'no_kk' => $this->no_kk,
@@ -311,7 +311,8 @@ class Pasien extends Component
         // }
 
         // $date = date('dmY', strtotime($this->tanggal_lahir_kk));
-        $p = Pasiens::where('kode_paramedis', 'LIKE', $this->nama_kk . '%')
+        $p = Pasiens::distinct()
+        ->where('kode_paramedis', 'LIKE', substr($this->nama_kk, 0, 1) . '%')
         ->orderBy('created_at', 'DESC')
         ->pluck('kode_paramedis')
         ->first();

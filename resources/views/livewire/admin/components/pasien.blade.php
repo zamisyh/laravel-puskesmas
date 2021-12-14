@@ -51,7 +51,7 @@
                     <select  id="pasien" wire:model.lazy='pasien' class="form-control @error('pasien') is-invalid @enderror">
                         <option selected>Pilih</option>
                          @foreach ($data_pasien as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_pasien }}</option>
+                            <option value="{{ $item->id }}">{{ $item->kode_paramedis }} - {{ $item->nama_pasien }}</option>
                          @endforeach
                     </select>
                     @error('pasien')
