@@ -14,7 +14,7 @@
     @enderror">
     <option value="" selected>Pilih</option>
     @foreach ($data_pasien as $item)
-        <option value="{{ $item->id }}">{{ $item->nama_pasien }}</option>
+        <option value="{{ $item->id }}">{{ $item->kode_paramedis }} - {{ $item->nama_pasien }}</option>
     @endforeach
 </select>
 </div>
@@ -46,7 +46,7 @@
 
 
 
-                
+
 @if ($perbaikanGiziId)
     <button class="btn btn-primary">Update</button>
 @else
