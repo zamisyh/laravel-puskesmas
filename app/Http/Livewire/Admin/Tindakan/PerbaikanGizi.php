@@ -25,7 +25,7 @@ class PerbaikanGizi extends Component
     public function render()
     {
 
-        $this->data_pasien = Pasien::orderBy('created_at', 'DESC')->get(['id', 'nama_pasien']);
+        $this->data_pasien = Pasien::orderBy('created_at', 'DESC')->get(['id', 'nama_pasien', 'kode_paramedis']);
 
         if ($this->search) {
             $perbaikan_gizis = PerbaikanGizis::whereHas('pasien', function ($q) {

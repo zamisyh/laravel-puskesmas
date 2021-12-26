@@ -308,27 +308,33 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <div>
-                                        <input type="text" wire:model='search' placeholder="Search by kode, nama">
-                                        <select wire:model='rows'>
-                                            <option value="5" selected>5</option>
-                                            <option value="10" selected>10</option>
-                                            <option value="15" selected>15</option>
-                                            <option value="20" selected>20</option>
-                                        </select>
+                                   <div class="d-flex justify-content-between">
+                                        <div>
+                                            <input type="text" wire:model='search' placeholder="Search by kode, nama">
+                                            <select wire:model='rows'>
+                                                <option value="5" selected>5</option>
+                                                <option value="10" selected>10</option>
+                                                <option value="15" selected>15</option>
+                                                <option value="20" selected>20</option>
+                                            </select>
 
-                                        @if (!$details)
-                                                <button wire:click='openDetails' class="btn btn-primary btn-sm">
-                                                    <i class="bi bi-eye-slash-fill"></i>
-                                                </button>
+                                            @if (!$details)
+                                                    <button wire:click='openDetails' class="btn btn-primary btn-sm">
+                                                        <i class="bi bi-eye-slash-fill"></i>
+                                                    </button>
 
-                                            @else
-                                                <button wire:click='closeDetails' class="btn btn-primary btn-sm">
-                                                    <i class="bi bi-eye-fill"></i>
-                                                </button>
-                                        @endif
+                                                @else
+                                                    <button wire:click='closeDetails' class="btn btn-primary btn-sm">
+                                                        <i class="bi bi-eye-fill"></i>
+                                                    </button>
+                                            @endif
 
-                                    </div>
+                                        </div>
+                                        <div>
+                                            <input type="date" wire:model='from'> sampai
+                                            <input type="date" wire:model='to'>
+                                        </div>
+                                   </div>
 
                                     <p></p>
 

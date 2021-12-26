@@ -30,6 +30,7 @@ class Pasien extends Component
         $wilayah, $status_pasien, $keterangan, $nama_faskes, $hubungan, $nama_kk, $tanggal_lahir_kk;
 
     public $searchRekammedis, $data_rekammedis, $cari_rekammedis;
+    public $from, $to;
 
     public function render()
     {
@@ -42,6 +43,15 @@ class Pasien extends Component
                 ->with('jaminan')
                 ->orderBy('created_at', 'DESC')
                 ->paginate($this->rows);
+
+        }else if(!is_null($this->from) && !is_null($this->to)){
+            $pasiens = Pasiens::whereRaw(
+                "(created_at >= ? AND created_at <= ?)",
+                [$this->from." 00:00:00", $this->to." 23:59:59"])
+                ->with('jaminan')
+                ->orderBy('created_at', 'DESC')
+                ->paginate($this->rows);
+
         } else {
             $pasiens = Pasiens::orderBy('created_at', 'DESC')
                 ->with('jaminan')

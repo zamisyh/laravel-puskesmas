@@ -15,7 +15,7 @@ class Pendaftaran extends Component
     protected $paginationTheme = 'bootstrap';
     protected $listeners = ['confirmed'];
 
-    public $search;
+    public $search, $from, $to;
     public $rows = 5;
 
     public $openFormCreate, $openFormUpdate, $details, $showDataPasien, $printPendaftaran;
@@ -24,6 +24,7 @@ class Pendaftaran extends Component
     public $no_rawat, $dokter, $poli, $no_rekamedis, $pasien, $no_kk, $tanggal_lahir,
         $nama_penanggung_jawab, $status_pasien, $no_jaminan, $wilayah, $alamat,
         $alamat_penanggung_jawab, $hubungan, $no_antrian;
+
     public function render()
     {
 
@@ -44,7 +45,28 @@ class Pendaftaran extends Component
                 ->with('pasien', 'poli:id,nama_poli', 'dokter:id,nama_dokter')
                 ->orderBy('created_at', 'DESC')
                 ->paginate($this->rows);
-        } else {
+        }else if(!is_null($this->from) && !is_null($this->to)){
+            if (!is_null($this->search)) {
+                $pendaftarans = ModelsPendaftaran::whereHas('pasien', function ($q) {
+                    $q->where('nama_pasien', 'LIKE', '%' . $this->search . '%')
+                        ->orWhere('no_rawat', 'LIKE', '%' . $this->search . '%')
+                        ->orWhere('no_rekammedis', 'LIKE', '%' . $this->search . '%');
+                })
+                    ->whereRaw(
+                        "(created_at >= ? AND created_at <= ?)",
+                        [$this->from." 00:00:00", $this->to." 23:59:59"])
+                        ->with('pasien', 'poli:id,nama_poli', 'dokter:id,nama_dokter')
+                        ->orderBy('created_at', 'DESC')
+                        ->paginate($this->rows);
+            }else{
+                $pendaftarans =  ModelsPendaftaran::whereRaw(
+                    "(created_at >= ? AND created_at <= ?)",
+                    [$this->from." 00:00:00", $this->to." 23:59:59"])
+                    ->with('pasien', 'poli:id,nama_poli', 'dokter:id,nama_dokter')
+                    ->orderBy('created_at', 'DESC')
+                    ->paginate($this->rows);
+            }
+        }else {
             $pendaftarans = ModelsPendaftaran::with('pasien', 'poli:id,nama_poli', 'dokter:id,nama_dokter')
                 ->orderBy('created_at', 'DESC')
                 ->paginate($this->rows);
